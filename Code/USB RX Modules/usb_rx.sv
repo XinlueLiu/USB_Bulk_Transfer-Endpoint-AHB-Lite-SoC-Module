@@ -48,7 +48,7 @@ decoder D1 (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .shift_enable(s
 
 bit_stuffer_detector BSD (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .invalid_bit(invalid_bit));
 
-sr_8bit SR8 (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .Packet_Data(Packet_Data));
+sr8_bit SR8 (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .Packet_Data(Packet_Data));
 
 timer T1 (.clk(clk), .n_rst(n_rst), .enable_timer(enable_timer), .invalid_bit(invalid_bit), .shift_enable(shift_enable), 
           .shift_enable_const(shift_enable_const), .byte_count(), .byte_complete(byte_complete));
