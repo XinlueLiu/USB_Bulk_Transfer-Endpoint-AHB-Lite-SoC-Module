@@ -22,13 +22,13 @@ module rx_data_buffer(input wire clk,
                       output reg [2:0] rx_packet,
                       output reg [7:0] rx_packet_data,
                       output reg store_rx_data_packet);
-local parameter IDLE = 3'b000;
-local parameter IN = 3'b001;
-local parameter OUT = 3'b010;
-local parameter ACK = 3'b011;
-local parameter ERROR = 3'100;
-local parameter DONE = 3'b101;
-local parameter NACK = 3'b110;
+parameter IDLE = 3'b000;
+parameter IN = 3'b001;
+parameter OUT = 3'b010;
+parameter ACK = 3'b011;
+parameter ERROR = 3'b100;
+parameter DONE = 3'b101;
+parameter NACK = 3'b110;
 
 reg [7:0] next_pid; 
 reg [7:0] temp_pid;
@@ -47,7 +47,7 @@ begin
   else begin
     pid <= next_pid;
     rx_packet_data <= next_rx_packet_data;
-    store_rx_packet_data <= next_store_rx_packet_data;
+    store_rx_data_packet <= next_store_rx_packet_data;
     rx_packet <= next_rx_packet;
   end
 end
@@ -55,20 +55,20 @@ end
 
 always_comb 
 begin : PACKET_DATA_LOGIC
-  next_pid = pid
+  next_pid = pid;
   temp_pid = pid;
   sync_byte = 8'b0;
   next_rx_packet_data = rx_packet_data;
   if(byte_complete && load_pid) begin
     next_pid = Packet_Data;
-    temp_pid = Packet_Data  
+    temp_pid = Packet_Data;
   end
   if(byte_complete && load_data) begin
     next_rx_packet_data = Packet_Data;
-    next_store_rx_data_packet = 1'b1;
+    next_store_rx_packet_data = 1'b1;
   end
   else begin
-    next_store_rx_data_packet = 1'b0;    
+    next_store_rx_packet_data = 1'b0;    
   end
   if(check_sync && byte_complete) begin
       sync_byte = Packet_Data;
