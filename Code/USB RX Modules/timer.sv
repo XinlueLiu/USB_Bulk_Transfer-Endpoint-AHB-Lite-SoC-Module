@@ -6,7 +6,7 @@
 // Version:     1.0  Initial Design Entry
 // Description: Timer for USB RX Design 
 module timer(input wire clk,
-             input wire n_rst
+             input wire n_rst,
              input wire enable_timer,
              input wire invalid_bit,
              output reg shift_enable,
