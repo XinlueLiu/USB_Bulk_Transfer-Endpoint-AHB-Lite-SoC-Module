@@ -31,29 +31,29 @@ reg load_pid;
 reg load_error;
 reg load_done;
 
-sync_high sh1 (.clk(clk), .n_rst(n_rst), .async_in(d_plus), .sync_out(d_plus_sync));
+sync_high SYNC_HIGH (.clk(clk), .n_rst(n_rst), .async_in(d_plus), .sync_out(d_plus_sync));
 
-sync_low sl1 (.clk(clk), .n_rst(n_rst), .async_in(d_minus), .sync_out(d_minus_sync));
+sync_low SYNC_LOW (.clk(clk), .n_rst(n_rst), .async_in(d_minus), .sync_out(d_minus_sync));
 
-rcu R1 (.clk(clk), .n_rst(n_rst), .d_edge(), .pid(pid), .byte_complete(byte_complete), .eop(eop), .crc_wrong(), 
+rcu CONTROLLER_UNIT (.clk(clk), .n_rst(n_rst), .d_edge(), .pid(pid), .byte_complete(byte_complete), .eop(eop), .crc_wrong(), 
         .crc_right(), .sync_status(sync_status), .pid_status(pid_status), .enable_timer(enable_timer), .check_sync(check_sync), .check_pid(check_pid), 
         .load_pid(load_pid), .load_data(load_data), .load_error(load_error), .load_done(load_done));
 
-rx_data_buffer RDB (.clk(clk), .n_rst(n_rst), .byte_complete(byte_complete), .Packet_Data(Packet_Data), .clear(1'b0), .load_data(load_data), 
+rx_data_buffer USB_PACKET_VALUE (.clk(clk), .n_rst(n_rst), .byte_complete(byte_complete), .Packet_Data(Packet_Data), .clear(1'b0), .load_data(load_data), 
                     .check_sync(check_sync), .check_pid(check_pid), .load_pid(load_pid), .load_error(load_error), 
                     .load_done(load_done), .sync_status(sync_status), .pid_status(pid_status), .pid(pid), .rx_packet(rx_packet), 
                     .rx_packet_data(rx_packet_data), .store_rx_packet_data(store_rx_packet_data));
 
-decoder D1 (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .shift_enable(shift_enable_const), .d_orig(d_orig));
+decoder DECODER (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .shift_enable(shift_enable_const), .d_orig(d_orig));
 
-bit_stuffer_detector BSD (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .invalid_bit(invalid_bit));
+bit_stuffer_detector BIT_STUFFER (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .invalid_bit(invalid_bit));
 
-sr8_bit SR8 (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .Packet_Data(Packet_Data));
+sr8_bit SHIFT_REG_8 (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .Packet_Data(Packet_Data));
 
-timer T1 (.clk(clk), .n_rst(n_rst), .enable_timer(enable_timer), .invalid_bit(invalid_bit), .shift_enable(shift_enable), 
+timer TIMER (.clk(clk), .n_rst(n_rst), .enable_timer(enable_timer), .invalid_bit(invalid_bit), .shift_enable(shift_enable), 
           .shift_enable_const(shift_enable_const), .byte_count(), .byte_complete(byte_complete));
 
-eop_detector ED1 (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_minus_sync(d_minus_sync), .shift_enable(shift_enable), .eop(eop));
+eop_detector EOP_DETECTOR (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_minus_sync(d_minus_sync), .shift_enable(shift_enable), .eop(eop));
 
 
 endmodule
