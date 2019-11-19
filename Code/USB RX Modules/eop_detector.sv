@@ -61,7 +61,7 @@ begin
   begin
      next_state = IDLE;
   end
-  end
+  endcase
 end
 
 always_comb
