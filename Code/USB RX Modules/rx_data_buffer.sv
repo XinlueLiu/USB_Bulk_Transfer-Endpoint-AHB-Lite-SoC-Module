@@ -21,7 +21,7 @@ module rx_data_buffer(input wire clk,
                       output reg [7:0] pid,
                       output reg [2:0] rx_packet,
                       output reg [7:0] rx_packet_data,
-                      output reg store_rx_data_packet);
+                      output reg store_rx_packet_data);
 parameter IDLE = 3'b000;
 parameter IN = 3'b001;
 parameter OUT = 3'b010;
@@ -47,7 +47,7 @@ begin
   else begin
     pid <= next_pid;
     rx_packet_data <= next_rx_packet_data;
-    store_rx_data_packet <= next_store_rx_packet_data;
+    store_rx_packet_data <= next_store_rx_packet_data;
     rx_packet <= next_rx_packet;
   end
 end
