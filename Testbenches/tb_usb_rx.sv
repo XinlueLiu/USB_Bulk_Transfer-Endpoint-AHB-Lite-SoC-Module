@@ -34,14 +34,22 @@ module tb_usb_rx();
   // Overall test case number for reference
   integer tb_test_num;
   string  tb_test_case;
-  // Test case 'inputs' used for test stimulus
-  reg [7:0] tb_test_data; // should be the decoded version of what gets sent through.
-  
+
   // Test case expected output values for the test case
   reg [2:0] tb_expected_rx_packet;
   reg [7:0] tb_expected_rx_packet_data;
   reg       tb_expected_store_rx_packet_data;
   
+  //output check parameters
+    reg [7:0] tb_test_sync;
+    reg [7:0] tb_expected_rx_packet_data_sync;
+    reg [2:0] tb_expected_rx_packet_sync;
+    reg tb_expected_store_rx_packet_data_sync;
+    reg [7:0] tb_test_pid;
+    reg [7:0] tb_expected_rx_packet_data_pid;
+    reg [2:0] tb_expected_rx_packet_pid;
+    reg tb_expected_store_rx_packet_data_pid;
+
   // DUT portmap
   usb_rx DUT
   (
@@ -139,6 +147,9 @@ module tb_usb_rx();
   endtask
   
   task check_outputs;
+	input tb_expected_rx_packet_data;
+	input tb_expected_rx_packet;
+	input tb_expected_store_rx_packet_data;
   begin
     // Don't need to syncrhonize relative to clock edge for this design's outputs since they should have been stable for quite a while given the 2 Data Period gap between the end of the packet and when this should be used to check the outputs
     
@@ -150,9 +161,9 @@ module tb_usb_rx();
       
     // Should tell what kind of packet is being transmitted and/or where the receiver is in processing the current packet (e.g. "DONE")
     assert(tb_expected_rx_packet == tb_rx_packet)
-      $info("Test case %0d: DUT correctly shows the right packet", tb_test_num);
+      $info("Test case %0d: DUT correctly shows the rx packet", tb_test_num);
     else
-      $error("Test case %0d: DUT incorrectly shows the right packet", tb_test_num);
+      $error("Test case %0d: DUT incorrectly shows the rx packet", tb_test_num);
     
     // For every 'data packet' regrardless of token, this should be asserted once the data is ready and hasn't failed. 
     assert(tb_expected_store_rx_packet_data == tb_store_rx_packet_data)
@@ -176,10 +187,14 @@ module tb_usb_rx();
     // Initialize all test bench signals
     tb_test_num               = -1;
     tb_test_case              = "TB Init";
-    tb_test_data              = 8'b0;
-    tb_expected_rx_packet       = 3'b0; 
-    tb_expected_rx_packet_data = 8'b0;
-    tb_expected_store_rx_packet_data       = 1'b0;
+    tb_test_sync = 8'b0;
+    tb_expected_rx_packet_data_sync = 8'b0;
+    tb_expected_rx_packet_sync = 3'b0;
+    tb_expected_store_rx_packet_data_sync = 1'b0;
+    tb_test_pid = 8'b0;
+    tb_expected_rx_packet_data_pid = 8'b0;
+    tb_expected_rx_packet_pid = 3'b0;
+    tb_expected_store_rx_packet_data_pid = 1'b0;
     // Initilize all inputs to inactive/idle values
     tb_n_rst      = 1'b1; // Initially inactive
     tb_d_plus  = 1'b1; // Initially idle
@@ -196,59 +211,59 @@ module tb_usb_rx();
     
     // Power-on Reset Test case: Simply populate the expected outputs
     // These values don't matter since it's a reset test but really should be set to 'idle'/inactive values
-    tb_test_data        = 8'b0;
+    tb_test_sync = 0; // sync byte
+    tb_test_pid = 0; // IN PID; correct. not incurring errors.
     
-    // Define expected ouputs for this test case
-    // Note: expected outputs should all be inactive/idle values
-    // For a good packet RX Data value should match data sent
-    tb_expected_rx_packet       = 8'b0;
-
-    tb_expected_rx_packet_data       = 8'b0;
-    // Not intentionally creating an overrun condition -> overrun should be 0
-    tb_expected_store_rx_packet_data       = 1'b0;
+    tb_expected_rx_packet_data_sync      = 0;
+    tb_expected_rx_packet_sync            = 0; // This shouldn't change until a PID is read in
+    tb_expected_store_rx_packet_data_sync = 0; // This shouldn't change until a data packet is read in.
+    //pid 
+    tb_expected_rx_packet_data_pid       = 0;
+    tb_expected_rx_packet_pid            = 0;
+    tb_expected_store_rx_packet_data_pid = 0;
+    send_packet(tb_test_sync, NORM_DATA_PERIOD);
+    send_packet(tb_test_pid, NORM_DATA_PERIOD);
     
     // DUT Reset
-    reset_dut;
+    reset_dut();
     
     // Check outputs
-    check_outputs();
+    check_outputs(tb_expected_rx_packet_data_sync, tb_expected_rx_packet_sync, tb_expected_store_rx_packet_data_sync);
+    check_outputs(tb_expected_rx_packet_data_pid, tb_expected_rx_packet_pid, tb_expected_store_rx_packet_data_pid);
+
 
     /******************************************************************************
     /******************************************************************************/
 
     // Test case 1: Normal IN Packet
     // Synchronize to falling edge of clock to prevent timing shifts from prior test case(s)
-    @(negedge tb_clk);
+    reset_dut();
     tb_test_num  += 1;
     tb_test_case = "Normal IN Packet";
     
     // Setup packet info for debugging/verificaton signals
-    tb_test_data       = 8'b00000001; // sync byte
+    tb_test_sync = 8'b10000000; // sync byte
+    tb_test_pid = 8'b01101001; // IN PID; correct. not incurring errors.
     
     // Define expected ouputs for this test case
-    // For a good packet RX Data value should match data sent
-    tb_expected_rx_packet_data       = tb_test_data;
-    tb_expected_rx_packet            = 3'b000; // This shouldn't change until a PID is read in
-    tb_expected_store_rx_packet_data = 1'b0; // This shouldn't change until a data packet is read in.
-    
-    // DUT Reset
-    reset_dut;
-    
+    // sync expected
+    tb_expected_rx_packet_data_sync      = 0;
+    tb_expected_rx_packet_sync            = 3'b000;
+    tb_expected_store_rx_packet_data_sync = 1'b0;
+    //pid 
+    tb_expected_rx_packet_data_pid       = 0;
+    tb_expected_rx_packet_pid            = 3'b001;
+    tb_expected_store_rx_packet_data_pid = 1'b0;
+   
     // Send packet
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    send_packet(tb_test_sync, NORM_DATA_PERIOD);
     
     // Check outputs
-    check_outputs();
+    check_outputs(tb_expected_rx_packet_data_sync, tb_expected_rx_packet_sync, tb_expected_store_rx_packet_data_sync);
 
-    tb_test_data = 8'b10010110; // IN PID; correct. not incurring errors.
-    
-    tb_expected_rx_packet_data       = tb_test_data;
-    tb_expected_rx_packet            = 3'b001;
-
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
-
-    check_outputs();
-
+    send_packet(tb_test_pid, NORM_DATA_PERIOD);
+    check_outputs(tb_expected_rx_packet_data_pid, tb_expected_rx_packet_pid, tb_expected_store_rx_packet_data_pid);
+/*
     tb_test_data = 8'b00000001; // ADDRESS: Note, since it should only be 7 bits long, I made the 8th bit 0. Given protocol this might be different.
     tb_expected_rx_packet_data       = tb_test_data;
     tb_expected_store_rx_packet_data = 1'b1;
@@ -278,7 +293,7 @@ module tb_usb_rx();
     tb_expected_rx_packet = 3'b101;
 
     check_outputs();
-
+*/
     /******************************************************************************/
     // Test case 2: Not Implemented
     // Synchronize to falling edge of clock to prevent timing shifts from prior test case(s)
@@ -288,4 +303,4 @@ module tb_usb_rx();
     
 
   end
-endmodule
+endmodule 
