@@ -23,7 +23,7 @@ module rcu(input wire clk,
            output reg load_error,
            output reg load_done);
 
-typedef enum bit [3:0] {IDLE, RECIEVE, SYNC, PID, DATAINOUT, DATA01, CHECK5, CHECK16, ERROR, DONE} stateType;
+typedef enum bit [3:0] {IDLE, RECEIVE, SYNC, PID, DATAINOUT, DATA01, CHECK5, CHECK16, ERROR, DONE} stateType;
 stateType state;
 stateType next_state;
 
@@ -41,7 +41,6 @@ always_comb
 begin : NEXT_STATE_LOGIC
   next_state = state;
   case(state) 
-  begin
     IDLE:
     begin
       if(d_edge) begin
@@ -58,7 +57,7 @@ begin : NEXT_STATE_LOGIC
 // do I need a receive state to enable the timer or not?
     SYNC:
     begin
-     if(byte_complete && sync_status = 2'b01) begin
+     if(byte_complete && sync_status == 2'b01) begin
        next_state = PID;
      end
      else if(sync_status == 2'b0) begin
@@ -150,10 +149,10 @@ begin : OUTPUT_LOGIC
     enable_timer = 1'b1;
   end
   if(state == SYNC) begin
-    sync_check = 1'b1;
+    check_sync = 1'b1;
   end
   else begin
-    sync_check = 1'b0;
+    check_sync = 1'b0;
   end
   if(state == PID) begin
     load_pid = 1'b1;
