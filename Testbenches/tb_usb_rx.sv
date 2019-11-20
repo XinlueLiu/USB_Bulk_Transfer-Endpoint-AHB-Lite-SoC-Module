@@ -11,7 +11,8 @@
 module tb_usb_rx();
 
   // Define parameters
-  parameter CLK_PERIOD        = 2.5;
+  //parameter CLK_PERIOD        = 2.5;
+  parameter CLK_PERIOD        = 10;
   parameter NORM_DATA_PERIOD  = (10 * CLK_PERIOD);
   
   //localparam OUTPUT_CHECK_DELAY = (CLK_PERIOD - 0.2);
@@ -53,42 +54,42 @@ module tb_usb_rx();
     .store_rx_packet_data(tb_store_rx_packet_data)
   );
   
-  // Tasks for regulating the timing of input stimulus to the design
-  task send_sequence; // TODO: I need to change this....
+  // generate d+/-
+  task send_packet;
     input  [7:0] data;
+    input time data_period;
     reg    [7:0] d_plus_input;
     reg    [7:0] d_minus_input;
-    time   data_period;
     integer i;
     integer j;
+
   begin
-    // First synchronize to away from clock's rising edge
+    //initialization
     @(negedge tb_clk)
-    
-    
     d_plus_input = '1;
     d_minus_input = '0;
-    if(data[7] == 1'b0) begin
+    //start or not
+    if(data[0] == 1'b0) begin
        d_plus_input[7] = 1'b0;
        d_minus_input[7] = 1'b1;    
     end
     else begin
-      $display("Was this a valid data packet? It may cause a glitch.");
+      $display("Not a valid start");
     end 
-    for(i = 6; i > -1; i = i - 1) 
+    for(i = 0; i < 8; i = i + 1) 
     begin
       if(data[i] == 1'b0) begin
-        d_plus_input[i] = !d_plus_input[i+1];
-        d_minus_input[i] = !d_minus_input[i +1];
+        d_plus_input[i + 1] = !d_plus_input[i];
+        d_minus_input[i + 1] = !d_minus_input[i];
       end 
       else begin
-       d_plus_input[i] = d_plus_input[i+1];
-       d_minus_input[i] = d_minus_input[i+1];
+       d_plus_input[i + 1] = d_plus_input[i];
+       d_minus_input[i + 1] = d_minus_input[i];
       end
     end
     
     // Send data bits
-    for(j = 7; j > -1; j = j - 1)
+    for(j = 0; j < 8; j = j + 1)
     begin
       tb_d_plus = d_plus_input[j];
       tb_d_minus = d_minus_input[j];
@@ -105,11 +106,12 @@ module tb_usb_rx();
     reg [7:0] d_plus_input;
     reg [7:0] d_minus_input;
     integer i;
-    time data_period;
+    input time data_period;
   begin
+    //driven low for 2 bit periods and back to the idle bus value
     d_plus_input = 8'b00111111;
     d_minus_input = 8'b0000000;
-    for(i = 7; i > -1; i = i - 1) begin
+    for(i = 0; i < 8; i = i + 1) begin
       tb_d_plus = d_plus_input[i];
       tb_d_minus = d_minus_input[i];
       #data_period;
@@ -148,15 +150,15 @@ module tb_usb_rx();
       
     // Should tell what kind of packet is being transmitted and/or where the receiver is in processing the current packet (e.g. "DONE")
     assert(tb_expected_rx_packet == tb_rx_packet)
-      $info("Test case %0d: DUT correctly shows the right packet", tb_test_num);
+      $info("Test case %0d: RX_packet token signal corrent", tb_test_num);
     else
-      $error("Test case %0d: DUT incorrectly shows the right packet", tb_test_num);
+      $error("Test case %0d: INCORRECT RX_packet token signal", tb_test_num);
     
     // For every 'data packet' regrardless of token, this should be asserted once the data is ready and hasn't failed. 
     assert(tb_expected_store_rx_packet_data == tb_store_rx_packet_data)
       $info("Test case %0d: DUT correctly asserted the store rx packet data flag", tb_test_num);
     else
-      $error("Test case %0d: DUT did not correctly asserted the store rx packet data flag", tb_test_num);
+      $error("Test case %0d: DUT DID not correctly asserted the store rx packet data flag", tb_test_num);
   end
   endtask
   
@@ -186,6 +188,8 @@ module tb_usb_rx();
     // Get away from Time = 0
     #0.1; 
     
+    /******************************************************************************
+    /******************************************************************************/   
     // Test case 0: Basic Power on Reset
     tb_test_num  = 0;
     tb_test_case = "Power-on-Reset";
@@ -194,54 +198,64 @@ module tb_usb_rx();
     // These values don't matter since it's a reset test but really should be set to 'idle'/inactive values
     tb_test_data        = 8'b0;
     
-    // Define expected ouputs for this test case
-    // Note: expected outputs should all be inactive/idle values
-    // For a good packet RX Data value should match data sent
     tb_expected_rx_packet       = 8'b0;
-
     tb_expected_rx_packet_data       = 8'b0;
-    // Not intentionally creating an overrun condition -> overrun should be 0
     tb_expected_store_rx_packet_data       = 1'b0;
     
     // DUT Reset
-    reset_dut;
-    
+    reset_dut();
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    reset_dut();
     // Check outputs
     check_outputs();
-    
-    // Test case 1: Normal data rate, Normal packet
+
+    /******************************************************************************
+     Test case 1: Norminal Token Packet Reception & Norminal ACK Packet Reception
+    /******************************************************************************/
     // Synchronize to falling edge of clock to prevent timing shifts from prior test case(s)
-    @(negedge tb_clk);
+    reset_dut();
     tb_test_num  += 1;
-    tb_test_case = "Normal IN Token";
+    tb_test_case = "Normal IN Packet";
     
-    // Setup packet info for debugging/verificaton signals
-    tb_test_data       = 8'b00000001; // sync byte
-    
-    // Define expected ouputs for this test case
-    // For a good packet RX Data value should match data sent
-    tb_expected_rx_packet_data       = tb_test_data;
-    tb_expected_rx_packet            = 3'b000; // This shouldn't change until a PID is read in
-    tb_expected_store_rx_packet_data = 1'b0; // This shouldn't change until a data packet is read in.
-    
-    // DUT Reset
-    reset_dut;
+    // Sync byte
+    tb_test_data       = 8'b10000000; // sync byte   
+    //expected output behavior
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b000;
+    tb_expected_store_rx_packet_data = 1'b0;
     
     // Send packet
     send_packet(tb_test_data, NORM_DATA_PERIOD);
-    
     // Check outputs
     check_outputs();
 
-    tb_test_data = 10010110; // IN PID; correct. not incurring errors.
+    //OUT PID
+    tb_test_data = 8'b01111000; //Out token
     
     tb_expected_rx_packet_data       = tb_test_data;
-    tb_expected_rx_packet            = 3'b001;
+    tb_expected_rx_packet            = 3'b010;
+    tb_expected_store_rx_packet_data = 1'b0;
 
     send_packet(tb_test_data, NORM_DATA_PERIOD);
-
     check_outputs();
 
+    //DATA field
+    //send a 2 byte value
+    tb_test_data = 8'b10101111;
+    tb_expected_rx_packet_data       = tb_test_data;
+    tb_expected_rx_packet            = 3'b010;
+    tb_expected_store_rx_packet_data = 1'b1;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+    
+    tb_test_data = 8'b11011101;
+    tb_expected_rx_packet_data       = tb_test_data;
+    tb_expected_rx_packet            = 3'b010;
+    tb_expected_store_rx_packet_data = 1'b1;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+
+/*
     tb_test_data = 8'b00000001; // ADDRESS: Note, since it should only be 7 bits long, I made the 8th bit 0. Given protocol this might be different.
     tb_expected_rx_packet_data       = tb_test_data;
     tb_expected_store_rx_packet_data = 1'b1;
@@ -258,7 +272,7 @@ module tb_usb_rx();
 
     check_outputs();   
 
-    tb_test_data = 8'b????????; // CRC 5-bit, this isn't a value I know. I just know it is 5 bits and needs to be correct. 
+    tb_test_data = 8'b00000000; // CRC 5-bit, this isn't a value I know. I just know it is 5 bits and needs to be correct. 
     tb_expected_rx_packet_data       = tb_test_data;
 
     send_packet(tb_test_data, NORM_DATA_PERIOD);
@@ -271,8 +285,8 @@ module tb_usb_rx();
     tb_expected_rx_packet = 3'b101;
 
     check_outputs();
-
-
+*/
+    /******************************************************************************/
     // Test case 2: Not Implemented
     // Synchronize to falling edge of clock to prevent timing shifts from prior test case(s)
     @(negedge tb_clk);
@@ -281,4 +295,4 @@ module tb_usb_rx();
     
 
   end
-endmodule
+endmodule 
