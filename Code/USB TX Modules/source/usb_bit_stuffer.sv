@@ -6,20 +6,21 @@ input wire serial_in,
 output reg bit_stuff_en
 );
 reg count_6_en;
+reg nxt_bit_stuff_en;
 reg [3:0]count_out;
 parameter[3:0] val = 4'b0110;
 flex_counter D(.clk(clk),.n_rst(n_rst),.count_enable(serial_in),.rollover_value(val),.clear(!serial_in),.rollover_flag(count_6_en),.count_out(count_out));
 
 
 always_ff@(posedge clk,negedge n_rst) begin
-	if(n_rst = 1'b1) begin
-		stuff_bit_en<=1'b0;		
+	if(n_rst == 1'b1) begin
+		bit_stuff_en<=1'b0;		
 	end
 	else begin
-		stuff_bit_end<=nxt_stuff_bit_en;
-	e
+		bit_stuff_en<=nxt_bit_stuff_en;
+	end
 end
-always comb begin
+always_comb begin
 if(clk12 == 1'b1) begin
 	if(count_6_en ==1) begin
 		nxt_bit_stuff_en =1'b1;

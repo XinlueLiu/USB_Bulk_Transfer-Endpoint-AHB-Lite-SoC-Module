@@ -1,13 +1,11 @@
 module usb_tx(
 input wire [7:0] tx_packet_data,
 input wire [6:0] tx_packet_size,
-input wire [2:0] tx_packet,
+input wire [1:0] tx_packet,
 input wire n_rst,
 input wire clk,
 output reg dplus_out,
 output reg dminus_out,
-output reg tx_transfer_active,
-output reg tx_error,
 output reg get_tx_packet_data
 );
 reg clk12,ack,en_pts,en_enc,bit_stuff_en,serial_out,bit8;
