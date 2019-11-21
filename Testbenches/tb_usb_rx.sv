@@ -74,7 +74,7 @@ module tb_usb_rx();
        d_minus_input[7] = 1'b1;    
     end
     else begin
-      $display("Not a valid start");
+      $display("Invalid start");
     end 
     for(i = 0; i < 8; i = i + 1) 
     begin
@@ -95,10 +95,7 @@ module tb_usb_rx();
       tb_d_minus = d_minus_input[j];
       #data_period;
     end
-    
-    // Send stop bit
-    //tb_serial_in = stop_bit;
-    //#data_period;
+
   end
   endtask
 
@@ -215,7 +212,7 @@ module tb_usb_rx();
     // Synchronize to falling edge of clock to prevent timing shifts from prior test case(s)
     reset_dut();
     tb_test_num  += 1;
-    tb_test_case = "Normal IN Packet";
+    tb_test_case = " Norminal Token Packet Reception & Norminal ACK Packet Reception";
     
     // Sync byte
     tb_test_data       = 8'b10000000; // sync byte   
@@ -239,14 +236,18 @@ module tb_usb_rx();
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs();
 
+    //8'b00011011;
+    
+
     //DATA field
-    //send a 2 byte value
+    //send a 2 byte value 10111011 11110101
     tb_test_data = 8'b10101111;
     tb_expected_rx_packet_data       = tb_test_data;
     tb_expected_rx_packet            = 3'b010;
     tb_expected_store_rx_packet_data = 1'b1;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs();
+
     
     tb_test_data = 8'b11011101;
     tb_expected_rx_packet_data       = tb_test_data;
@@ -255,44 +256,94 @@ module tb_usb_rx();
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs();
 
-/*
-    tb_test_data = 8'b00000001; // ADDRESS: Note, since it should only be 7 bits long, I made the 8th bit 0. Given protocol this might be different.
-    tb_expected_rx_packet_data       = tb_test_data;
-    tb_expected_store_rx_packet_data = 1'b1;
-
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
-
-    check_outputs();
-        
-    tb_test_data = 8'b00000010; // ENDPOINT: Note this is 4 bits long so I put it on the last 4 to make the value stick 
-                                // (if it were the first four it'd be different). Also assigned an aribtrary value.
-    tb_expected_rx_packet_data       = tb_test_data; 
-
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
-
-    check_outputs();   
-
-    tb_test_data = 8'b00000000; // CRC 5-bit, this isn't a value I know. I just know it is 5 bits and needs to be correct. 
-    tb_expected_rx_packet_data       = tb_test_data;
-
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
-
-    check_outputs(); 
-
-    send_eop();
-
+    //send EOP signal and Done signal
+    send_eop(NORM_DATA_PERIOD);
+    tb_expected_rx_packet_data = 0; //this
+    tb_expected_rx_packet = 3'b101; //DONE signal
     tb_expected_store_rx_packet_data = 1'b0;
-    tb_expected_rx_packet = 3'b101;
 
-    check_outputs();
-*/
+    /******************************************************************************
+     Test case 2: Invalid token packet reception, tokens for incorrect address/endpoints & incorrect crc
     /******************************************************************************/
-    // Test case 2: Not Implemented
-    // Synchronize to falling edge of clock to prevent timing shifts from prior test case(s)
+    reset_dut();
     @(negedge tb_clk);
     tb_test_num += 1;
-    tb_test_case = "Whatever else is appropriate";
+    tb_test_case = "Invalid token packet reception with incorrect token addresss";
     
+
+    //token with incorrect address
+    // Sync byte
+    tb_test_data       = 8'b10000000; // sync byte   
+    //expected output behavior
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b000;
+    tb_expected_store_rx_packet_data = 1'b0;
+    
+    // Send packet
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    // Check outputs
+    check_outputs();
+
+    //Incorrect Token packet
+    tb_test_data = 8'b01111001; //Out token with incorrect 1 at the end of the signal
+    //crc is also incorrect
+    
+    tb_expected_rx_packet_data       = tb_test_data;
+    tb_expected_rx_packet            = 3'b100; //error
+    tb_expected_store_rx_packet_data = 1'b0;
+
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+
+    /******************************************************************************
+     Test case 3: Incorrect data CRC field
+    /******************************************************************************/
+    reset_dut();
+    @(negedge tb_clk);
+    tb_test_num += 1;
+    tb_test_case = "Incorrect data CRC field";
+    
+    // Sync byte
+    tb_test_data       = 8'b10000000; // sync byte   
+    //expected output behavior
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b000;
+    tb_expected_store_rx_packet_data = 1'b0;
+    
+    // Send packet
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    // Check outputs
+    check_outputs();
+
+    //OUT PID
+    tb_test_data = 8'b01111000; //Out token
+    
+    tb_expected_rx_packet_data       = tb_test_data;
+    tb_expected_rx_packet            = 3'b010;
+    tb_expected_store_rx_packet_data = 1'b0;
+
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+
+    //8'b00011011;
+    
+
+    //DATA field -- invalud crc
+    //send a 2 byte value 10111011 11110101
+    tb_test_data = 8'b10101111;
+    tb_expected_rx_packet_data       = tb_test_data;
+    tb_expected_rx_packet            = 3'b010;
+    tb_expected_store_rx_packet_data = 1'b1;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+
+    
+    tb_test_data = 8'b11011101;
+    tb_expected_rx_packet_data       = tb_test_data;
+    tb_expected_rx_packet            = 3'b010;
+    tb_expected_store_rx_packet_data = 1'b1;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
 
   end
 endmodule 
