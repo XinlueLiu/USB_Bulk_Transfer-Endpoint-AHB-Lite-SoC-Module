@@ -15,7 +15,7 @@ module sr8_bit
   output wire [7:0] Packet_Data 
 );
 
-  flex_stp_sr #(.(8))
+  flex_stp_sr #(.NUM_CNT_BITS(8))
   CORE(
     .clk(clk),
     .n_rst(n_rst),

@@ -75,9 +75,5 @@ begin : OUTPUT_LOGIC
   end
 end
 
-always_comb 
-begin
-
-end
 
 endmodule

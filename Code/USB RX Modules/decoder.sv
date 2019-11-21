@@ -35,5 +35,4 @@ begin
     next_d_orig = 1'b0;
   end
 end
-
 endmodule

@@ -11,7 +11,6 @@ module timer(input wire clk,
              input wire invalid_bit,
              output reg shift_enable,
              output reg shift_enable_const,
-             output reg [6:0] byte_count,
              output reg byte_complete);
 
 //reg [3:0] track;
@@ -79,7 +78,7 @@ end
 flex_counter #(5) fc1 (.clk(clk), .n_rst(n_rst), .clear(clear_1), .count_enable(enable), .rollover_val(5'd25), .count_out(count_out_1), .rollover_flag(rollover_flag_1));
 flex_counter fc2 (.clk(clk), .n_rst(n_rst), .clear(clear_2), .count_enable(rollover_flag_1), .rollover_val(4'b1000), .count_out(count_out_2), .rollover_flag(byte_complete));
 // flex_counter #(2) fc3 (.clk(clk), .n_rst(n_rst), .clear(clear_3), .count_enable(rollover_flag_1), .rollover_val(2'b11), .count_out(cycles), .rollover_flag());
-flex_counter #(7) nb1 (.clk(clk), .n_rst(n_rst), .clear(1'b0), .count_enable(byte_complete), .rollover_val(7'd69), .count_out(byte_count), .rollover_flag(rollover_flag_2));
+// flex_counter #(7) nb1 (.clk(clk), .n_rst(n_rst), .clear(1'b0), .count_enable(byte_complete), .rollover_val(7'd69), .count_out(byte_count), .rollover_flag(rollover_flag_2));
 
 
 
