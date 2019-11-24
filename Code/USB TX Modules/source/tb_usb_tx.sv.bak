@@ -34,7 +34,7 @@ logic tb_n_rst;
 //*****************************************************************************
 logic			[7:0] tb_tx_packet_data;
 logic			[6:0] tb_tx_packet_size;
-logic			[1:0] tb_tx_packet;
+logic			[2:0] tb_tx_packet;
 logic			tb_dplus_out;
 logic			tb_dminus_out;
 logic			tb_tx_transfer_active;
@@ -43,6 +43,8 @@ logic		 	tb_get_tx_packet_data;
 // Expected value check signals
 logic		 	tb_expected_dplus_out;
 logic 			tb_expected_dminus_out;
+logic			tb_expected_tx_transfer_active;
+logic 			tb_expected_tx_error;
 logic 			tb_expected_get_tx_packet_data;
 
 //*****************************************************************************
@@ -62,6 +64,30 @@ end
 //*****************************************************************************
 // Bus Model Instance
 //*****************************************************************************
+ahb_lite_bus BFM (.clk(tb_clk),
+                  // Testing setup signals
+                  .enqueue_transaction(tb_enqueue_transaction),
+                  .transaction_write(tb_transaction_write),
+                  .transaction_fake(tb_transaction_fake),
+                  .transaction_addr(tb_transaction_addr),
+                  .transaction_data(tb_transaction_data),
+                  .transaction_error(tb_transaction_error),
+                  .transaction_size(tb_transaction_size),
+                  // Testing controls
+                  .model_reset(tb_model_reset),
+                  .enable_transactions(tb_enable_transactions),
+                  .current_transaction_num(tb_current_transaction_num),
+                  .current_transaction_error(tb_current_transaction_error),
+                  // AHB-Lite-Slave Side
+                  .hsel(tb_hsel),
+                  .htrans(tb_htrans),
+                  .haddr(tb_haddr),
+                  .hsize(tb_hsize),
+                  .hwrite(tb_hwrite),
+                  .hwdata(tb_hwdata),
+                  .hrdata(tb_hrdata),
+                  .hresp(tb_hresp));
+
 
 //*****************************************************************************
 // DUT Instance
@@ -73,6 +99,8 @@ usb_tx main (.clk(tb_clk), .n_rst(tb_n_rst),
 					.tx_packet(tb_tx_packet),
 					.dplus_out(tb_dplus_out),
 					.dminus_out(tb_dminus_out),
+					.tx_transfer_active(tb_tx_tranfer_active),
+					.tx_error(tb_tx_error),
 					.get_tx_packet_data(tb_get_tx_packet_data));
            
 
@@ -121,6 +149,20 @@ begin
     tb_mismatch = 1'b1;
     $error("Incorrect 'dminus' output %s during %s test case", check_tag, tb_test_case);
   end
+ if(tb_expected_tx_transfer_active == tb_tx_transfer_active) begin // Check passed
+    $info("Correct 'transfer_active' output %s during %s test case", check_tag, tb_test_case);
+  end
+  else begin // Check failed
+    tb_mismatch = 1'b1;
+    $error("Incorrect 'transfer_active' output %s during %s test case", check_tag, tb_test_case);
+  end
+ if(tb_expected_tx_error == tb_tx_error) begin // Check passed
+    $info("Correct 'error' output %s during %s test case", check_tag, tb_test_case);
+  end
+  else begin // Check failed
+    tb_mismatch = 1'b1;
+    $error("Incorrect 'error' output %s during %s test case", check_tag, tb_test_case);
+  end  
  if(tb_expected_get_tx_packet_data == tb_get_tx_packet_data) begin // Check passed
     $info("Correct 'get_packet_data' output %s during %s test case", check_tag, tb_test_case);
   end
@@ -156,7 +198,7 @@ begin
   
 end
 endtask
-string tb_test_case;
+logic tb_test_case;
 logic tb_test_case_num;
 string check_tag;
 //*****************************************************************************

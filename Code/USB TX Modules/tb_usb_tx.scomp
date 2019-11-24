@@ -1,0 +1,10 @@
+QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+Start time: 17:57:19 on Nov 24,2019
+vlog -sv -work source_work source/tb_usb_tx.sv 
+-- Compiling module tb_usb_tx
+** Error: source/tb_usb_tx.sv(124): (vlog-2730) Undefined variable: 'tb_expected_tx_transfer_active'.
+** Error: source/tb_usb_tx.sv(131): (vlog-2730) Undefined variable: 'tb_expected_tx_error'.
+** Error: source/tb_usb_tx.sv(167): (vlog-2730) Undefined variable: 'tb_expected_tx_error'.
+** Error: source/tb_usb_tx.sv(169): (vlog-2730) Undefined variable: 'tb_expected_tx_transfer_active'.
+End time: 17:57:19 on Nov 24,2019, Elapsed time: 0:00:00
+Errors: 4, Warnings: 0

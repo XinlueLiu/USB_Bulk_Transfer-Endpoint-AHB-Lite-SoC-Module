@@ -1,0 +1,9 @@
+QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+Start time: 17:53:29 on Nov 24,2019
+vlog -sv -work source_work source/usb_pts.sv 
+-- Compiling module usb_pts
+
+Top level modules:
+	usb_pts
+End time: 17:53:30 on Nov 24,2019, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0

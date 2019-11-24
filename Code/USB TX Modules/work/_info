@@ -32,6 +32,29 @@ r1
 !i113 0
 Z4 o-work work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 n@c@d@l_@c@r@c_16
+vtb_usb_tx
+R1
+!s110 1574634062
+!i10b 1
+!s100 gi=HObdF_JTA>fKegF_ol3
+IRDV2J_0eS=zg;>O[m:`@b0
+R2
+!s105 tb_usb_tx_sv_unit
+S1
+R0
+w1574634059
+8/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv
+F/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv
+L0 11
+R3
+r1
+!s85 0
+31
+!s108 1574634062.509652
+!s107 /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv|
+!s90 -reportprogress|300|-work|work|/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv|
+!i113 0
+R4
 vusb_bit_stuffer
 R1
 !s110 1574276255
@@ -149,24 +172,24 @@ r1
 R4
 vusb_tx
 R1
-!s110 1574276922
+!s110 1574633118
 !i10b 1
 !s100 eS5TM=z39bM:5ddnHc2>k1
-Ia5jG5eA45^7``N9GTjaPO2
+IoHOPjDEE2XemUR969^HVz0
 R2
 !s105 usb_tx_sv_unit
 S1
 R0
 w1574276871
-8/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/usb_tx.sv
-F/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/usb_tx.sv
+8/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv
+F/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv
 L0 1
 R3
 r1
 !s85 0
 31
-!s108 1574276922.802584
-!s107 /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/usb_tx.sv|
-!s90 -reportprogress|300|-work|work|/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/usb_tx.sv|
+!s108 1574633118.882765
+!s107 /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv|
+!s90 -reportprogress|300|-work|work|/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv|
 !i113 0
 R4
