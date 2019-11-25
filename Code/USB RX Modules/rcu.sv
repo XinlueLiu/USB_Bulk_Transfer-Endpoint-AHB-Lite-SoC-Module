@@ -24,7 +24,8 @@ module rcu(input wire clk,
            output reg load_error,
            output reg load_done);
 
-typedef enum bit [4:0] {IDLE, RECEIVE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK16, EOP, ERROR, DONE} stateType;
+//typedef enum bit [4:0] {IDLE, RECEIVE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK16, EOP, ERROR, DONE} stateType;
+typedef enum bit [4:0] {IDLE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK16, EOP, ERROR, DONE} stateType;
 stateType state;
 stateType next_state;
 
@@ -51,16 +52,17 @@ begin : NEXT_STATE_LOGIC
     IDLE:
     begin
       if(d_edge) begin
-         next_state = RECEIVE;
+         //next_state = RECEIVE;
+	next_state = SYNC;
       end
       else begin
          next_state = IDLE;
       end
     end
-    RECEIVE:
+    /*RECEIVE:
     begin
       next_state = SYNC;
-    end
+    end*/
     SYNC:
     begin
      if(byte_complete) begin
@@ -173,7 +175,8 @@ end
 
 always_comb 
 begin : OUTPUT_LOGIC
-  if(state == RECEIVE) begin
+  //if(state == RECEIVE) begin
+    if(state == SYNC) begin
     enable_timer = 1'b1;
   end
   else if((state == CHECK5) || (state == CHECK16) || (state == DONE) || (state == IDLE) || (state == ERROR)) begin
@@ -192,7 +195,7 @@ begin : OUTPUT_LOGIC
     check_sync = 1'b1;
   end
   else begin
-    check_sync = 1'b1;
+    check_sync = 1'b0;
   end
   if(state == PID) begin
     load_pid = 1'b1;

@@ -10,7 +10,7 @@ module protocol_controller
 (
 	input wire clk,
 	input wire n_rst,
-	input wire Buffer_Occupancy,
+	input wire [6:0] Buffer_Occupancy,
 	input wire [6:0] TX_Packet_Data_Size,
 	input wire Buffer_Reserved,
 	input wire [2:0] RX_Packet,
@@ -58,9 +58,9 @@ always_comb begin: PROTOCOL_CONTROLLER_NEXT_STATE_LOGIC
 				next_state = IN_NAK;
 			else if (Buffer_Reserved)
 				next_state = RESERVED;
-			else if (RX_Packet == RX_OUT & Buffer_Occupancy)
+			else if (RX_Packet == RX_OUT & (Buffer_Occupancy != 0))
 				next_state = OUT_WAIT;
-			else if (RX_Packet == RX_OUT & !Buffer_Occupancy)
+			else if (RX_Packet == RX_OUT & (Buffer_Occupancy == 0))
 				next_state = OUT_MODE;
 		end
 		RESERVED: begin
