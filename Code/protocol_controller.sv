@@ -43,7 +43,7 @@ typedef enum bit [2:0] {RX_IDLE = 3'b000,
 			RX_ACK = 3'b011,
 			RX_ERROR = 3'b100,
 			RX_DONE = 3'b101,
-			RX_NCK = 3'b110} RX_Packet_Type;
+			RX_NAK = 3'b110} RX_Packet_Type;
 
 typedef enum bit [1:0] {TX_IDLE = 2'b00,
 			TX_SEND_DATA = 2'b01,
@@ -70,7 +70,14 @@ always_comb begin: PROTOCOL_CONTROLLER_NEXT_STATE_LOGIC
 				next_state = IN_WAIT;
 		end
 		IN_WAIT: next_state = (RX_Packet == RX_IN) ? IN_MODE : IN_WAIT;
-		IN_MODE: next_state = (RX_Packet == RX_ACK) ? IDLE : IN_MODE;
+		IN_MODE: begin
+			if (RX_Packet == RX_NAK)
+				next_state = IN_NAK;
+			else if (RX_Packet == RX_ACK)
+				next_state = IDLE;
+			else
+				next_state = IN_MODE;
+		end
 		IN_NAK: next_state = IDLE;
 		OUT_WAIT: next_state = (RX_Packet == RX_DONE) ? OUT_NAK : OUT_WAIT;
 		OUT_MODE: begin
