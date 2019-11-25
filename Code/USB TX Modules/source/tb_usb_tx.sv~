@@ -121,20 +121,6 @@ begin
     tb_mismatch = 1'b1;
     $error("Incorrect 'dminus' output %s during %s test case", check_tag, tb_test_case);
   end
- if(tb_expected_tx_transfer_active == tb_tx_transfer_active) begin // Check passed
-    $info("Correct 'transfer_active' output %s during %s test case", check_tag, tb_test_case);
-  end
-  else begin // Check failed
-    tb_mismatch = 1'b1;
-    $error("Incorrect 'transfer_active' output %s during %s test case", check_tag, tb_test_case);
-  end
- if(tb_expected_tx_error == tb_tx_error) begin // Check passed
-    $info("Correct 'error' output %s during %s test case", check_tag, tb_test_case);
-  end
-  else begin // Check failed
-    tb_mismatch = 1'b1;
-    $error("Incorrect 'error' output %s during %s test case", check_tag, tb_test_case);
-  end  
  if(tb_expected_get_tx_packet_data == tb_get_tx_packet_data) begin // Check passed
     $info("Correct 'get_packet_data' output %s during %s test case", check_tag, tb_test_case);
   end
@@ -164,9 +150,7 @@ task init_expected_outs;
 begin
   tb_expected_dplus_out = 1'b0; 
   tb_expected_dminus_out = 1'b0;
-  tb_expected_tx_error = 1'b0;
   tb_expected_get_tx_packet_data = 1'b0;
-  tb_expected_tx_transfer_active = 1'b0;
   
 end
 endtask

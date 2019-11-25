@@ -37,8 +37,6 @@ logic			[6:0] tb_tx_packet_size;
 logic			[1:0] tb_tx_packet;
 logic			tb_dplus_out;
 logic			tb_dminus_out;
-logic			tb_tx_transfer_active;
-logic			tb_tx_error;
 logic		 	tb_get_tx_packet_data;
 // Expected value check signals
 logic		 	tb_expected_dplus_out;
@@ -150,9 +148,7 @@ task init_expected_outs;
 begin
   tb_expected_dplus_out = 1'b0; 
   tb_expected_dminus_out = 1'b0;
-  tb_expected_tx_error = 1'b0;
   tb_expected_get_tx_packet_data = 1'b0;
-  tb_expected_tx_transfer_active = 1'b0;
   
 end
 endtask

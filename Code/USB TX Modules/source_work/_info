@@ -9,14 +9,13 @@ z2
 cModel Technology
 Z0 d/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules
 T_opt
-!s110 1574636014
-V8H3nR]MgTFi3`MA4`Bl4O1
+!s110 1574641687
+V@ITEVZ0z?[E[Iz]C8T;XS2
 04 9 4 work tb_usb_tx fast 0
-=1-308d99b2fa67-5ddb09ed-af61f-4d54
+=1-308d99b2fa67-5ddb2016-e7e31-296d
 o-quiet -auto_acc_if_foreign -work source_work -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim +acc
 n@_opt
 OL;O;10.3b;59
-R0
 vCDL_CRC_16
 Z1 DXx6 sv_std 3 std 0 22 <EOTafDcUY:cQeO^ICn]m3
 Z2 !s110 1574634140
@@ -89,15 +88,15 @@ r1
 R5
 vtb_usb_tx
 R1
-Z6 !s110 1574636009
+!s110 1574641681
 !i10b 1
-!s100 g3<77<gE@@Qo[4Ic4`Nk42
-Ic;CX^zhPODUABiYdG<;nM1
+!s100 RKUW_?@E21`fU^E8W0n2=0
+IzXNFL0<Cm@g4jAzeVf;_F0
 R3
 !s105 tb_usb_tx_sv_unit
 S1
 R0
-w1574635969
+w1574641668
 8source/tb_usb_tx.sv
 Fsource/tb_usb_tx.sv
 L0 11
@@ -105,7 +104,7 @@ R4
 r1
 !s85 0
 31
-!s108 1574636009.698812
+!s108 1574641681.117355
 !s107 source/tb_usb_tx.sv|
 !s90 -sv|-work|source_work|source/tb_usb_tx.sv|
 !i113 0
@@ -135,7 +134,7 @@ r1
 R5
 vusb_controller
 R1
-Z7 !s110 1574634141
+Z6 !s110 1574634141
 !i10b 1
 !s100 gCzWO<XXn;@T_77[zY7Pj3
 IkNn:J`Yj8dDfL<TL7:7]V3
@@ -158,7 +157,7 @@ r1
 R5
 vusb_encoder
 R1
-R7
+R6
 !i10b 1
 !s100 J1bNnO^5fzoFbJd9Xm04N0
 I<13KgYg0@dPCNkUFi`kGF0
@@ -181,7 +180,7 @@ r1
 R5
 vusb_pts
 R1
-R6
+Z7 !s110 1574636009
 !i10b 1
 !s100 IY^9n`O<SYD>I1e9J[DbE2
 IMbYBoMz4EB062^mE`=MKd2
@@ -204,15 +203,15 @@ r1
 R5
 vusb_timer
 R1
-!s110 1574634310
+!s110 1574641597
 !i10b 1
-!s100 UgB1^FAa_K@4Y@1za;zJ32
-IWmnMl3Q_2BbJoiX4Ro^A90
+!s100 ?>gR=AREUjH1iRBEF<eOP3
+IYomVI5zR^WlcfIV1f=MQ]1
 R3
 !s105 usb_timer_sv_unit
 S1
 R0
-w1574634302
+w1574636067
 8source/usb_timer.sv
 Fsource/usb_timer.sv
 L0 1
@@ -220,14 +219,14 @@ R4
 r1
 !s85 0
 31
-!s108 1574634310.466640
+!s108 1574641597.737321
 !s107 source/usb_timer.sv|
 !s90 -sv|-work|source_work|source/usb_timer.sv|
 !i113 0
 R5
 vusb_tx
 R1
-R6
+R7
 !i10b 1
 !s100 7HkiG[SVSLAk<LF7ZQMUZ2
 IP^GGJ0gW3bnV^F`GIMjFM3
