@@ -1,7 +1,7 @@
 // $Id: $
 // File name:   tb_usb_tx.sv
 // Created:     11/17/2019
-// Author:      Karan Oberoi
+// Author:      Yiming Li
 // Lab Section: 9999
 // Version:     1.0  Initial Design Entry
 // Description: Starter bus model based test bench for the AHB-Lite-slave module
@@ -13,37 +13,52 @@ module tb_usb_tx();
 // Timing related constants
 localparam CLK_PERIOD = 10;
 localparam BUS_DELAY  = 800ps; // Based on FF propagation delay
-
+localparam USB_CLK_PERIOD = CLK_PERIOD * 8.33;
+// Preset Values
+localparam [7:0] SYNC_BYTE = 8'b10000000;
+localparam [7:0] ACK_BYTE = 8'b00101101;
+localparam [7:0] NAK_BYTE = 8'b10100101;
+localparam [1:0] TX_IDLE = 2'b00;
+localparam [1:0] TX_SEND_DATA = 2'b01;
+localparam [1:0] TX_NAK = 2'b10;
+localparam [1:0] TX_ACK = 2'b11;
 
 //*****************************************************************************
 // Declare TB Signals (Bus Model Controls)
 //*****************************************************************************
 // Testing control signal(s)
 string                 tb_check_tag;
-string		       tb_test_case;
 logic                  tb_mismatch;
 logic                  tb_check;
+integer                i;
+string		       tb_test_case;
 integer		       tb_test_case_num;
+integer		       idx_tx_packet_data;
 
 //*****************************************************************************
 // General System signals
 //*****************************************************************************
 logic tb_clk;
 logic tb_n_rst;
+logic tb_usb_clk;
 
 //*****************************************************************************
 // USB_tx side Signals
 //*****************************************************************************
 logic			[7:0] tb_tx_packet_data;
-logic			[6:0] tb_tx_packet_size;
-logic			[2:0] tb_tx_packet;
+logic			[6:0] tb_tx_packet_data_size;
+logic			[1:0] tb_tx_packet;
 logic			tb_dplus_out;
 logic			tb_dminus_out;
 logic		 	tb_get_tx_packet_data;
 // Expected value check signals
 logic		 	tb_expected_dplus_out;
-logic 		tb_expected_dminus_out;
-logic 		tb_expected_get_tx_packet_data;
+logic 			tb_expected_dminus_out;
+logic 			tb_expected_get_tx_packet_data;
+// Test Values
+logic     		[63:0][7:0] result_list;
+logic     		prev_dplus;
+logic     		[63:0][7:0] data_list;
 
 //*****************************************************************************
 // Clock Generation Block
@@ -59,20 +74,27 @@ always begin
   #(CLK_PERIOD/2.0);
 end
 
+always begin
+  // Start with clock low to avoid false rising edge events at t=0
+  tb_usb_clk = 1'b0;
+  // Wait half of the clock period before toggling clock value (maintain 50% duty cycle)
+  #(USB_CLK_PERIOD /2.0);
+  tb_usb_clk = 1'b1;
+  // Wait half of the clock period before toggling clock value via rerunning the block (maintain 50% duty cycle)
+  #(USB_CLK_PERIOD /2.0);
+end
+
 //*****************************************************************************
 // DUT Instance
 //****************************************************************************
 usb_tx main (.clk(tb_clk), .n_rst(tb_n_rst),
             // USB TX Signls
             .tx_packet_data(tb_tx_packet_data),
-            .tx_packet_size(tb_tx_packet_size),
+            .tx_packet_size(tb_tx_packet_data_size),
             .tx_packet(tb_tx_packet),
             .dplus_out(tb_dplus_out),
             .dminus_out(tb_dminus_out),
-            .tx_transfer_active(tb_tx_tranfer_active),
-            .tx_error(tb_tx_error),
-            .get_tx_packet_data(tb_get_tx_packet_data),
-            .hresp(tb_hresp));
+            .get_tx_packet_data(tb_get_tx_packet_data));
 
 //*****************************************************************************
 // DUT Related TB Tasks
@@ -116,7 +138,49 @@ begin
     tb_mismatch = 1'b1;
     $error("Incorrect 'get_tx_packet_data' output %s during %s test case", check_tag, tb_test_case);
   end
-  #(0.1);
+end
+endtask
+
+task check_eop;
+  logic [2:0] expected_dplus;
+  logic [2:0] expected_dminus;
+  integer i;
+begin
+  expected_dplus = 3'b100;
+  expected_dminus = 3'b000;
+  for(i = 0; i < 3; i++) begin
+    tb_expected_dplus_out = expected_dplus[i];
+    tb_expected_dminus_out = expected_dminus[i];
+    tb_expected_get_tx_packet_data = 0;
+    check_outputs("EOP check");
+    #(USB_CLK_PERIOD);
+  end
+end
+endtask
+
+task test_stream;
+  input [7:0] expected_result;
+  integer i;
+  logic [7:0] expected_result_lsb;
+  logic [7:0] expected_dplus;
+begin
+  for(i = 0; i < 8; i++) begin
+    expected_result_lsb[i] = expected_result[i];
+  end
+  for(i = 0; i < 8; i++) begin
+    if(expected_result_lsb[i] == 0) begin
+      expected_dplus[i] = !prev_dplus;
+      prev_dplus = expected_dplus[i];
+    end else if (expected_result_lsb[i] == 1)
+      expected_dplus[i] = prev_dplus;
+  end
+  for(i = 0; i < 8; i++) begin
+    tb_expected_dplus_out = expected_dplus[i];
+    tb_expected_dminus_out = !expected_dplus[i];
+    tb_expected_get_tx_packet_data = 0;
+    check_outputs("during test_stream");
+    #(USB_CLK_PERIOD);
+  end
 end
 endtask
 
@@ -130,10 +194,26 @@ begin
 end
 endtask
 
+task reset_tb;
+begin
+  reset_dut();
+  prev_dplus = tb_dplus_out;
+  init_expected_outs();
+  idx_tx_packet_data = 0;
+end
+endtask
+
 //*****************************************************************************
 //*****************************************************************************
 // Main TB Process
 //****************************************************************************
+always_comb begin
+  if (tb_get_tx_packet_data == 1) begin
+    tb_tx_packet_data = data_list[idx_tx_packet_data];
+    idx_tx_packet_data += 1;
+  end
+end
+
 initial begin
   // Initialize Test Case Navigation Signals
   tb_test_case       = "Initilization";
@@ -156,6 +236,103 @@ initial begin
   check_outputs("after DUT reset");
 
   // Give some visual spacing between check and next test case start
-  #(CLK_PERIOD * 3);
+  #(USB_CLK_PERIOD * 3);
+
+  //*****************************************************************************
+  // NAK
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Send NAK";
+  tb_test_case_num = tb_test_case_num + 1;
+  
+  // Reset the DUT
+  reset_tb();
+
+  @(posedge tb_usb_clk);
+  tb_tx_packet = TX_NAK;  //8'b10100101
+  #(USB_CLK_PERIOD);
+  test_stream(SYNC_BYTE);
+  test_stream(NAK_BYTE);
+  check_eop();
+
+  // Give some visual spacing between check and next test case start
+  #(USB_CLK_PERIOD * 3);
+
+  //*****************************************************************************
+  // ACK
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Send ACK";
+  tb_test_case_num = tb_test_case_num + 1;
+  
+  // Reset the DUT
+  reset_tb();
+
+  @(posedge tb_usb_clk);
+  tb_tx_packet = TX_ACK;
+  #(USB_CLK_PERIOD);
+  test_stream(SYNC_BYTE);
+  test_stream(ACK_BYTE);
+  check_eop();
+
+  // Give some visual spacing between check and next test case start
+  #(USB_CLK_PERIOD * 3);
+
+  //*****************************************************************************
+  // SEND_DATA
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Send DATA";
+  tb_test_case_num = tb_test_case_num + 1;
+  
+  // Reset the DUT
+  reset_tb();
+  tb_tx_packet_data_size = 7'b10;
+  result_list[0] = 8'b11110000;
+  data_list[0] = 8'b11110000;
+  for(i = 1; i < tb_tx_packet_data_size; i++) begin
+    result_list[i] = result_list[i-1] ^ 8'b11111111;
+    data_list[i] = data_list[i-1] ^ 8'b11111111;
+  end
+
+  @(posedge tb_usb_clk);
+  tb_tx_packet = TX_SEND_DATA;
+  #(USB_CLK_PERIOD * (tb_tx_packet_data_size + 2)); // ???
+  test_stream(SYNC_BYTE);
+  for(i = 0; i < tb_tx_packet_data_size; i++) begin
+    test_stream(result_list[i]);
+  end
+  check_eop();
+
+  // Give some visual spacing between check and next test case start
+  #(USB_CLK_PERIOD * 3);
+
+
+  //*****************************************************************************
+  // Bit Stuffing
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Bit Stuffing";
+  tb_test_case_num = tb_test_case_num + 1;
+  
+  // Reset the DUT
+  reset_tb();
+  tb_tx_packet_data_size = 7'b1;
+  data_list[0] = 8'b11111110;
+  result_list[0] = 8'b11111101; // 0 in the next bit 111111010
+
+  @(posedge tb_usb_clk);
+  tb_tx_packet = TX_SEND_DATA;
+  #(USB_CLK_PERIOD * (tb_tx_packet_data_size + 2))
+  test_stream(result_list[0]);
+  tb_expected_dplus_out = !prev_dplus;
+  tb_expected_dminus_out = prev_dplus;
+  tb_expected_get_tx_packet_data = 0;
+  check_outputs("during bit stuffing"); // checking if the next one is 0
+  check_eop();
+
+  // Give some visual spacing between check and next test case start
+  #(USB_CLK_PERIOD * 3);
+
  end
 endmodule
