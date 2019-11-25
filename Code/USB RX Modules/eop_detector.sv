@@ -22,7 +22,7 @@ begin
   if(n_rst == 1'b0) begin
     state <= IDLE;
   end
-  else begin
+  else if (shift_enable) begin
     state <= next_state;
   end
 end
@@ -32,7 +32,7 @@ begin
   case(state)
   IDLE:
   begin
-    if(!d_plus_sync && !d_minus_sync && shift_enable) begin // the first instance of both d_plus and d_minus being low
+    if(!d_plus_sync && !d_minus_sync) begin // the first instance of both d_plus and d_minus being low
       next_state = START;
     end
     else begin
@@ -41,7 +41,7 @@ begin
   end
   START:
   begin
-    if(!d_plus_sync && !d_minus_sync && shift_enable) begin // the second instance of both d_plus and d_minus being low
+    if(!d_plus_sync && !d_minus_sync) begin // the second instance of both d_plus and d_minus being low
       next_state = MID;
     end
     else begin
@@ -50,7 +50,7 @@ begin
   end
   MID:
   begin
-    if(d_plus_sync && !d_minus_sync && shift_enable) begin // the signals must return to idle to complete the sequence.
+    if(d_plus_sync && !d_minus_sync) begin // the signals must return to idle to complete the sequence.
       next_state = FINISH;
     end
     else begin
