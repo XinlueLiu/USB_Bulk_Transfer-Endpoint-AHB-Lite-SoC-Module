@@ -45,6 +45,7 @@ reg [7:0] sync_byte;
 reg [7:0] next_rx_packet_data;
 reg next_store_rx_packet_data;
 reg [2:0] next_rx_packet;
+reg [7:0] next_sync_byte;
 
 always_ff @ (posedge clk, negedge n_rst) 
 begin
@@ -52,12 +53,14 @@ begin
     pid <= 8'b0;
     rx_packet_data <= 8'b0;
     rx_packet <= IDLE;
+    sync_byte <= 0;
   end
   else begin
     pid <= next_pid;
     rx_packet_data <= next_rx_packet_data;
     store_rx_packet_data <= next_store_rx_packet_data;
     rx_packet <= next_rx_packet;
+    sync_byte <= next_sync_byte;
   end
 end
 
@@ -66,7 +69,7 @@ always_comb
 begin : PACKET_DATA_LOGIC
   next_pid = pid;
   temp_pid = pid;
-  sync_byte = 8'b0;
+  next_sync_byte = 8'b0;
   next_rx_packet_data = rx_packet_data;
   if(byte_complete && load_pid) begin
     next_pid = Packet_Data;
@@ -80,7 +83,7 @@ begin : PACKET_DATA_LOGIC
     next_store_rx_packet_data = 1'b0;    
   end
   if(load_sync && byte_complete) begin
-      sync_byte = Packet_Data;
+      next_sync_byte = Packet_Data;
   end
 end
 
@@ -90,7 +93,7 @@ begin : ERROR_CHECKING_LOGIC
     if(temp_pid[0] != !temp_pid[4] || temp_pid[1] != !temp_pid[5] || temp_pid[2] != !temp_pid[6] || temp_pid[3] != !temp_pid[7]) begin
        pid_status = 3'b100;
     end
-    else if((temp_pid[7:4] == 4'b0001) || (temp_pid == 4'b1001)) begin   
+    else if((temp_pid[7:4] == 4'b0111) || (temp_pid == 4'b1001)) begin   
        pid_status = 3'b001;
     end
     else if((temp_pid[7:4] == 4'b0011) || (temp_pid == 4'b1011)) begin
@@ -144,7 +147,9 @@ end
 
 always_comb 
 begin : RX_PACKET_LOGIC
+//made change on pid[7:4] 
   next_rx_packet = rx_packet;
+  if (byte_complete) begin
   if(pid[7:4] == 4'b1001) begin
      next_rx_packet = IN;
   end
@@ -162,6 +167,7 @@ begin : RX_PACKET_LOGIC
   end
   else if(load_done) begin
     next_rx_packet = DONE;
+  end
   end
 end
 endmodule
