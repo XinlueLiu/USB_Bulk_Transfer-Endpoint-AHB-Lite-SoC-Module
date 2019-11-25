@@ -250,7 +250,8 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_NAK;  //8'b10100101
-  #(USB_CLK_PERIOD);
+  #(USB_CLK_PERIOD + 0.1);
+  tb_tx_packet = 0;
   test_stream(SYNC_BYTE);
   test_stream(NAK_BYTE);
   check_eop();
@@ -270,7 +271,8 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_ACK;
-  #(USB_CLK_PERIOD);
+  #(USB_CLK_PERIOD + 0.1);
+  tb_tx_packet = 0;
   test_stream(SYNC_BYTE);
   test_stream(ACK_BYTE);
   check_eop();
@@ -297,7 +299,8 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
-  #(USB_CLK_PERIOD * (tb_tx_packet_data_size + 2)); // ???
+  #(USB_CLK_PERIOD + 0.1);
+  tb_tx_packet = 0;
   test_stream(SYNC_BYTE);
   for(i = 0; i < tb_tx_packet_data_size; i++) begin
     test_stream(result_list[i]);
@@ -323,7 +326,8 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
-  #(USB_CLK_PERIOD * (tb_tx_packet_data_size + 2))
+  #(USB_CLK_PERIOD + 0.1);
+  tb_tx_packet = 0;
   test_stream(result_list[0]);
   tb_expected_dplus_out = !prev_dplus;
   tb_expected_dminus_out = prev_dplus;
