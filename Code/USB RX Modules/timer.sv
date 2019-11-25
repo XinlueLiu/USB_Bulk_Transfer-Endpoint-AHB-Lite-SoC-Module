@@ -16,31 +16,45 @@ module timer(input wire clk,
 //reg [3:0] track;
 reg enable;
 reg rollover_flag_1;
-reg rollover_flag_2;
+//reg rollover_flag_2;
 reg [4:0] count_out_1;
 reg [3:0] count_out_2;
-reg [1:0] cycles;
+//reg [1:0] cycles;
 reg clear_1;
 reg clear_2;
-reg clear_3;
+//reg clear_3;
+//integer cnt = 0;
 
+// to control 8 clk bit to be 1 bit
+flex_counter #(5) fc1 (.clk(clk), .n_rst(n_rst), .clear(1'b0),
+ .count_enable(enable), .rollover_val(5'd24), .count_out(count_out_1), .rollover_flag(rollover_flag_1));
+//8 shift enable to be 1 byte complete
+flex_counter #(4) fc2 (.clk(clk), .n_rst(n_rst), .clear(clear_2), 
+.count_enable(shift_enable), .rollover_val(4'd8), .count_out(count_out_2), .rollover_flag(byte_complete));
+
+/*flex_counter #(4) fc2 (.clk(clk), .n_rst(n_rst), .clear(clear_2), 
+.count_enable(rollover_flag_1), .rollover_val(4'd8), .count_out(count_out_2), .rollover_flag(byte_complete));*/
 
 always_comb
 begin
   clear_1 = 1'b0;
-  if(count_out_1 == 5'd8) begin
+  if(count_out_1 == 5'd7) begin
     shift_enable = 1'b1;
+    //cnt = cnt + 1;
   end
-  else if(count_out_1 == 5'd16) begin
+  else if(count_out_1 == 5'd15) begin
     shift_enable = 1'b1;
+    //cnt = cnt + 1;
   end
-  else if(count_out_1 == 5'd25) begin
+  else if(count_out_1 == 5'd23) begin
     shift_enable = 1'b1;
+    //cnt = cnt + 1;
   end
-  else begin 
+  else begin
     shift_enable = 1'b0;
+    //cnt = 0;
   end
-  if(count_out_2 == 4'b1000) begin
+  if(count_out_2 == 4'd8) begin
     clear_1 = 1'b1;
     clear_2 = 1'b1;
   end
@@ -73,10 +87,6 @@ begin
      shift_enable_const = shift_enable;
    end
 end 
-
-
-flex_counter #(5) fc1 (.clk(clk), .n_rst(n_rst), .clear(clear_1), .count_enable(enable), .rollover_val(5'd25), .count_out(count_out_1), .rollover_flag(rollover_flag_1));
-flex_counter fc2 (.clk(clk), .n_rst(n_rst), .clear(clear_2), .count_enable(rollover_flag_1), .rollover_val(4'b1000), .count_out(count_out_2), .rollover_flag(byte_complete));
 // flex_counter #(2) fc3 (.clk(clk), .n_rst(n_rst), .clear(clear_3), .count_enable(rollover_flag_1), .rollover_val(2'b11), .count_out(cycles), .rollover_flag());
 // flex_counter #(7) nb1 (.clk(clk), .n_rst(n_rst), .clear(1'b0), .count_enable(byte_complete), .rollover_val(7'd69), .count_out(byte_count), .rollover_flag(rollover_flag_2));
 
