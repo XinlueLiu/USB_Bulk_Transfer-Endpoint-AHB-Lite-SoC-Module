@@ -56,10 +56,11 @@ rx_data_buffer Rx_data_buffer (.clk(clk), .n_rst(n_rst), .byte_complete(byte_com
                     .rx_packet_data(rx_packet_data), .store_rx_packet_data(store_rx_packet_data), .crc_status(crc_status));
 
 decoder Decoder (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .shift_enable(shift_enable_const), .d_orig(d_orig));
+//decoder Decoder (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_orig(d_orig));
 
 bit_stuffer_detector bit_stuffer (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .invalid_bit(invalid_bit));
 
-sr8_bit shift_register8bit (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .Packet_Data(Packet_Data));
+sr8_bit sr_8bit (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .Packet_Data(Packet_Data));
 
 timer Timer (.clk(clk), .n_rst(n_rst), .enable_timer(enable_timer), .invalid_bit(invalid_bit), .shift_enable(shift_enable), 
           .shift_enable_const(shift_enable_const), .byte_complete(byte_complete));
