@@ -2,9 +2,9 @@ module usb_timer(
 input wire clk,
 input wire n_rst,
 input wire serial_out,
+input wire timer_en,
 output reg clk12,
 output reg bytecomplete);
-reg en;
 parameter [3:0] thr = 4'b0011;
 assign en = 1'b1;
 reg [3:0]rollover_valedit;

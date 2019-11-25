@@ -8,29 +8,103 @@
 # //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
 # //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
 # //
-# vsim -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB "+no_glitch_msg" -coverage -voptargs="+acc" -i -t ps source_work.tb_usb_tx 
-# Start time: 19:28:06 on Nov 24,2019
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter(fast__1)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-add wave -position insertpoint sim:/tb_usb_tx/*
-run 200ns
-# ** Error: Incorrect 'dplus' output after DUT reset during Power-on-Reset test case
-#    Time: 40 ns  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 113
-# ** Info: Correct 'dminus' output after DUT reset during Power-on-Reset test case
-#    Time: 40 ns  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 116
-# ** Error: Incorrect 'get_packet data' output after DUT reset during Power-on-Reset test case
-#    Time: 40 ns  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 127
-# End time: 19:30:18 on Nov 24,2019, Elapsed time: 0:02:12
-# Errors: 0, Warnings: 1
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:29 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter.sv 
+# -- Compiling module flex_counter
+# 
+# Top level modules:
+# 	flex_counter
+# End time: 17:04:29 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:31 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv 
+# -- Compiling module flex_pts_sr
+# 
+# Top level modules:
+# 	flex_pts_sr
+# End time: 17:04:31 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:34 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv 
+# -- Compiling module tb_usb_tx
+# 
+# Top level modules:
+# 	tb_usb_tx
+# End time: 17:04:34 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_bit_stuffer.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:36 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_bit_stuffer.sv 
+# -- Compiling module usb_bit_stuffer
+# 
+# Top level modules:
+# 	usb_bit_stuffer
+# End time: 17:04:36 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:39 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
+# -- Compiling module usb_controller
+# 
+# Top level modules:
+# 	usb_controller
+# End time: 17:04:39 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_encoder.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:41 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_encoder.sv 
+# -- Compiling module usb_encoder
+# 
+# Top level modules:
+# 	usb_encoder
+# End time: 17:04:41 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_pts.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:43 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_pts.sv 
+# -- Compiling module usb_pts
+# 
+# Top level modules:
+# 	usb_pts
+# End time: 17:04:44 on Nov 25,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_timer.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:46 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_timer.sv 
+# -- Compiling module usb_timer
+# 
+# Top level modules:
+# 	usb_timer
+# End time: 17:04:46 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:49 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv 
+# -- Compiling module usb_tx
+# 
+# Top level modules:
+# 	usb_tx
+# End time: 17:04:49 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/CDL_CRC_16.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:04:51 on Nov 25,2019
+# vlog -reportprogress 300 -work work /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/CDL_CRC_16.sv 
+# -- Compiling module CDL_CRC_16
+# 
+# Top level modules:
+# 	CDL_CRC_16
+# End time: 17:04:51 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

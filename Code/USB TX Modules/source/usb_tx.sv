@@ -12,6 +12,7 @@ reg byteccomplete;
 reg clk12,serial_out;
 reg [15:0]CRC;
 reg [7:0] prev_parallel,data_out;
+reg eop_reset,eop_en;
 usb_controller A(.clk(clk),
 		.n_rst(n_rst),
 		.clk12(clk12),
@@ -25,6 +26,8 @@ usb_controller A(.clk(clk),
 		.en(en_pts),
 		.enc_en(enc_en),
 		.timer_en(timer_en),
+		.eop_en(eop_en),
+		.eop_reset(eop_reset),
 		.CRC_en(crc_en),		
 		.get_tx_packet_data(get_tx_packet_data),
 		.data(data_out));
@@ -45,6 +48,8 @@ usb_pts C(	.clk(clk),
 usb_encoder D(	.clk(clk),
 		.n_rst(n_rst),
 		.clk12(clk12),
+		.eop_en(eop_en),
+		.eop_reset(eop_reset),
 		.enc_en(en_enc),
 		.serial_out(serial_out),
 		.stuff_bit_en(bit_stuff_en),
@@ -61,6 +66,7 @@ usb_timer F(	.clk(clk),
 		.n_rst(n_rst),
 		.serial_out(serial_out),
 		.clk12(clk12),
+		.timer_en(timer_en),
 		.bytecomplete(bytecomplete));
 
 endmodule
