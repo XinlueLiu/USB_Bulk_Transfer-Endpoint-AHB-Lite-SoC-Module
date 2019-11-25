@@ -11,13 +11,8 @@
 module tb_usb_rx();
 
   // Define parameters
-  //parameter CLK_PERIOD        = 2.5;
   parameter CLK_PERIOD        = 10;
-  parameter NORM_DATA_PERIOD  = (10 * CLK_PERIOD);
-  
-  //localparam OUTPUT_CHECK_DELAY = (CLK_PERIOD - 0.2);
-  //localparam WORST_FAST_DATA_PERIOD = (NORM_DATA_PERIOD * 0.96);
-  //localparam WORST_SLOW_DATA_PERIOD = (NORM_DATA_PERIOD * 1.04);
+  parameter NORM_DATA_PERIOD  =  8 * CLK_PERIOD;
   
   //  DUT inputs
   reg tb_clk;
@@ -62,7 +57,6 @@ module tb_usb_rx();
     reg    [7:0] d_minus_input;
     integer i;
     integer j;
-
   begin
     //initialization
     @(negedge tb_clk)
@@ -74,20 +68,21 @@ module tb_usb_rx();
        d_minus_input[7] = 1'b1;    
     end
     else begin
-      $display("Invalid start");
+       d_plus_input[7] = 1'b1;
+       d_minus_input[7] = 1'b0;
     end 
-    for(i = 0; i < 8; i = i + 1) 
+    for(i = 7; i > 0; i = i - 1) 
     begin
       if(data[i] == 1'b0) begin
-        d_plus_input[i + 1] = !d_plus_input[i];
-        d_minus_input[i + 1] = !d_minus_input[i];
+        d_plus_input[i - 1] = !d_plus_input[i];
+        d_minus_input[i - 1] = !d_minus_input[i];
       end 
       else begin
-       d_plus_input[i + 1] = d_plus_input[i];
-       d_minus_input[i + 1] = d_minus_input[i];
+       d_plus_input[i - 1] = d_plus_input[i];
+       d_minus_input[i - 1] = d_minus_input[i];
       end
     end
-    
+
     // Send data bits
     for(j = 0; j < 8; j = j + 1)
     begin
@@ -100,13 +95,13 @@ module tb_usb_rx();
   endtask
 
   task send_eop;
+    input time data_period;
     reg [7:0] d_plus_input;
     reg [7:0] d_minus_input;
     integer i;
-    input time data_period;
   begin
     //driven low for 2 bit periods and back to the idle bus value
-    d_plus_input = 8'b00111111;
+    d_plus_input = 8'b11111100;
     d_minus_input = 8'b0000000;
     for(i = 0; i < 8; i = i + 1) begin
       tb_d_plus = d_plus_input[i];
@@ -182,12 +177,9 @@ module tb_usb_rx();
     tb_d_plus  = 1'b1; // Initially idle
     tb_d_minus = 1'b0; // Initially idle
     
-    // Get away from Time = 0
-    #0.1; 
-    
     /******************************************************************************
     /******************************************************************************/   
-    // Test case 0: Basic Power on Reset
+    /*// Test case 0: Basic Power on Reset
     tb_test_num  = 0;
     tb_test_case = "Power-on-Reset";
     
@@ -204,7 +196,7 @@ module tb_usb_rx();
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     reset_dut();
     // Check outputs
-    check_outputs();
+    check_outputs();*/
 
     /******************************************************************************
      Test case 1: Norminal Token Packet Reception & Norminal ACK Packet Reception
@@ -229,19 +221,25 @@ module tb_usb_rx();
     //OUT PID
     tb_test_data = 8'b01111000; //Out token
     
-    tb_expected_rx_packet_data       = tb_test_data;
+    tb_expected_rx_packet_data       = 0;
     tb_expected_rx_packet            = 3'b010;
     tb_expected_store_rx_packet_data = 1'b0;
 
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs();
 
+    //send EOP signal and Done signal
+    send_eop(NORM_DATA_PERIOD);
+    tb_expected_rx_packet_data = 0; //this
+    tb_expected_rx_packet = 3'b101; //DONE signal
+    tb_expected_store_rx_packet_data = 1'b0;
+    check_outputs();
     //8'b00011011;
     
 
     //DATA field
     //send a 2 byte value 10111011 11110101
-    tb_test_data = 8'b10101111;
+    /*tb_test_data = 8'b10101111;
     tb_expected_rx_packet_data       = tb_test_data;
     tb_expected_rx_packet            = 3'b010;
     tb_expected_store_rx_packet_data = 1'b1;
@@ -260,12 +258,12 @@ module tb_usb_rx();
     send_eop(NORM_DATA_PERIOD);
     tb_expected_rx_packet_data = 0; //this
     tb_expected_rx_packet = 3'b101; //DONE signal
-    tb_expected_store_rx_packet_data = 1'b0;
+    tb_expected_store_rx_packet_data = 1'b0;*/
 
     /******************************************************************************
      Test case 2: Invalid token packet reception, tokens for incorrect address/endpoints & incorrect crc
     /******************************************************************************/
-    reset_dut();
+    /*reset_dut();
     @(negedge tb_clk);
     tb_test_num += 1;
     tb_test_case = "Invalid token packet reception with incorrect token addresss";
@@ -298,7 +296,7 @@ module tb_usb_rx();
     /******************************************************************************
      Test case 3: Incorrect data CRC field
     /******************************************************************************/
-    reset_dut();
+    /*reset_dut();
     @(negedge tb_clk);
     tb_test_num += 1;
     tb_test_case = "Incorrect data CRC field";
@@ -328,7 +326,7 @@ module tb_usb_rx();
     //8'b00011011;
     
 
-    //DATA field -- invalud crc
+    //DATA field //for invalid crc data field
     //send a 2 byte value 10111011 11110101
     tb_test_data = 8'b10101111;
     tb_expected_rx_packet_data       = tb_test_data;
@@ -343,7 +341,7 @@ module tb_usb_rx();
     tb_expected_rx_packet            = 3'b010;
     tb_expected_store_rx_packet_data = 1'b1;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
-    check_outputs();
+    check_outputs();*/
 
   end
 endmodule 
