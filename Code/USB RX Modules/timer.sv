@@ -9,6 +9,7 @@ module timer(input wire clk,
              input wire n_rst,
              input wire enable_timer,
              input wire invalid_bit,
+	     input wire eop_detected,
              output reg shift_enable,
              output reg shift_enable_const,
              output reg byte_complete);
@@ -78,6 +79,13 @@ end */
 
 always_comb 
 begin
+   if (eop_detected) begin
+	enable = 1'b0;
+	shift_enable_const = 1'b0;
+   end else begin
+        enable = enable_timer;
+	shift_enable_const = shift_enable; 
+   end
    if(invalid_bit) begin
      enable = 1'b0;
      shift_enable_const = 1'b1;
