@@ -29,7 +29,7 @@ if(clk12 == 1'b1) begin
 		nxt_dminus = 1'b0;
 		nxt_dplus = 1'b0;
 	end
-	else if ( eop_reset == 1'b1) begin
+	else if (eop_reset == 1'b1) begin
 		nxt_dminus = 1'b0;
 		nxt_dplus = 1'b1;
 	end
@@ -38,8 +38,8 @@ if(clk12 == 1'b1) begin
 		nxt_dplus = dplus_out;
 	end	
 	else if(serial_out == 1'b1 && enc_en) begin
-		nxt_dminus = !dminus_out;
-		nxt_dplus  = !dplus_out;
+		nxt_dminus = dminus_out;
+		nxt_dplus  = dplus_out;
 	end	
 	else begin
 		nxt_dminus = dminus_out;

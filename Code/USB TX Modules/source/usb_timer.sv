@@ -14,7 +14,7 @@ flex_counter #(4)B(.clk(clk),.count_enable(clk12),.clear(1'b0),.n_rst(n_rst),.co
 flex_counter  #(4)C(.clk(clk),.count_enable(bytecomplete),.clear(1'b0),.n_rst(n_rst),.count_out(cnt_out3),.rollover_flag(three),.rollover_value(thr));
 always_comb begin
 if(three == 1'b1) begin
-	rollover_valedit = 4'b1001;
+	rollover_valedit = 4'b1000;
 end 
 else begin
 	rollover_valedit = 4'b1000;

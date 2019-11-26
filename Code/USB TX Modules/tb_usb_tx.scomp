@@ -1,9 +1,10 @@
 QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-Start time: 19:28:01 on Nov 24,2019
+Start time: 17:10:10 on Nov 25,2019
 vlog -sv -work source_work source/tb_usb_tx.sv 
 -- Compiling module tb_usb_tx
+** Warning: source/tb_usb_tx.sv(212): (vlog-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
 
 Top level modules:
 	tb_usb_tx
-End time: 19:28:01 on Nov 24,2019, Elapsed time: 0:00:00
-Errors: 0, Warnings: 0
+End time: 17:10:10 on Nov 25,2019, Elapsed time: 0:00:00
+Errors: 0, Warnings: 1

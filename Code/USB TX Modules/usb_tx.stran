@@ -9,7 +9,82 @@
 # //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
 # //
 # vsim -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB "+no_glitch_msg" -coverage -voptargs="+acc" -i -t ps source_work.tb_usb_tx 
-# Start time: 19:28:06 on Nov 24,2019
+# Start time: 18:43:16 on Nov 25,2019
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading sv_std.std
+# Loading work.tb_usb_tx(fast)
+# Loading work.usb_tx(fast)
+# Loading work.usb_controller(fast)
+# Loading work.flex_counter(fast)
+# Loading work.usb_bit_stuffer(fast)
+# Loading work.flex_counter(fast__1)
+# Loading work.usb_pts(fast)
+# Loading work.flex_pts_sr(fast)
+# Loading work.usb_encoder(fast)
+# Loading work.CDL_CRC_16(fast)
+# Loading work.usb_timer(fast)
+# ** Warning: (vsim-8634) Code was not compiled with coverage options.
+do {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/wave.do}
+run 3000ns
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 458150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 458150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 541450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 541450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 624750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 624750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1041250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1041250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1124550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1124550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1207850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1207850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1291150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1291150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1374450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1374450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1541050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1541050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1624350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1624350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1707650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1707650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dminus' output EOP check during Send NAK test case
+#    Time: 1790950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
+#    Time: 1957550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 19:05:05 on Nov 25,2019
+# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv 
+# -- Compiling module flex_pts_sr
+# 
+# Top level modules:
+# 	flex_pts_sr
+# End time: 19:05:05 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart -f;run 3000ns
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # Loading sv_std.std
 # Loading work.tb_usb_tx(fast)
@@ -24,13 +99,259 @@
 # Loading work.CDL_CRC_16(fast)
 # Loading work.usb_timer(fast)
 # ** Warning: (vsim-8634) Code was not compiled with coverage options.
-add wave -position insertpoint sim:/tb_usb_tx/*
-run 200ns
-# ** Error: Incorrect 'dplus' output after DUT reset during Power-on-Reset test case
-#    Time: 40 ns  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 113
-# ** Info: Correct 'dminus' output after DUT reset during Power-on-Reset test case
-#    Time: 40 ns  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 116
-# ** Error: Incorrect 'get_packet data' output after DUT reset during Power-on-Reset test case
-#    Time: 40 ns  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 127
-# End time: 19:30:18 on Nov 24,2019, Elapsed time: 0:02:12
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 458150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 458150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 541450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 541450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 624750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 624750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1041250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1041250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1207850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1207850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1374450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1374450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1457750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1457750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1541050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1541050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1624350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1624350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dminus' output EOP check during Send NAK test case
+#    Time: 1790950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
+#    Time: 1957550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 19:08:40 on Nov 25,2019
+# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv 
+# -- Compiling module flex_pts_sr
+# 
+# Top level modules:
+# 	flex_pts_sr
+# End time: 19:08:40 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart -f;run 3000ns
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.tb_usb_tx(fast)
+# Loading work.usb_tx(fast)
+# Loading work.usb_controller(fast)
+# Loading work.flex_counter(fast)
+# Loading work.usb_bit_stuffer(fast)
+# Loading work.flex_counter(fast__1)
+# Loading work.usb_pts(fast)
+# Loading work.flex_pts_sr(fast)
+# Loading work.usb_encoder(fast)
+# Loading work.CDL_CRC_16(fast)
+# Loading work.usb_timer(fast)
+# ** Warning: (vsim-8634) Code was not compiled with coverage options.
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 458150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 458150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 541450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 541450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 624750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 624750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1124550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1124550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1291150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1291150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1541050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1541050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1707650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1707650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
+#    Time: 1790950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
+#    Time: 1957550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 131
+vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 19:11:37 on Nov 25,2019
+# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter.sv 
+# -- Compiling module flex_counter
+# 
+# Top level modules:
+# 	flex_counter
+# End time: 19:11:38 on Nov 25,2019, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+restart -f;run 3000ns
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.tb_usb_tx(fast)
+# Loading work.usb_tx(fast)
+# Loading work.usb_controller(fast)
+# Loading work.flex_counter(fast)
+# Loading work.usb_bit_stuffer(fast)
+# Loading work.flex_counter(fast__1)
+# Loading work.usb_pts(fast)
+# Loading work.flex_pts_sr(fast)
+# Loading work.usb_encoder(fast)
+# Loading work.CDL_CRC_16(fast)
+# Loading work.usb_timer(fast)
+# ** Warning: (vsim-8634) Code was not compiled with coverage options.
+# ** Error: Incorrect 'dminus' output EOP check during Send NAK test case
+#    Time: 1957550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+restart -f;run 3000ns
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading sv_std.std
+# Loading work.tb_usb_tx(fast)
+# Loading work.usb_tx(fast)
+# Loading work.usb_controller(fast)
+# Loading work.flex_counter(fast)
+# Loading work.usb_bit_stuffer(fast)
+# Loading work.flex_counter(fast__1)
+# Loading work.usb_pts(fast)
+# Loading work.flex_pts_sr(fast)
+# Loading work.usb_encoder(fast)
+# Loading work.CDL_CRC_16(fast)
+# Loading work.usb_timer(fast)
+# ** Warning: (vsim-8634) Code was not compiled with coverage options.
+# ** Error: Incorrect 'dminus' output EOP check during Send NAK test case
+#    Time: 1957550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 135
+vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 19:13:28 on Nov 25,2019
+# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv 
+# -- Compiling module tb_usb_tx
+# ** Warning: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv(212): (vlog-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
+# 
+# Top level modules:
+# 	tb_usb_tx
+# End time: 19:13:28 on Nov 25,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 1
+restart -f;run 3000ns
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv(212): (vopt-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
+# Loading sv_std.std
+# Loading work.tb_usb_tx(fast)
+# Loading work.usb_tx(fast)
+# Loading work.usb_controller(fast)
+# Loading work.flex_counter(fast)
+# Loading work.usb_bit_stuffer(fast)
+# Loading work.flex_counter(fast__1)
+# Loading work.usb_pts(fast)
+# Loading work.flex_pts_sr(fast)
+# Loading work.usb_encoder(fast)
+# Loading work.CDL_CRC_16(fast)
+# Loading work.usb_timer(fast)
+# ** Warning: (vsim-8634) Code was not compiled with coverage options.
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 440 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 440 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 520 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 520 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 600 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 600 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 680 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 680 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 760 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 760 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 840 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 840 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 920 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 920 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1160 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1160 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1320 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1320 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1400 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1400 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output during test_stream during Send NAK test case
+#    Time: 1560 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+# ** Error: Incorrect 'dminus' output during test_stream during Send NAK test case
+#    Time: 1560 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dminus' output EOP check during Send NAK test case
+#    Time: 1720 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 135
+# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
+#    Time: 1880 ns  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 131
+vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 19:22:28 on Nov 25,2019
+# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv 
+# -- Compiling module tb_usb_tx
+# ** Warning: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv(212): (vlog-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
+# 
+# Top level modules:
+# 	tb_usb_tx
+# End time: 19:22:28 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 19:22:32 on Nov 25,2019
+# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
+# -- Compiling module usb_controller
+# 
+# Top level modules:
+# 	usb_controller
+# End time: 19:22:32 on Nov 25,2019, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart -f;run 3000ns
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv(212): (vopt-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
+# ** Note: (vopt-143) Recognized 1 FSM in module "usb_controller(fast)".
+# Loading sv_std.std
+# Loading work.tb_usb_tx(fast)
+# Loading work.usb_tx(fast)
+# Loading work.usb_controller(fast)
+# Loading work.flex_counter(fast)
+# Loading work.usb_bit_stuffer(fast)
+# Loading work.flex_counter(fast__1)
+# Loading work.usb_pts(fast)
+# Loading work.flex_pts_sr(fast)
+# Loading work.usb_encoder(fast)
+# Loading work.CDL_CRC_16(fast)
+# Loading work.usb_timer(fast)
+# ** Warning: (vsim-8634) Code was not compiled with coverage options.
+# End time: 19:23:56 on Nov 25,2019, Elapsed time: 0:40:40
+# Errors: 0, Warnings: 11

@@ -13,7 +13,7 @@ output reg eop_en,
 output reg eop_reset,
 output reg en,
 output reg CRC_en,
-output reg [7:0]data,
+output reg [7:0]nxt_data,
 output reg enc_en,
 output reg timer_en,
 output reg get_tx_packet_data
@@ -35,13 +35,13 @@ typedef enum bit [3:0]{IDLE,
 }StateType;
 StateType state,nxt_state;
 reg[6:0] current_packet;
-reg stored_packet;
+reg [1:0]stored_packet;
 reg data_sent;
 reg data_set,nxt_data_set;
 reg count_packet,nxt_count_packet;
 reg nxt_get_tx_packet_data;
 reg nxt_en,nxt_CRC_en,nxt_enc_en,nxt_timer_en;
-reg [7:0] nxt_data;
+reg [7:0] data;
 always_ff@(posedge clk,negedge n_rst) begin
 	if(n_rst == 1'b0) begin
 		state<= IDLE;
@@ -51,15 +51,16 @@ always_ff@(posedge clk,negedge n_rst) begin
 		CRC_en<=1'b0;
 		enc_en<=1'b0;
 		timer_en<=1'b0;
-		data<= 8'b0;
+		//data<= 8'b0;
 		data_set<=1'b0;
 		count_packet<= 1'b0;
 		get_tx_packet_data<=1'b0;
 	end
 	else begin
 		eop_en<=nxt_eop_en;
-		eop_reset<=nxt_eop_en;
+		eop_reset<=nxt_eop_reset;
 		state<=nxt_state;
+		//data<=nxt_data;
 		en<=nxt_en;
 		CRC_en<=nxt_CRC_en;
 		enc_en<=nxt_enc_en;
@@ -75,20 +76,25 @@ always_comb begin
 	nxt_count_packet = bytecomplete&&data_set;
 	case(state)
 	IDLE:begin
+		nxt_enc_en = 1'b0;
 		nxt_eop_reset = 1'b0;
 		if(tx_packet != 2'b00) begin
 			nxt_state = SYNC;
 			stored_packet = tx_packet;
 			nxt_timer_en = 1'b1;
+			nxt_en = 1'b1;
+			nxt_enc_en = 1'b1;
 			nxt_data = 8'b10000000;
 		end
 		else begin
+			nxt_en = 1'b0;
 			nxt_state = IDLE;
 		end
 	end
 	SYNC:begin
-		if(bytecomplete == 1'b1) begin
+		if(bytecomplete == 1'b1&&clk12 ==1'b1) begin
 			nxt_state = PID;
+			nxt_en = 1'b1;
 			if(stored_packet ==2'b01) begin
 					nxt_data = 8'b00111100;
 				end
@@ -100,13 +106,15 @@ always_comb begin
 			end
 		end
 		else begin
+			nxt_en = 1'b0;
 			nxt_state = SYNC;
 		end
 	end
 	PID:begin
-		if(bytecomplete == 1'b1) begin
+		if(bytecomplete == 1'b1&&clk12 == 1'b1) begin
 			if(stored_packet ==2'b01) begin
 				nxt_state = DATA;
+				nxt_en = 1'b1;
 				nxt_get_tx_packet_data = 1'b1;
 				nxt_data_set = 1'b1;
 				
@@ -120,6 +128,7 @@ always_comb begin
 			end
 		end
 		else begin
+			nxt_en = 1'b0;
 			nxt_state = PID;
 		end
 	end
@@ -143,17 +152,34 @@ always_comb begin
 		end
 	end
 	EOP1:begin
-		nxt_eop_en = 1'b1;
+	nxt_eop_en = 1'b1;
+	if(clk12 == 1'b1) begin
 		nxt_state = EOP2;
 	end
+	else begin
+		nxt_state = EOP1;
+	end	
+	end
 	EOP2:begin
-		nxt_eop_en = 1'b1;
+	nxt_eop_en = 1'b1;
+	if(clk12 == 1'b1) begin		
 		nxt_state = EOP3;
+	end 
+	else begin
+		nxt_state = EOP2;
+	end
 	end
 	EOP3:begin
-		nxt_eop_en = 1'b0;
-		nxt_eop_reset = 1'b1;
+	nxt_eop_en = 1'b0;
+	nxt_eop_reset = 1'b1;
+	if(clk12 == 1'b1) begin	
 		nxt_state = IDLE;
+		nxt_en = 1'b0;
+		nxt_timer_en = 1'b0;
+	end
+	else begin
+		nxt_state = EOP3;
+	end
 	end
 endcase
 end			
