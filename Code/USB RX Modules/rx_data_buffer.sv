@@ -93,7 +93,7 @@ begin : ERROR_CHECKING_LOGIC
     if(temp_pid[0] != !temp_pid[4] || temp_pid[1] != !temp_pid[5] || temp_pid[2] != !temp_pid[6] || temp_pid[3] != !temp_pid[7]) begin
        pid_status = 3'b100;
     end
-    else if((temp_pid[7:4] == 4'b0111) || (temp_pid == 4'b1001)) begin   
+    else if((temp_pid[7:4] == 4'b0001) || (temp_pid == 4'b1001)) begin  //change this maybe 
        pid_status = 3'b001;
     end
     else if((temp_pid[7:4] == 4'b0011) || (temp_pid == 4'b1011)) begin
@@ -150,24 +150,24 @@ begin : RX_PACKET_LOGIC
 //made change on pid[7:4] 
   next_rx_packet = rx_packet;
   if (byte_complete) begin
-  if(pid[7:4] == 4'b1001) begin
-     next_rx_packet = IN;
-  end
-  else if(pid[7:4] == 4'b0001) begin
-     next_rx_packet = OUT;
-  end
-  else if(load_error) begin
-    next_rx_packet = ERROR;
-  end
-  else if(pid[7:4] == 4'b0010) begin
-    next_rx_packet = ACK;
-  end
-  else if(pid[7:4] == 4'b1010) begin
-    next_rx_packet = NACK;
-  end
-  else if(load_done) begin
-    next_rx_packet = DONE;
-  end
+  	if(pid[7:4] == 4'b1001) begin
+     	next_rx_packet = IN;
+  	end
+  	else if(pid[7:4] == 4'b0001) begin
+     	next_rx_packet = OUT;
+  	end
+  	else if(load_error) begin
+    	next_rx_packet = ERROR;
+  	end
+  	else if(pid[7:4] == 4'b0010) begin
+  	  next_rx_packet = ACK;
+  	end
+  	else if(pid[7:4] == 4'b1010) begin
+  	  next_rx_packet = NACK;
+  	end
+  	else if(load_done) begin
+  	  next_rx_packet = DONE;
+  	end
   end
 end
 endmodule
