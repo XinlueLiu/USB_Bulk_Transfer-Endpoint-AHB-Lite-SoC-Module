@@ -9,7 +9,7 @@ module rcu(input wire clk,
            input wire n_rst,    
            input wire d_edge,
            input wire byte_complete,
-           input wire eop,
+           input wire eop_detected,
            output reg crc_check_5,
            output reg crc_check_16,
            input wire [1:0] sync_status,
@@ -29,17 +29,17 @@ typedef enum bit [4:0] {IDLE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA0
 stateType state;
 stateType next_state;
 
-reg store_eop = 1'b0;
-reg nxt_store_eop;
+//reg store_eop = 1'b0;
+//reg nxt_store_eop;
 
 always_ff @(posedge clk, negedge n_rst) begin
   if(n_rst == 1'b0) begin
     state <= IDLE;
-    store_eop <= 1'b0;
+    //store_eop <= 1'b0;
   end
   else begin
     state <= next_state;
-    store_eop <= nxt_store_eop;
+    //store_eop <= nxt_store_eop;
   end
 end
 
@@ -113,16 +113,16 @@ begin : NEXT_STATE_LOGIC
     end
     DATAINOUT:
     begin
-       if(eop != 1'b1) begin
+       if(eop_detected != 1'b1) begin
           next_state = DATAINOUT;
        end
-       else begin
+       else begin //only know to check crc when eop is asserted, and 3 bits required to tell
           next_state = CHECK5;
        end
     end
     DATA01:
     begin
-       if(eop != 1'b1) begin
+       if(eop_detected != 1'b1) begin
          next_state = DATA01;
        end
        else begin
@@ -155,7 +155,7 @@ begin : NEXT_STATE_LOGIC
     end
     EOP:
     begin
-      if(store_eop) begin
+      if(eop_detected) begin
         next_state = DONE;
       end
       else begin
@@ -176,7 +176,8 @@ end
 always_comb 
 begin : OUTPUT_LOGIC
   //if(state == RECEIVE) begin
-    if(state == SYNC) begin
+  crc_check_5 = 0;
+  if(state == SYNC) begin
     enable_timer = 1'b1;
   end
   else if((state == CHECK5) || (state == CHECK16) || (state == DONE) || (state == IDLE) || (state == ERROR)) begin
@@ -215,6 +216,9 @@ begin : OUTPUT_LOGIC
   else begin
     load_data = 1'b0;
   end
+  if (state == CHECK5) begin ////////////////////////////////
+      crc_check_5 = 1'b1;
+  end
   if(state == ERROR) begin
     load_error = 1'b1;
   end
@@ -229,7 +233,7 @@ begin : OUTPUT_LOGIC
   end 
 end
 
-always_comb 
+/*always_comb 
 begin
    nxt_store_eop = store_eop;
    if(eop == 1'b1) begin
@@ -238,6 +242,6 @@ begin
    else if(state == IDLE) begin
      nxt_store_eop = 1'b0;
    end
-end
+end*/
 
 endmodule
