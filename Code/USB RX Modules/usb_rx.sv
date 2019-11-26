@@ -19,7 +19,7 @@ reg enable_timer;
 reg shift_enable;
 reg shift_enable_const;
 reg invalid_bit;
-reg eop;
+reg eop_detected;
 reg byte_complete;
 reg [7:0] Packet_Data;
 reg [1:0] sync_status;
@@ -44,8 +44,9 @@ sync_low sync_low (.clk(clk), .n_rst(n_rst), .async_in(d_minus), .sync_out(d_min
 
 start_bit_det Start_bit_detector (.clk(clk), .n_rst(n_rst), .serial_in(d_plus_sync), .start_bit_detected(d_edge));
 
-rcu controller_rcu (.clk(clk), .n_rst(n_rst), .d_edge(d_edge), .byte_complete(byte_complete), .eop(eop), .crc_check_5(check_crc_5), 
-        .crc_check_16(check_crc_16), .sync_status(sync_status), .pid_status(pid_status), .crc_status(crc_status), .enable_timer(enable_timer), 
+rcu controller_rcu (.clk(clk), .n_rst(n_rst), .d_edge(d_edge), .byte_complete(byte_complete), .eop_detected(eop_detected), 
+        .crc_check_5(crc_check_5), 
+        .crc_check_16(crc_check_16), .sync_status(sync_status), .pid_status(pid_status), .crc_status(crc_status), .enable_timer(enable_timer), 
 	.check_pid(check_pid), .check_sync(check_sync), 
         .load_sync(load_sync), .load_pid(load_pid), .load_data(load_data), .load_error(load_error), .load_done(load_done));
 
@@ -55,17 +56,17 @@ rx_data_buffer Rx_data_buffer (.clk(clk), .n_rst(n_rst), .byte_complete(byte_com
                      .crc_5bit(crc_5bit), .crc_16bit(crc_16bit), .sync_status(sync_status), .pid_status(pid_status), .rx_packet(rx_packet), 
                     .rx_packet_data(rx_packet_data), .store_rx_packet_data(store_rx_packet_data), .crc_status(crc_status));
 
-decoder Decoder (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .shift_enable(shift_enable_const), .d_orig(d_orig));
+decoder Decoder (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_minus_sync(d_minus_sync), .shift_enable(shift_enable_const), .d_orig(d_orig), .eop_detected(eop_detected));
 //decoder Decoder (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_orig(d_orig));
 
 bit_stuffer_detector bit_stuffer (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .invalid_bit(invalid_bit));
 
 sr8_bit sr_8bit (.clk(clk), .n_rst(n_rst), .d_orig(d_orig), .shift_enable(shift_enable), .Packet_Data(Packet_Data));
 
-timer Timer (.clk(clk), .n_rst(n_rst), .enable_timer(enable_timer), .invalid_bit(invalid_bit), .shift_enable(shift_enable), 
+timer Timer (.clk(clk), .n_rst(n_rst), .enable_timer(enable_timer), .invalid_bit(invalid_bit), .eop_detected(eop_detected), .shift_enable(shift_enable), 
           .shift_enable_const(shift_enable_const), .byte_complete(byte_complete));
 
-eop_detector EOP_detector (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_minus_sync(d_minus_sync), .shift_enable(shift_enable), .eop(eop));
+//eop_detector EOP_detector (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_minus_sync(d_minus_sync), .shift_enable(shift_enable), .eop(eop));
 
 CDL_CRC_16 CRC_16bit (.clk(clk), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_16bit));
 
