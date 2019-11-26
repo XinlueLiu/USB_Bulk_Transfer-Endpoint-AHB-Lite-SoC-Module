@@ -13,10 +13,11 @@ module tb_ahb_buffer();
 // Timing related constants
 localparam CLK_PERIOD = 10;
 localparam BUS_DELAY  = 800ps; // Based on FF propagation delay
+localparam data_period = 8*8.33;
 
 // Sizing related constants
 localparam DATA_WIDTH      = 4;
-localparam ADDR_WIDTH      = 8;
+localparam ADDR_WIDTH      = 7;
 localparam DATA_WIDTH_BITS = DATA_WIDTH * 8;
 localparam DATA_MAX_BIT    = DATA_WIDTH_BITS - 1;
 localparam ADDR_MAX_BIT    = ADDR_WIDTH - 1;
@@ -54,7 +55,7 @@ bit [(ADDR_WIDTH - 1):0]     tb_transaction_addr;
 bit [((DATA_WIDTH*8) - 1):0] tb_transaction_data [];
 bit [2:0]                    tb_transaction_burst;
 bit                          tb_transaction_error;
-bit [2:0]                    tb_transaction_size;
+bit [1:0]                    tb_transaction_size;
 // Testing control signal(s)
 logic    tb_model_reset;
 logic    tb_enable_transactions;
@@ -68,6 +69,7 @@ logic    tb_current_data_transaction_error;
 string                 tb_test_case;
 integer                tb_test_case_num;
 bit   [DATA_MAX_BIT:0] tb_test_data [];
+reg              [7:0] tb_test_rx_data;       
 string                 tb_check_tag;
 logic                  tb_mismatch;
 logic                  tb_check;
@@ -87,7 +89,7 @@ logic                          tb_hsel;
 logic [1:0]                    tb_htrans;
 logic [2:0]                    tb_hburst;
 logic [(ADDR_WIDTH - 1):0]     tb_haddr;
-logic [2:0]                    tb_hsize;
+logic [1:0]                    tb_hsize;
 logic                          tb_hwrite;
 logic [((DATA_WIDTH*8) - 1):0] tb_hwdata;
 logic [((DATA_WIDTH*8) - 1):0] tb_hrdata;
@@ -118,7 +120,7 @@ logic 	[6:0] tb_buffer_occupancy;
 // Expected value check signals
 logic                   tb_expected_buffer_reserved;
 logic                   [6:0] tb_expected_tx_packet_data_size;
-logic                   [6:0] tb_expected_tx_packet_data;
+logic                   [7:0] tb_expected_tx_packet_data;
 logic                   tb_expected_buffer_occupancy;
 
 //*****************************************************************************
@@ -239,6 +241,34 @@ begin
   @(negedge tb_clk);
 end
 endtask
+
+task send_rx_packet_data;
+  input reg [7:0] data;
+begin
+   tb_rx_packet_data = data;
+   tb_store_rx_packet_data = 1'b1;
+   @(posedge tb_clk);
+   tb_store_rx_packet_data = 1'b0;
+   #data_period;
+end
+endtask
+
+/*task request_tx_packet_data;
+  input reg [63:0] expected_data;
+  int num_requests;
+begin
+   for(int i = 0; i < num_requests; i++) begin
+       tb_get_tx_packet_data = 1'b1;
+       @(posedge tb_clk);
+       tb_get_tx_packet_data = 1'b0;
+       #data_period;
+       tb_expected_tx_packet_data = ;
+       check_outputs("after a byte has been sent");
+   end
+end
+endtask*/
+
+
 
 // Task to cleanly and consistently check DUT output values
 task check_outputs;
@@ -384,6 +414,7 @@ initial begin
   tb_test_case       = "Initialization";
   tb_test_case_num   = -1;
   tb_test_data       = new[1];
+  tb_test_rx_data    = '0;
   tb_check_tag       = "N/A";
   tb_check           = 1'b0;
   tb_mismatch        = 1'b0;
@@ -440,32 +471,63 @@ reset_dut();
   // Power-on-Reset Test Case
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Power-on-Reset";
+/*  tb_test_case     = "Power-on-Reset";
   tb_test_case_num = tb_test_case_num + 1;
   
   // Reset the DUT
-  reset_dut();
-/*
+  reset_dut();*/
+
   //*****************************************************************************
-  // Test Case: Singleton Write
+  // Test Case: OUT Token Data Buffer response
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Single Word Write";
+  tb_test_case     = "OUT token response sequence";
   tb_test_case_num = tb_test_case_num + 1;
 
   // Reset the DUT to isolate from prior test case
   reset_dut();
 
-  // Enqueue the needed transactions
-  tb_test_data = '{32'd1000}; 
-  enqueue_transaction(1'b1, 1'b1, 8'd64, tb_test_data, BURST_SINGLE, 1'b0, 2'd2);
+
+  // assume an OUT token got sent and act as though it did
+  tb_rx_transfer_active = 1'b1;
   
+// NOTE: send 8 packets... this is ugly but it is fine
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_expected_buffer_occupancy = 7'd8; // make sure the buffer actually took the data
+
+  check_outputs("after sending 8 data packets");
+  
+  // assume a done got asserted
+  tb_rx_transfer_active = 1'b0;
+  tb_rx_data_ready = 1'b1; 
+  
+  // Enqueue the needed transactions
+  tb_test_data = '{32'b10011110110100111000001010010101}; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, tb_test_data, BURST_SINGLE, 1'b0, 2'd2);
+  tb_test_data = '{32'b11110001011011011001001001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd2, tb_test_data, BURST_SINGLE, 1'b0, 2'd2);
+
   // Run the transactions via the model
-  execute_transactions(1);
+  execute_transactions(2);
 
 
   //*****************************************************************************
-  // Test Case: Back-to-Back Write/Read
+  // Test Case: Full Write Sequence 
   //*****************************************************************************
   // Update Navigation Info
   tb_test_case     = "Back to back Write/Read";
@@ -474,17 +536,52 @@ reset_dut();
   // Reset the DUT to isolate from prior test case
   reset_dut();
 
-  // Enqueue the needed transactions
-  tb_test_data = '{32'hADAD8000};
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd70, tb_test_data, BURST_SINGLE, 1'b0, 2'd2);
-  // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, 8'd70, tb_test_data, BURST_SINGLE, 1'b0, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(2);
 
-  
+  // writing the ENDPOINT-TO-HOST-SIZE
+  tb_test_data = '{32'h00000002};
+
+  enqueue_transaction(1'b1, 1'b1, 8'd48, tb_test_data, BURST_SINGLE, 1'b0, 2'd2);
+
+  execute_transactions(1);
+
+  tb_expected_buffer_reserved = 1'b1;
+  tb_expected_tx_packet_data_size = 7'd2;
+
+  check_outputs("after size has been written");
+
+  tb_test_data = '{32'h0000ABCD};
+
+  enqueue_transaction(1'b1, 1'b1, 8'd0, tb_test_data, BURST_SINGLE, 1'b0, 2'd1);
+ 
+ tb_expected_buffer_occupancy = 7'd2;
+
+ check_outputs("after writing the proper number of bytes");
+
+ tb_tx_transfer_active = 1'b1; 
+
+ tb_get_tx_packet_data = 1'b1;
+ 
+ @(posedge tb_clk)
+
+ tb_get_tx_packet_data = 1'b0;
+
+ #data_period  
+
+ tb_expected_tx_packet_data = 8'hAB;
+
+ tb_get_tx_packet_data = 1'b1;
+ 
+ @(posedge tb_clk)
+
+ tb_get_tx_packet_data = 1'b0;
+
+ #data_period  
+
+ tb_expected_tx_packet_data = 8'hCD;
+
+
+
+/*  
   //*****************************************************************************
   // Test Case: INCR4 Burst
   //*****************************************************************************
