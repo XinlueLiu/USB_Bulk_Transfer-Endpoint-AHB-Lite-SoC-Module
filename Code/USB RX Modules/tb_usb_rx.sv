@@ -11,12 +11,8 @@
 module tb_usb_rx();
 
   // Define parameters
-  parameter CLK_PERIOD        = 2.5;
-  parameter NORM_DATA_PERIOD  = (10 * CLK_PERIOD);
-  
-  //localparam OUTPUT_CHECK_DELAY = (CLK_PERIOD - 0.2);
-  //localparam WORST_FAST_DATA_PERIOD = (NORM_DATA_PERIOD * 0.96);
-  //localparam WORST_SLOW_DATA_PERIOD = (NORM_DATA_PERIOD * 1.04);
+  parameter CLK_PERIOD        = 10;
+  parameter NORM_DATA_PERIOD  =  8 * CLK_PERIOD;
   
   //  DUT inputs
   reg tb_clk;
@@ -53,70 +49,100 @@ module tb_usb_rx();
     .store_rx_packet_data(tb_store_rx_packet_data)
   );
   
-  // Tasks for regulating the timing of input stimulus to the design
-  task send_sequence; // TODO: I need to change this....
+  // generate d+/-
+  task send_packet;
     input  [7:0] data;
+    input time data_period;
     reg    [7:0] d_plus_input;
     reg    [7:0] d_minus_input;
-    time   data_period;
     integer i;
     integer j;
   begin
-    // First synchronize to away from clock's rising edge
+    //initialization
     @(negedge tb_clk)
-    
-    
     d_plus_input = '1;
     d_minus_input = '0;
-    if(data[7] == 1'b0) begin
+    //start or not
+    if(data[0] == 1'b0) begin
        d_plus_input[7] = 1'b0;
        d_minus_input[7] = 1'b1;    
     end
     else begin
-      $display("Was this a valid data packet? It may cause a glitch.");
+       d_plus_input[7] = 1'b1;
+       d_minus_input[7] = 1'b0;
     end 
-    for(i = 6; i > -1; i = i - 1) 
+    for(i = 7; i > 0; i = i - 1) 
     begin
       if(data[i] == 1'b0) begin
-        d_plus_input[i] = !d_plus_input[i+1];
-        d_minus_input[i] = !d_minus_input[i +1];
+        d_plus_input[i - 1] = !d_plus_input[i];
+        d_minus_input[i - 1] = !d_minus_input[i];
       end 
       else begin
-       d_plus_input[i] = d_plus_input[i+1];
-       d_minus_input[i] = d_minus_input[i+1];
+       d_plus_input[i - 1] = d_plus_input[i];
+       d_minus_input[i - 1] = d_minus_input[i];
       end
     end
-    
+
     // Send data bits
-    for(j = 7; j > -1; j = j - 1)
+    for(j = 0; j < 8; j = j + 1)
     begin
       tb_d_plus = d_plus_input[j];
       tb_d_minus = d_minus_input[j];
       #data_period;
     end
-    
-    // Send stop bit
-    //tb_serial_in = stop_bit;
-    //#data_period;
+
   end
   endtask
 
   task send_eop;
+    input time data_period;
     reg [7:0] d_plus_input;
     reg [7:0] d_minus_input;
     integer i;
-    time data_period;
   begin
-    d_plus_input = 8'b00111111;
+    //driven low for 2 bit periods and back to the idle bus value
+    d_plus_input = 8'b11111100;
     d_minus_input = 8'b0000000;
-    for(i = 7; i > -1; i = i - 1) begin
+    for(i = 0; i < 8; i = i + 1) begin
       tb_d_plus = d_plus_input[i];
       tb_d_minus = d_minus_input[i];
       #data_period;
     end
   end
   endtask
-  
+
+  /*task send_device_address;
+    input time data_period;
+    reg [7:0] d_plus_input;
+    reg [7:0] d_minus_input;
+    integer k;
+  begin
+    d_plus_input = 8'b01010101;
+    d_minus_input = 8'b10101010;
+    for(k = 0; k < 8; k = k + 1) begin
+      tb_d_plus = d_plus_input[k];
+      tb_d_minus = d_minus_input[k];
+      #data_period;
+    end
+  end
+  endtask
+
+  task send_endpoint_number;
+    input time data_period;
+    reg [7:0] d_plus_input;
+    reg [7:0] d_minus_input;
+    integer o;
+  begin
+    d_plus_input = 8'b01010100;
+    d_minus_input = 8'b10101011;
+    for(o = 0; o < 8; o = o + 1) begin
+      tb_d_plus = d_plus_input[o];
+      tb_d_minus = d_minus_input[o];
+      #data_period;
+    end
+  end
+  endtask*/
+
   task reset_dut;
   begin
     // Activate the design's reset (does not need to be synchronize with clock)
@@ -148,15 +174,15 @@ module tb_usb_rx();
       
     // Should tell what kind of packet is being transmitted and/or where the receiver is in processing the current packet (e.g. "DONE")
     assert(tb_expected_rx_packet == tb_rx_packet)
-      $info("Test case %0d: DUT correctly shows the right packet", tb_test_num);
+      $info("Test case %0d: RX_packet token signal corrent", tb_test_num);
     else
-      $error("Test case %0d: DUT incorrectly shows the right packet", tb_test_num);
+      $error("Test case %0d: INCORRECT RX_packet token signal", tb_test_num);
     
     // For every 'data packet' regrardless of token, this should be asserted once the data is ready and hasn't failed. 
     assert(tb_expected_store_rx_packet_data == tb_store_rx_packet_data)
       $info("Test case %0d: DUT correctly asserted the store rx packet data flag", tb_test_num);
     else
-      $error("Test case %0d: DUT did not correctly asserted the store rx packet data flag", tb_test_num);
+      $error("Test case %0d: DUT DID not correctly asserted the store rx packet data flag", tb_test_num);
   end
   endtask
   
@@ -183,10 +209,10 @@ module tb_usb_rx();
     tb_d_plus  = 1'b1; // Initially idle
     tb_d_minus = 1'b0; // Initially idle
     
-    // Get away from Time = 0
-    #0.1; 
-    
-    // Test case 0: Basic Power on Reset
+    /******************************************************************************
+	Test case 0: Basic Power on Reset
+    /******************************************************************************/   
+    /*
     tb_test_num  = 0;
     tb_test_case = "Power-on-Reset";
     
@@ -194,91 +220,204 @@ module tb_usb_rx();
     // These values don't matter since it's a reset test but really should be set to 'idle'/inactive values
     tb_test_data        = 8'b0;
     
-    // Define expected ouputs for this test case
-    // Note: expected outputs should all be inactive/idle values
-    // For a good packet RX Data value should match data sent
     tb_expected_rx_packet       = 8'b0;
-
     tb_expected_rx_packet_data       = 8'b0;
-    // Not intentionally creating an overrun condition -> overrun should be 0
     tb_expected_store_rx_packet_data       = 1'b0;
     
     // DUT Reset
-    reset_dut;
-    
+    reset_dut();
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    reset_dut();
     // Check outputs
-    check_outputs();
-    
-    // Test case 1: Normal IN Packet
+    check_outputs();*/
+
+    /******************************************************************************
+     Test case 1: Norminal Token Packet Reception
+    /******************************************************************************/
     // Synchronize to falling edge of clock to prevent timing shifts from prior test case(s)
-    @(negedge tb_clk);
+    reset_dut();
     tb_test_num  += 1;
-    tb_test_case = "Normal IN Packet";
+    tb_test_case = " Norminal Token Packet Reception";
     
-    // Setup packet info for debugging/verificaton signals
-    tb_test_data       = 8'b00000001; // sync byte
-    
-    // Define expected ouputs for this test case
-    // For a good packet RX Data value should match data sent
-    tb_expected_rx_packet_data       = tb_test_data;
-    tb_expected_rx_packet            = 3'b000; // This shouldn't change until a PID is read in
-    tb_expected_store_rx_packet_data = 1'b0; // This shouldn't change until a data packet is read in.
-    
-    // DUT Reset
-    reset_dut;
+    // Sync byte
+    tb_test_data = 8'b10000000; // sync byte   
+    //expected output behavior
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b000;
+    tb_expected_store_rx_packet_data = 1'b0;
     
     // Send packet
     send_packet(tb_test_data, NORM_DATA_PERIOD);
-    
     // Check outputs
     check_outputs();
 
-    tb_test_data = 8'b10010110; // IN PID; correct. not incurring errors.
+    //OUT PID
+    tb_test_data = 8'b00011110; //Out token
     
-    tb_expected_rx_packet_data       = tb_test_data;
-    tb_expected_rx_packet            = 3'b001;
-
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
-
-    check_outputs();
-
-    tb_test_data = 8'b00000001; // ADDRESS: Note, since it should only be 7 bits long, I made the 8th bit 0. Given protocol this might be different.
-    tb_expected_rx_packet_data       = tb_test_data;
-    tb_expected_store_rx_packet_data = 1'b1;
-
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
-
-    check_outputs();
-        
-    tb_test_data = 8'b00000010; // ENDPOINT: Note this is 4 bits long so I put it on the last 4 to make the value stick 
-                                // (if it were the first four it'd be different). Also assigned an aribtrary value.
-    tb_expected_rx_packet_data       = tb_test_data; 
-
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
-
-    check_outputs();   
-
-    tb_test_data = 8'b????????; // CRC 5-bit, this isn't a value I know. I just know it is 5 bits and needs to be correct. 
-    tb_expected_rx_packet_data       = tb_test_data;
-
-    send_packet(tb_test_data, NORM_DATA_PERIOD);
-
-    check_outputs(); 
-
-    send_eop();
-
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b010;
     tb_expected_store_rx_packet_data = 1'b0;
-    tb_expected_rx_packet = 3'b101;
 
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+
+    /*//send address for the intended device
+    //8'b00000000
+    send_device_address(NORM_DATA_PERIOD);
+
+    //8'b00000001
+    //send endpoint number
+    send_endpoint_number(NORM_DATA_PERIOD);
+
+    //token crc 00001001
+    tb_test_data = 8'b0001001;
+    send_packet(tb_test_data,NORM_DATA_PERIOD);*/
+
+    //send data field of the token packet 0000000000101001
+    tb_test_data = 8'b00000000;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    tb_test_data = 8'b00101001;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+
+    //send EOP signal and Done signal
+    send_eop(NORM_DATA_PERIOD);
+    tb_expected_rx_packet_data = 0; //this
+    tb_expected_rx_packet = 3'b101; //DONE signal
+    tb_expected_store_rx_packet_data = 1'b0;
+    check_outputs();
+    //8'b00011011;
+    
+/******************************************************************************
+Test case 2: Norminal ACK Packet Reception
+/******************************************************************************/
+    //reset_dut();
+    tb_test_num  += 1;
+    tb_test_case = " Norminal ACK Packet Reception";
+    
+    // Sync byte
+    tb_test_data       = 8'b10000000; // sync byte   
+    //expected output behavior
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b000;
+    tb_expected_store_rx_packet_data = 1'b0;
+    // Send packet
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    // Check outputs
     check_outputs();
 
 
-    // Test case 2: Not Implemented
-    // Synchronize to falling edge of clock to prevent timing shifts from prior test case(s)
-    @(negedge tb_clk);
-    tb_test_num += 1;
-    tb_test_case = "Whatever else is appropriate";
+    //IN PID
+    tb_test_data = 8'b10010110; //IN token
     
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b001;
+    tb_expected_store_rx_packet_data = 1'b0;
+
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+    
+ //send data field of the token packet 0000000000101001
+    tb_test_data = 8'b00000000;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    tb_test_data = 8'b00101010;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+
+    //send data
+    tb_test_data = 8'b10101010;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    tb_test_data = 8'b10101111;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);  
+
+   //16 bit crc
+    tb_test_data = 8'b11111111;
+    send_packet(tb_test_data,NORM_DATA_PERIOD);
+    tb_test_data = 8'b11101000;
+    send_packet(tb_test_data,NORM_DATA_PERIOD);
+
+   //host sends a ACK signal
+    tb_test_data = 10110100;
+    tb_expected_rx_packet_data       = tb_test_data;
+    tb_expected_rx_packet            = 3'b011; //?
+    tb_expected_store_rx_packet_data = 1'b0;  
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    /******************************************************************************
+     Test case 3: Invalid token packet reception, tokens for incorrect address/endpoints & incorrect crc
+    /******************************************************************************/
+    tb_test_num  += 1;
+    tb_test_case = "Invalid token packet reception, tokens for incorrect address/endpoints & incorrect crc";
+    
+    // Sync byte
+    tb_test_data       = 8'b10000000; // sync byte   
+    //expected output behavior
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b000;
+    tb_expected_store_rx_packet_data = 1'b0;
+    
+    // Send packet
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    // Check outputs
+    check_outputs();
+
+    //OUT PID
+    tb_test_data = 8'b01111000; //incorrect out token
+    
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b010;
+    tb_expected_store_rx_packet_data = 1'b0;
+
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+
+    //send incorrect data field of the token packet & incorrect crc
+    tb_test_data = 8'b00010000;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    tb_test_data = 8'b00101001;
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+
+    //send EOP signal and Done signal
+    send_eop(NORM_DATA_PERIOD);
+    tb_expected_rx_packet_data = 0; //this
+    tb_expected_rx_packet = 3'b101; //DONE signal
+    tb_expected_store_rx_packet_data = 1'b0;
+    check_outputs();
+    //8'b00011011;
+   
+    /******************************************************************************
+     Test case 3: Invalid packet reception, including premature EOP errors, incorrect sync fields, 
+		  and invalid or unsupprted PID fields
+    /******************************************************************************/
+    tb_test_num  += 1;
+    tb_test_case = "Invalid packet reception";
+    
+    // Incorrect Sync byte
+    tb_test_data       = 8'b10001000; // sync byte   
+    //expected output behavior
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b000;
+    tb_expected_store_rx_packet_data = 1'b0;
+    
+    // Send packet
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    // Check outputs
+    check_outputs();
+
+    //Invalid OUT PID
+    tb_test_data = 8'b01111100; //Out token
+    
+    tb_expected_rx_packet_data       = 0;
+    tb_expected_rx_packet            = 3'b010;
+    tb_expected_store_rx_packet_data = 1'b0;
+
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs();
+    
+
+    //premature EOP error
+    send_eop(NORM_DATA_PERIOD);
+    tb_expected_rx_packet_data = 0; //this
+    tb_expected_rx_packet = 3'b101; //DONE signal
+    tb_expected_store_rx_packet_data = 1'b0;
+    check_outputs();
 
   end
-endmodule
+endmodule 
