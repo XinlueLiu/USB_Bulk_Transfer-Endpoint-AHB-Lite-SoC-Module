@@ -281,13 +281,14 @@ initial begin
   // Reset the DUT
   reset_dut();
 
-  // Check outputs for reset state
+  // Check outputs for reset stateIN_MODE
   @(posedge tb_clk);
   tb_Buffer_Reserved = 1;
   #(CLK_PERIOD + 0.1);
 
   tb_Buffer_Occupancy = 64;
   tb_TX_Packet_Data_Size = 64;
+  tb_Buffer_Reserved = 0;
   #(CLK_PERIOD + 0.1);
   
   @(posedge tb_clk);
@@ -422,6 +423,7 @@ initial begin
   tb_expected_TX_Error = 1;
   #(CLK_PERIOD + 0.1);
   check_outputs("during IN_NAK");
+  tb_Buffer_Reserved = 0;
 
   init_expected_outputs();
   tb_RX_Packet = 3'b000;
