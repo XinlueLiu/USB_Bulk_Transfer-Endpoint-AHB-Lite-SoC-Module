@@ -1,661 +1,298 @@
 // $Id: $
-// File name:   tb_ahb_lite_slave.sv
-// Created:     10/1/2018
-// Author:      Tim Pritchett
-// Lab Section: 9999
+// File name:   CDL_AHB_LITE_SLAVE.sv
+// Created:     11/11/2019
+// Author:      Xinlue LIu
+// Lab Section: 337-02
 // Version:     1.0  Initial Design Entry
-// Description: Starter bus model based test bench for the AHB-Lite-slave module
+// Description: CDL_AHB_LITE_SLAVE
 
-`timescale 1ns / 10ps
+module ahb_buffer
+(
+	//to master
+	input wire clk,
+	input wire n_rst,
+	input wire hsel,
+	input wire [6:0] haddr,
+	input wire [1:0] htrans,
+	input wire [1:0] hsize,
+	input wire hwrite,
+	input wire [31:0] hwdata,
+	input wire [2:0] hburst, 
+	output reg [31:0] hrdata,
+	output reg hresp,
+	output reg hready,
+	//to protocol controller
+	input wire rx_data_ready,
+	input wire rx_transfer_active,
+	input wire rx_error,
+	input wire tx_transfer_active,
+	input wire tx_error,
+	input wire clear,
+	output reg buffer_reserved,
+	output reg [6:0] tx_packet_data_size,
+	output reg [6:0] buffer_occupancy,
+	//to USB_TX
+	input wire get_tx_packet_data,
+	output reg [7:0] tx_packet_data,
+	//TO USB_RX
+	input wire store_rx_packet_data,
+	input wire [7:0] rx_packet_data
+);
 
-module tb_ahb_lite_slave();
+typedef enum bit [1:0] {IDLE, READ, WRITE, ERROR} stateType;
 
-// Timing related constants
-localparam CLK_PERIOD = 10;
-localparam BUS_DELAY  = 800ps; // Based on FF propagation delay
+stateType STATE;
+stateType NXT_STATE;
+//73 is for 71 + ptrW & ptrR
+reg [73:0][7:0] next_address_mapping;
+reg [73:0][7:0] address_mapping;
+reg [6:0] next_haddr;
+reg [1:0] next_hsize;
+reg [7:0] next_tx_packet_data;
+// reg [2:0] next_hburst;
+reg [7:0] ptrW, next_ptrW; //pointer for write
+reg [7:0] ptrR, next_ptrR; //pointer for read
+//pointer at the final output logic
 
-// Sizing related constants
-localparam DATA_WIDTH      = 2;
-localparam ADDR_WIDTH      = 4;
-localparam DATA_WIDTH_BITS = DATA_WIDTH * 8;
-localparam DATA_MAX_BIT    = DATA_WIDTH_BITS - 1;
-localparam ADDR_MAX_BIT    = ADDR_WIDTH - 1;
-
-// Define our address mapping scheme via constants
-localparam ADDR_STATUS      = 4'd0;
-localparam ADDR_STATUS_BUSY = 4'd0;
-localparam ADDR_STATUS_ERR  = 4'd1;
-localparam ADDR_RESULT      = 4'd2;
-localparam ADDR_SAMPLE      = 4'd4;
-localparam ADDR_COEF_START  = 4'd6;  // F0
-localparam ADDR_COEF_SET    = 4'd14; // Coeff Set Confirmation
-
-// AHB-Lite-Slave reset value constants
-// Student TODO: Update these based on the reset values for your config registers
-localparam RESET_COEFF  = '0;
-localparam RESET_SAMPLE = '0;
-
-//*****************************************************************************
-// Declare TB Signals (Bus Model Controls)
-//*****************************************************************************
-// Testing setup signals
-logic                      tb_enqueue_transaction;
-logic                      tb_transaction_write;
-logic                      tb_transaction_fake;
-logic [ADDR_MAX_BIT:0]     tb_transaction_addr;
-logic [DATA_MAX_BIT:0]     tb_transaction_data;
-logic                      tb_transaction_error;
-logic [2:0]                tb_transaction_size;
-// Testing control signal(s)
-logic    tb_enable_transactions;
-integer  tb_current_transaction_num;
-logic    tb_current_transaction_error;
-logic    tb_model_reset;
-string   tb_test_case;
-integer  tb_test_case_num;
-logic [DATA_MAX_BIT:0] tb_test_data;
-string                 tb_check_tag;
-logic                  tb_mismatch;
-logic                  tb_check;
-
-//*****************************************************************************
-// General System signals
-//*****************************************************************************
-logic tb_clk;
-logic tb_n_rst;
-
-//*****************************************************************************
-// AHB-Lite-Slave side signals
-//*****************************************************************************
-logic                  tb_hsel;
-logic [1:0]            tb_htrans;
-logic [ADDR_MAX_BIT:0] tb_haddr;
-logic [2:0]            tb_hsize;
-logic                  tb_hwrite;
-logic [DATA_MAX_BIT:0] tb_hwdata;
-logic [DATA_MAX_BIT:0] tb_hrdata;
-logic                  tb_hresp;
-
-//*****************************************************************************
-// FIR Filter-side Signals
-//*****************************************************************************
-// From FIR Filter or Coefficient Loader (TB)
-logic [DATA_MAX_BIT:0]  tb_fir_out;
-logic                   tb_modwait;
-logic                   tb_err;
-logic [1:0]             tb_coeff_num;
-// To FIR Filter or Coefficient Loader (From DUT)
-logic                   tb_data_ready;
-logic [DATA_MAX_BIT:0]  tb_sample_data;
-logic                   tb_new_coeff_set;
-logic [DATA_MAX_BIT:0]  tb_fir_coefficient;
-
-// Expected value check signals
-logic                   tb_expected_data_ready;
-logic [DATA_MAX_BIT:0]  tb_expected_sample;
-logic                   tb_expected_new_coeff_set;
-logic [DATA_MAX_BIT:0]  tb_expected_coeff;
-
-//*****************************************************************************
-// Clock Generation Block
-//*****************************************************************************
-// Clock generation block
-always begin
-  // Start with clock low to avoid false rising edge events at t=0
-  tb_clk = 1'b0;
-  // Wait half of the clock period before toggling clock value (maintain 50% duty cycle)
-  #(CLK_PERIOD/2.0);
-  tb_clk = 1'b1;
-  // Wait half of the clock period before toggling clock value via rerunning the block (maintain 50% duty cycle)
-  #(CLK_PERIOD/2.0);
+always_ff @ (negedge n_rst, posedge clk)
+	begin: REG_LOGIC
+	if (!n_rst) begin
+		STATE <= IDLE;
+		address_mapping <= '0;
+		next_haddr <= '0;
+		next_hsize <= '0;
+		ptrW <= 0;
+		ptrR <= 0;
+		tx_packet_data <= 0;
+	end else begin
+		STATE <= NXT_STATE;
+		address_mapping <= next_address_mapping;
+		next_haddr <= haddr;
+		next_hsize <= hsize;
+		ptrW <= next_ptrW;
+		ptrR <= next_ptrR;
+		tx_packet_data <= next_tx_packet_data;
+	end
 end
 
-//*****************************************************************************
-// Bus Model Instance
-//*****************************************************************************
-ahb_lite_bus BFM (.clk(tb_clk),
-                  // Testing setup signals
-                  .enqueue_transaction(tb_enqueue_transaction),
-                  .transaction_write(tb_transaction_write),
-                  .transaction_fake(tb_transaction_fake),
-                  .transaction_addr(tb_transaction_addr),
-                  .transaction_data(tb_transaction_data),
-                  .transaction_error(tb_transaction_error),
-                  .transaction_size(tb_transaction_size),
-                  // Testing controls
-                  .model_reset(tb_model_reset),
-                  .enable_transactions(tb_enable_transactions),
-                  .current_transaction_num(tb_current_transaction_num),
-                  .current_transaction_error(tb_current_transaction_error),
-                  // AHB-Lite-Slave Side
-                  .hsel(tb_hsel),
-                  .htrans(tb_htrans),
-                  .haddr(tb_haddr),
-                  .hsize(tb_hsize),
-                  .hwrite(tb_hwrite),
-                  .hwdata(tb_hwdata),
-                  .hrdata(tb_hrdata),
-                  .hresp(tb_hresp));
-
-
-//*****************************************************************************
-// DUT Instance
-//*****************************************************************************
-ahb_lite_slave DUT (.clk(tb_clk), .n_rst(tb_n_rst),
-                    // FIR Filter Operation signals
-                    .fir_out(tb_fir_out),
-                    .modwait(tb_modwait),
-                    .err(tb_err),
-                    .sample_data(tb_sample_data),
-                    .data_ready(tb_data_ready),
-                    .fir_coefficient(tb_fir_coefficient),
-                    .new_coefficient_set(tb_new_coeff_set),
-                    .coefficient_num(tb_coeff_num),
-                    // AHB-Lite-Slave bus signals
-                    .hsel(tb_hsel),
-                    .htrans(tb_htrans),
-                    .haddr(tb_haddr),
-                    .hsize(tb_hsize[0]),
-                    .hwrite(tb_hwrite),
-                    .hwdata(tb_hwdata),
-                    .hrdata(tb_hrdata),
-                    .hresp(tb_hresp));
-
-//*****************************************************************************
-// DUT Related TB Tasks
-//*****************************************************************************
-// Task for standard DUT reset procedure
-task reset_dut;
-begin
-  // Activate the reset
-  tb_n_rst = 1'b0;
-
-  // Maintain the reset for more than one cycle
-  @(posedge tb_clk);
-  @(posedge tb_clk);
-
-  // Wait until safely away from rising edge of the clock before releasing
-  @(negedge tb_clk);
-  tb_n_rst = 1'b1;
-
-  // Leave out of reset for a couple cycles before allowing other stimulus
-  // Wait for negative clock edges, 
-  // since inputs to DUT should normally be applied away from rising clock edges
-  @(negedge tb_clk);
-  @(negedge tb_clk);
-end
-endtask
-
-// Task to cleanly and consistently check DUT output values
-task check_outputs;
-  input string check_tag;
-begin
-  tb_mismatch = 1'b0;
-  tb_check    = 1'b1;
-  if(tb_expected_data_ready == tb_data_ready) begin // Check passed
-    $info("Correct 'data_ready' output %s during %s test case", check_tag, tb_test_case);
-  end
-  else begin // Check failed
-    tb_mismatch = 1'b1;
-    $error("Incorrect 'data_ready' output %s during %s test case", check_tag, tb_test_case);
-  end
-
-  if(tb_expected_sample == tb_sample_data) begin // Check passed
-    $info("Correct 'sample_data' output %s during %s test case", check_tag, tb_test_case);
-  end
-  else begin // Check failed
-    tb_mismatch = 1'b1;
-    $error("Incorrect 'sample_data' output %s during %s test case", check_tag, tb_test_case);
-  end
-
-  if(tb_expected_new_coeff_set == tb_new_coeff_set) begin // Check passed
-    $info("Correct 'new_coeff_set' output %s during %s test case", check_tag, tb_test_case);
-  end
-  else begin // Check failed
-    tb_mismatch = 1'b1;
-    $error("Incorrect 'new_coeff_set' output %s during %s test case", check_tag, tb_test_case);
-  end
-
-  if(tb_expected_coeff == tb_fir_coefficient) begin // Check passed
-    $info("Correct 'fir_coefficient' output %s during %s test case", check_tag, tb_test_case);
-  end
-  else begin // Check failed
-    tb_mismatch = 1'b1;
-    $error("Incorrect 'fir_coefficient' output %s during %s test case", check_tag, tb_test_case);
-  end
-
-  // Wait some small amount of time so check pulse timing is visible on waves
-  #(0.1);
-  tb_check =1'b0;
-end
-endtask
-
-//*****************************************************************************
-// Bus Model Usage Related TB Tasks
-//*****************************************************************************
-// Task to pulse the reset for the bus model
-task reset_model;
-begin
-  tb_model_reset = 1'b1;
-  #(0.1);
-  tb_model_reset = 1'b0;
-end
-endtask
-
-// Task to enqueue a new transaction
-task enqueue_transaction;
-  input logic for_dut;
-  input logic write_mode;
-  input logic [ADDR_MAX_BIT:0] address;
-  input logic [DATA_MAX_BIT:0] data;
-  input logic expected_error;
-  input logic size;
-begin
-  // Make sure enqueue flag is low (will need a 0->1 pulse later)
-  tb_enqueue_transaction = 1'b0;
-  #0.1ns;
-
-  // Setup info about transaction
-  tb_transaction_fake  = ~for_dut;
-  tb_transaction_write = write_mode;
-  tb_transaction_addr  = address;
-  tb_transaction_data  = data;
-  tb_transaction_error = expected_error;
-  tb_transaction_size  = {2'b00,size};
-
-  // Pulse the enqueue flag
-  tb_enqueue_transaction = 1'b1;
-  #0.1ns;
-  tb_enqueue_transaction = 1'b0;
-end
-endtask
-
-// Task to wait for multiple transactions to happen
-task execute_transactions;
-  input integer num_transactions;
-  integer wait_var;
-begin
-  // Activate the bus model
-  tb_enable_transactions = 1'b1;
-  @(posedge tb_clk);
-
-  // Process the transactions (all but last one overlap 1 out of 2 cycles
-  for(wait_var = 0; wait_var < num_transactions; wait_var++) begin
-    @(posedge tb_clk);
-  end
-
-  // Run out the last one (currently in data phase)
-  @(posedge tb_clk);
-
-  // Turn off the bus model
-  @(negedge tb_clk);
-  tb_enable_transactions = 1'b0;
-end
-endtask
-
-// Task to clear/initialize all FIR-side inputs
-task init_fir_side;
-begin
-  tb_fir_out   = '0;
-  tb_modwait   = 1'b0;
-  tb_err       = 1'b0;
-  tb_coeff_num = 2'd0;
-end
-endtask
-
-// Task to clear/initialize all FIR-side inputs
-task init_expected_outs;
-begin
-  tb_expected_data_ready    = 1'b0;
-  tb_expected_sample        = RESET_SAMPLE;
-  tb_expected_new_coeff_set = 1'b0;
-  tb_expected_coeff         = RESET_COEFF;
-end
-endtask
-
-//*****************************************************************************
-//*****************************************************************************
-// Main TB Process
-//*****************************************************************************
-//*****************************************************************************
-initial begin
-  // Initialize Test Case Navigation Signals
-  tb_test_case       = "Initilization";
-  tb_test_case_num   = -1;
-  tb_test_data       = '0;
-  tb_check_tag       = "N/A";
-  tb_check           = 1'b0;
-  tb_mismatch        = 1'b0;
-  // Initialize all of the directly controled DUT inputs
-  tb_n_rst          = 1'b1;
-  init_fir_side();
-  // Initialize all of the bus model control inputs
-  tb_model_reset          = 1'b0;
-  tb_enable_transactions  = 1'b0;
-  tb_enqueue_transaction  = 1'b0;
-  tb_transaction_write    = 1'b0;
-  tb_transaction_fake     = 1'b0;
-  tb_transaction_addr     = '0;
-  tb_transaction_data     = '0;
-  tb_transaction_error    = 1'b0;
-  tb_transaction_size     = 3'd0;
-
-  // Wait some time before starting first test case
-  #(0.1);
-
-  // Clear the bus model
-  reset_model();
-  reset_dut();
-  //*****************************************************************************
-  // Power-on-Reset Test Case
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "Power-on-Reset";
-  tb_test_case_num = tb_test_case_num + 1;
-  
-  // Setup FIR Filter provided signals with 'active' values for reset check
-  tb_fir_out   = '1;
-  tb_modwait   = 1'b1;
-  tb_err       = 1'b1;
-  tb_coeff_num = 2'd1;
-
-  // Reset the DUT
-  reset_dut();
-
-  // Check outputs for reset state
-  init_expected_outs();
-  check_outputs("after DUT reset");
-
-  // Give some visual spacing between check and next test case start
-  #(CLK_PERIOD * 3);
-
-
-  //*****************************************************************************
-  // Test Case: Set a new sample value
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "Send Sample";
-  tb_test_case_num = tb_test_case_num + 1;
-  init_fir_side();
-  init_expected_outs();
-  
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions (Low Coeff Address => F0, just add 2 x index)
-  tb_test_data = 16'd1000;  //1111101000
-  enqueue_transaction(1'b1, 1'b1, ADDR_SAMPLE, tb_test_data, 1'b0, 1'b1);
-
-  // Run the transactions via the model
-  execute_transactions(1);
-
-  // Check the DUT outputs
-  tb_expected_data_ready    = 1'b1;
-  tb_expected_sample        = tb_test_data;
-  tb_expected_new_coeff_set = 1'b0;
-  tb_expected_coeff         = RESET_COEFF;
-  check_outputs("after attempting to send a sample");
-
-  // Give some visual spacing between check and next test case start
-  #(CLK_PERIOD * 3);
-
-
-  //*****************************************************************************
-  // Test Case: Configure and check a Coefficient Value
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "Configure Coeff F3";
-  tb_test_case_num = tb_test_case_num + 1;
-  init_fir_side();
-  init_expected_outs();
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions (Low Coeff Address => F0, just add 2 x index)
-  tb_test_data = 16'h8000; // Fixed decimal value of 1.0
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, (ADDR_COEF_START + 6), tb_test_data, 1'b0, 1'b1);
-  // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, (ADDR_COEF_START + 6), tb_test_data, 1'b0, 1'b1);
-  
-  // Run the transactions via the model
-  execute_transactions(2);
-
-  // Check the DUT outputs
-  tb_expected_data_ready    = 1'b0;
-  tb_expected_sample        = RESET_SAMPLE;
-  tb_expected_new_coeff_set = 1'b0;
-  tb_expected_coeff         = RESET_COEFF;
-  check_outputs("after attempting to configure F3");
-
-  // Give some visual spacing between check and next test case start
-  #(CLK_PERIOD * 3);
-
-
-
-  //*****************************************************************************
-  // Test Case: MASTER_READ_RESULT
-  //*****************************************************************************
-  // Student TODO: Add more test cases here
-  // Update Navigation Info
-  tb_test_case     = "MASTER_READ_RESULT";
-  tb_test_case_num = tb_test_case_num + 1;
-  init_fir_side();
-  init_expected_outs();
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  tb_fir_out = 16'b1111010100100101;
-
-  enqueue_transaction(1'b1, 1'b0, ADDR_RESULT, tb_fir_out, 1'b0, 1'd1);
-  execute_transactions(1);
-
-  enqueue_transaction(1'b1, 1'b0, ADDR_RESULT, tb_fir_out[7:0], 1'b0, 1'd0);
-  execute_transactions(1);
-
-  enqueue_transaction(1'b1, 1'b0, ADDR_RESULT, tb_fir_out, 1'b0, 1'd1);
-  enqueue_transaction(1'b1, 1'b0, ADDR_RESULT, tb_fir_out[7:0], 1'b0, 1'd0);
-  execute_transactions(2);
-
-  enqueue_transaction(1'b1, 1'b1, ADDR_RESULT, tb_fir_out, 1'b1, 1'd1);
-  enqueue_transaction(1'b1, 1'b1, ADDR_RESULT, tb_fir_out[7:0], 1'b1, 1'd0);
-  execute_transactions(2);
-  #(CLK_PERIOD * 3);
-
-  //*****************************************************************************
-  // Test Case: MASTER_READ_NEW_SAMPLE
-  //*****************************************************************************
-  tb_test_case     = "MASTER_READ_NEW_SAMPLE";
-  tb_test_case_num = tb_test_case_num + 1;
-  init_fir_side();
-  init_expected_outs();
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  tb_test_data = 16'b1010101011111111;
-
-  enqueue_transaction(1'b1, 1'b1, ADDR_SAMPLE, tb_test_data, 1'b0, 1'd1);
-  execute_transactions(1);
-
-  enqueue_transaction(1'b1, 1'b0, ADDR_SAMPLE, tb_test_data, 1'b0, 1'd1);
-  execute_transactions(1);
-
-  tb_expected_data_ready    = 1'b1;
-  tb_expected_sample        = tb_test_data;
-  tb_expected_new_coeff_set = 1'b0;
-  tb_expected_coeff         = RESET_COEFF;
-  check_outputs("MASTER_READ_NEW_SAMPLE");
-
-  #(CLK_PERIOD * 3);
-  tb_modwait = 1;
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_BUSY, tb_modwait, 1'b0, 1'd0);
-  execute_transactions(1);
-
-  tb_modwait = 0;
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_BUSY, tb_modwait, 1'b0, 1'd0);
-  execute_transactions(1);
-
-  #(CLK_PERIOD * 3);
-
-
-  tb_test_data = 16'b1010101011111111;
-  enqueue_transaction(1'b1, 1'b1, ADDR_SAMPLE, tb_test_data[7:0], 1'b0, 1'd0);
-  execute_transactions(1);
-
-  enqueue_transaction(1'b1, 1'b0, ADDR_SAMPLE, tb_test_data[7:0], 1'b0, 1'd0);
-  execute_transactions(1);
-
-  tb_expected_data_ready    = 1'b1;
-  tb_expected_sample        = {8'b0,tb_test_data[7:0]};
-  tb_expected_new_coeff_set = 1'b0;
-  tb_expected_coeff         = RESET_COEFF;
-  check_outputs("MASTER_READ_NEW_SAMPLE");
-  #(CLK_PERIOD * 3);
-
-  tb_test_data = 16'b1101001100000000;
-  enqueue_transaction(1'b1, 1'b1, (ADDR_SAMPLE + 1), tb_test_data[15:8], 1'b0, 1'd0);
-  execute_transactions(1);
-  enqueue_transaction(1'b1, 1'b0, (ADDR_SAMPLE + 1), tb_test_data[15:8], 1'b0, 1'd0);
-  execute_transactions(1);
-
-  tb_expected_data_ready    = 1'b1;
-  tb_expected_sample        = {tb_test_data[15:8],8'b0};
-  tb_expected_new_coeff_set = 1'b0;
-  tb_expected_coeff         = RESET_COEFF;
-  check_outputs("MASTER_READ_NEW_SAMPLE");
-  #(CLK_PERIOD * 3);
-
-  //*****************************************************************************
-  // Test Case: MASTER_READ_STATUS_REGISTER
-  //*****************************************************************************
-  tb_test_case     = "MASTER_READ_STATUS_REGISTER";
-  tb_test_case_num = tb_test_case_num + 1;
-  init_fir_side();
-  init_expected_outs();
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-  
-  //error & !modwait amd !error & modwait
- 
-  tb_err = 1;
-  tb_modwait = 0;
-  tb_test_data = 16'b100000000;
-  //ADDR_STATUS_ERR is 1
-  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS_ERR, tb_test_data, 1'b1, 1'd0);
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_ERR, tb_test_data, 1'b0, 1'd0);
-  execute_transactions(1);
-
-  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS_ERR, tb_test_data, 1'b1, 1'd1);
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_ERR, tb_test_data, 1'b0, 1'd1);
-  execute_transactions(1);
-
-//busy & idle, hsize 0 & 1
-  tb_err = 0;
-  tb_modwait = 1;
-  tb_test_data = 16'b0000000000000001;
-  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS_BUSY, tb_test_data, 1'b1, 1'd0);
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_BUSY, tb_test_data, 1'b0, 1'd0);
-  execute_transactions(2);
-
-  tb_err = 0;
-  tb_modwait = 1;
-  tb_test_data = 16'b0000000000000001;
-  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS_BUSY, tb_test_data, 1'b1, 1'd1);
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_BUSY, tb_test_data, 1'b0, 1'd1);
-  execute_transactions(2);
-
-  tb_err = 0;
-  tb_modwait = 0;
-  tb_test_data = 16'b0000000000000000;
-  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS_BUSY, tb_test_data, 1'b1, 1'd1);
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_BUSY, tb_test_data, 1'b0, 1'd1);
-  execute_transactions(2);
-
-  tb_err = 0;
-  tb_modwait = 0;
-  tb_test_data = 16'b0000000000000000;
-  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS_BUSY, tb_test_data, 1'b1, 1'd0);
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_BUSY, tb_test_data, 1'b0, 1'd0);
-  execute_transactions(2);
-
-
-  tb_err = 1;
-  tb_modwait = 1;
-  tb_test_data = 16'b0000000100000001;
-  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS_BUSY, tb_test_data, 1'b1, 1'd1);
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_BUSY, tb_test_data, 1'b0, 1'd1);
-  execute_transactions(2);
-
-  tb_err = 1;
-  tb_modwait = 1;
-  tb_test_data = 16'b0000000000000001;
-  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS_BUSY, tb_test_data, 1'b1, 1'd0);
-  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS_BUSY, tb_test_data, 1'b0, 1'd0);
-  execute_transactions(2);
-
-
-  #(CLK_PERIOD * 3);
-
-  //*****************************************************************************
-  // Test Case: MASTER_READ_WRITE_COEFFICIENT_RELATED_REGISTERS
-  //*****************************************************************************
-  tb_test_case     = "MASTER_READ_WRITE_COEFFICIENT_RELATED_REGISTERS";
-  tb_test_case_num = tb_test_case_num + 1;
-  init_fir_side();
-  init_expected_outs();
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  tb_new_coeff_set = 16'd1;
-  enqueue_transaction(1'b1, 1'b1, ADDR_COEF_SET, tb_new_coeff_set, 1'b0, 1'b0);
-  enqueue_transaction(1'b1, 1'b0, ADDR_COEF_SET, tb_new_coeff_set, 1'b0, 1'b0);
-  execute_transactions(2);
-
-  tb_coeff_num = 0;
-
-  // Enqueue the needed transactions (Low Coeff Address => F0, just add 2 x index)
-  tb_test_data = 16'd10; // Fixed decimal value of 1.0
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, ADDR_COEF_START, tb_test_data, 1'b0, 1'b1);
-  // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, ADDR_COEF_START, tb_test_data, 1'b0, 1'b1);
-
-  // Run the transactions via the model
-  execute_transactions(2);
-
-  tb_coeff_num = 1;
-  tb_test_data = 16'd11; 
-  enqueue_transaction(1'b1, 1'b1, (ADDR_COEF_START + 2), tb_test_data, 1'b0, 1'b1);
-  enqueue_transaction(1'b1, 1'b0, (ADDR_COEF_START + 2), tb_test_data, 1'b0, 1'b1);
-  execute_transactions(2);
-
-  tb_coeff_num = 2;
-  tb_test_data = 16'd12; 
-  enqueue_transaction(1'b1, 1'b1, (ADDR_COEF_START + 4), tb_test_data, 1'b0, 1'b1);
-  enqueue_transaction(1'b1, 1'b0, (ADDR_COEF_START + 4), tb_test_data, 1'b0, 1'b1);
-  execute_transactions(2);
-
-  tb_coeff_num = 3;
-  tb_test_data = 16'd13; 
-  enqueue_transaction(1'b1, 1'b1, (ADDR_COEF_START + 6), tb_test_data, 1'b0, 1'b1);
-  enqueue_transaction(1'b1, 1'b0, (ADDR_COEF_START + 6), tb_test_data, 1'b0, 1'b1);
-  execute_transactions(2);
-
-  // Check the DUT outputs
-  tb_expected_data_ready    = 1'b0;
-  tb_expected_sample        = RESET_SAMPLE;
-  tb_expected_new_coeff_set = 1'b0;
-  tb_expected_coeff         = tb_test_data;
-  check_outputs("MASTER_READ_WRITE_COEFFICIENT_RELATED_REGISTERS");
-
-  // Give some visual spacing between check and next test case start
-  #(CLK_PERIOD * 3);
-
+always_comb
+	begin: ERROR_LOGIC
+	hresp = 0;
+	//write to read only addresses & increment k mode that exceeds the limit
+	if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
+		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
+	/*if ((hsel) & ((hwrite) & ((haddr == 7'd64) | (haddr == 7'd65) | (haddr == 7'd66) | (haddr == 7'd67) | (haddr == 7'd68)) 
+		| (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
+		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))) begin*/
+	hresp = 1;
+	end
 end
 
+always_comb
+	begin: NXT_LOGIC_CONTROLLER
+	NXT_STATE = STATE;
+	case(STATE)
+	IDLE: begin
+		if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
+		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
+			NXT_STATE = ERROR;
+		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (!hwrite)) begin
+			NXT_STATE = READ;
+		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
+			NXT_STATE = WRITE;
+		end else begin
+			NXT_STATE = IDLE;
+		end
+	end
+	READ: begin
+		if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
+		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
+			NXT_STATE = ERROR;
+		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (!hwrite)) begin
+			NXT_STATE = READ;
+		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
+			NXT_STATE = WRITE;
+		end else begin
+			NXT_STATE = IDLE;
+		end
+	end
+	WRITE: begin
+		if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
+		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
+			NXT_STATE = ERROR;
+		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (!hwrite)) begin
+			NXT_STATE = READ;
+		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
+			NXT_STATE = WRITE;
+		end else begin
+			NXT_STATE = IDLE;
+		end
+	end
+	ERROR: begin
+		if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
+		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
+			NXT_STATE = ERROR;
+		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (!hwrite)) begin
+			NXT_STATE = READ;
+		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
+			NXT_STATE = WRITE;
+		end else begin
+			NXT_STATE = IDLE;
+		end
+	end
+	endcase
+end
+
+always_comb
+	begin: HREADY_LOGIC
+	hready = 1;
+
+	if (hsel == 1) begin
+		if (hresp == 1) begin
+			if (STATE == ERROR) begin
+				hready = 1;
+			end else begin
+				hready = 0;
+			end
+		end
+	end
+end
+
+assign tx_packet_data_size = address_mapping[72];
+
+always_comb
+	begin: OUTPUT_LOGIC_INTERMEDIATE
+	next_address_mapping = address_mapping;
+	next_ptrW = ptrW;
+	next_ptrR = ptrR;
+	hrdata = '0;
+	next_tx_packet_data = tx_packet_data;
+
+	next_address_mapping[64] = rx_data_ready;
+	if (rx_transfer_active) begin
+		next_address_mapping[65] = 8'd1;
+	end else if (tx_transfer_active) begin
+		next_address_mapping[65] = 8'b00000010;
+	end
+
+	if (rx_error == 1) begin
+		next_address_mapping[66] = 8'd1;
+	end 
+	if (tx_error == 1) begin
+		next_address_mapping[67] = 8'd1;
+	end
+	
+	//original data_buffer
+	if (clear) begin
+		next_address_mapping[63:0] = 0;
+		next_ptrW = 0;
+		next_ptrR = 0;
+	end
+	if (store_rx_packet_data) begin
+		next_address_mapping[ptrW] = rx_packet_data;
+		next_ptrW = ptrW + 1;
+	end
+	if (get_tx_packet_data) begin
+		next_tx_packet_data = address_mapping[ptrR];
+		next_ptrR = ptrR + 1;
+	end
+
+	//store buffer_occupancy to register for master to read
+	buffer_occupancy = ptrW - ptrR;
+	next_address_mapping[68] = buffer_occupancy;
+	buffer_reserved = hsel & hwrite;
+	
+
+	//endpoint to host transfer
+	if (STATE == WRITE) begin
+		if (next_haddr == 72)
+			next_address_mapping[72] = hwdata[7:0];
+		else if (0 <= next_haddr && next_haddr <= 64) begin
+			if (next_hsize == 2'd0) begin
+				if (buffer_occupancy != tx_packet_data_size) begin
+					next_address_mapping[ptrW] = hwdata[7:0];
+					next_ptrW = ptrW + 1;
+				end
+			end else if (next_hsize == 2'd1) begin
+				if (buffer_occupancy != tx_packet_data_size) begin
+					next_address_mapping[ptrW] = hwdata[7:0];
+					next_address_mapping[ptrW + 1] = hwdata[15:8];
+					next_ptrW = ptrW + 2;
+				end
+			end else if ((next_hsize == 2'd2) | (next_hsize == 2'd3)) begin
+				if (buffer_occupancy != tx_packet_data_size) begin
+					next_address_mapping[ptrW] = hwdata[7:0];
+					next_address_mapping[ptrW + 1] = hwdata[15:8];
+					next_address_mapping[ptrW + 2] = hwdata[23:16];
+					next_address_mapping[ptrW + 3] = hwdata[31:24];
+					next_ptrW = ptrW + 4;
+				end
+			end
+		end
+	end
+
+	if (!tx_transfer_active) begin
+		next_address_mapping[72] = 0;
+	end
+	
+	if (address_mapping[64] == 1) begin
+		if (STATE == READ) begin
+			if (next_hsize == 2'd0) begin
+				if (ptrR <= ptrW) begin
+					hrdata[15:0] = {8'b0, address_mapping[ptrR]};
+					hrdata[31:16] = 0;
+					next_ptrR = ptrR + 1;
+				end
+			end else if (next_hsize == 2'd1) begin
+				if (ptrR <= ptrW) begin
+					hrdata[15:0] = {address_mapping[ptrR+1], address_mapping[ptrR]};
+					hrdata[31:16] = 0;
+					next_ptrR = ptrR + 2;
+				end
+			end else if ((next_hsize == 2'd2)|(next_hsize == 2'd3)) begin
+				if (ptrR <= ptrW) begin
+					hrdata[15:0] = {address_mapping[ptrR+1], address_mapping[ptrR]};
+					hrdata[31:16] = {address_mapping[ptrR+3], address_mapping[ptrR + 2]};
+					next_ptrR = ptrR + 4;
+				end
+			end
+		end
+	end
+	// ??? address 72
+	//next_address_mapping[72] = ptrW;
+	//next_address_mapping[73] = ptrR;
+end
+
+
+/*always_comb
+	begin: TO_MASTER_LOGIC
+
+	hrdata = '0;
+	ptrW_i = address_mapping[72];
+	ptrR_i = address_mapping[73];
+
+	if (address_mapping[64] == 1) begin
+		if (STATE == READ) begin
+			if (next_hsize == 2'd0) begin
+				if (ptrR_i <= ptrW_i) begin
+					hrdata[15:0] = {8'b0, address_mapping[ptrR_i]};
+					hrdata[31:16] = 0;
+					ptrR_i = ptrR_i + 1;
+				end
+			end else if (next_hsize == 2'd1) begin
+				if (ptrR_i <= ptrW_i) begin
+					hrdata[15:0] = {address_mapping[ptrR_i+1], address_mapping[ptrR_i]};
+					hrdata[31:16] = 0;
+					ptrR_i = ptrR_i + 2;
+				end
+			end else if ((next_hsize == 2'd2)|(next_hsize == 2'd3)) begin
+				if (ptrR_i <= ptrW_i) begin
+					hrdata[15:0] = {address_mapping[ptrR_i+1], address_mapping[ptrR_i]};
+					hrdata[31:16] = {address_mapping[ptrR_i+3], address_mapping[ptrR_i + 2]};
+					ptrR_i = ptrR_i + 4;
+				end
+			end
+		end
+	end
+end*/
 endmodule
