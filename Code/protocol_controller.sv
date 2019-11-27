@@ -119,6 +119,9 @@ always_comb begin: PROTOCOL_CONTROLLER_OUTPUT
 	D_Mode = 0;
 
 	case(state)
+		IDLE: if (Buffer_Reserved == 1) TX_Transfer_Active = 1;
+		RESERVED: TX_Transfer_Active = 1;
+		IN_WAIT: TX_Transfer_Active = 1;
 		IN_MODE: begin
 			D_Mode = 0;
 			TX_Transfer_Active = 1;
