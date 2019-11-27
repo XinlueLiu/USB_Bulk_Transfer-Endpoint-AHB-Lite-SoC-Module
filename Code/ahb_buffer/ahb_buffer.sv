@@ -41,20 +41,18 @@ module ahb_buffer
 
 typedef enum bit [1:0] {IDLE, READ, WRITE, ERROR} stateType;
 
-stateType [1:0] STATE;
-stateType [1:0] NXT_STATE;
+stateType STATE;
+stateType NXT_STATE;
 //73 is for 71 + ptrW & ptrR
 reg [73:0][7:0] next_address_mapping;
 reg [73:0][7:0] address_mapping;
 reg [6:0] next_haddr;
 reg [1:0] next_hsize;
+reg [7:0] next_tx_packet_data;
 // reg [2:0] next_hburst;
-reg ptrW; //pointer for write
-reg ptrR; //pointer for read
-reg transfer_size_indicator;
+reg [7:0] ptrW, next_ptrW; //pointer for write
+reg [7:0] ptrR, next_ptrR; //pointer for read
 //pointer at the final output logic
-reg ptrW_i;
-reg ptrR_i;
 
 always_ff @ (negedge n_rst, posedge clk)
 	begin: REG_LOGIC
@@ -63,11 +61,17 @@ always_ff @ (negedge n_rst, posedge clk)
 		address_mapping <= '0;
 		next_haddr <= '0;
 		next_hsize <= '0;
+		ptrW <= 0;
+		ptrR <= 0;
+		tx_packet_data <= 0;
 	end else begin
 		STATE <= NXT_STATE;
 		address_mapping <= next_address_mapping;
 		next_haddr <= haddr;
 		next_hsize <= hsize;
+		ptrW <= next_ptrW;
+		ptrR <= next_ptrR;
+		tx_packet_data <= next_tx_packet_data;
 	end
 end
 
@@ -97,7 +101,7 @@ always_comb
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
 			NXT_STATE = WRITE;
 		end else begin
-			NXT_STATE = ERROR;
+			NXT_STATE = IDLE;
 		end
 	end
 	READ: begin
@@ -109,7 +113,7 @@ always_comb
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
 			NXT_STATE = WRITE;
 		end else begin
-			NXT_STATE = ERROR;
+			NXT_STATE = IDLE;
 		end
 	end
 	WRITE: begin
@@ -121,7 +125,7 @@ always_comb
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
 			NXT_STATE = WRITE;
 		end else begin
-			NXT_STATE = ERROR;
+			NXT_STATE = IDLE;
 		end
 	end
 	ERROR: begin
@@ -133,7 +137,7 @@ always_comb
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
 			NXT_STATE = WRITE;
 		end else begin
-			NXT_STATE = ERROR;
+			NXT_STATE = IDLE;
 		end
 	end
 	endcase
@@ -154,21 +158,21 @@ always_comb
 	end
 end
 
+assign tx_packet_data_size = address_mapping[72];
+
 always_comb
 	begin: OUTPUT_LOGIC_INTERMEDIATE
 	next_address_mapping = address_mapping;
-	ptrW = 0;
-	ptrR = 0;
-	transfer_size_indicator = 0;
-	tx_packet_data_size = 0;
+	next_ptrW = ptrW;
+	next_ptrR = ptrR;
+	hrdata = '0;
+	next_tx_packet_data = tx_packet_data;
 
 	next_address_mapping[64] = rx_data_ready;
 	if (rx_transfer_active) begin
 		next_address_mapping[65] = 8'd1;
 	end else if (tx_transfer_active) begin
 		next_address_mapping[65] = 8'b00000010;
-	end else begin
-		next_address_mapping[64] = 0;
 	end
 
 	if (rx_error == 1) begin
@@ -181,16 +185,16 @@ always_comb
 	//original data_buffer
 	if (clear) begin
 		next_address_mapping[63:0] = 0;
-		ptrW = 0;
-		ptrR = 0;
+		next_ptrW = 0;
+		next_ptrR = 0;
 	end
 	if (store_rx_packet_data) begin
 		next_address_mapping[ptrW] = rx_packet_data;
-		ptrW = ptrW + 1;
+		next_ptrW = ptrW + 1;
 	end
 	if (get_tx_packet_data) begin
-		tx_packet_data = address_mapping[ptrR];
-		ptrR = ptrR + 1;
+		next_tx_packet_data = address_mapping[ptrR];
+		next_ptrR = ptrR + 1;
 	end
 
 	//store buffer_occupancy to register for master to read
@@ -201,20 +205,19 @@ always_comb
 
 	//endpoint to host transfer
 	if (STATE == WRITE) begin
-		transfer_size_indicator = transfer_size_indicator + 1;
-		next_address_mapping[71] = hwdata[7:0];
-		tx_packet_data_size = hwdata[7:0];
-		if (transfer_size_indicator != 1) begin
+		if (next_haddr == 72)
+			next_address_mapping[72] = hwdata[7:0];
+		else if (0 <= next_haddr && next_haddr <= 64) begin
 			if (next_hsize == 2'd0) begin
 				if (buffer_occupancy != tx_packet_data_size) begin
 					next_address_mapping[ptrW] = hwdata[7:0];
-					ptrW = ptrW + 1;
+					next_ptrW = ptrW + 1;
 				end
 			end else if (next_hsize == 2'd1) begin
 				if (buffer_occupancy != tx_packet_data_size) begin
 					next_address_mapping[ptrW] = hwdata[7:0];
 					next_address_mapping[ptrW + 1] = hwdata[15:8];
-					ptrW = ptrW + 2;
+					next_ptrW = ptrW + 2;
 				end
 			end else if ((next_hsize == 2'd2) | (next_hsize == 2'd3)) begin
 				if (buffer_occupancy != tx_packet_data_size) begin
@@ -222,21 +225,44 @@ always_comb
 					next_address_mapping[ptrW + 1] = hwdata[15:8];
 					next_address_mapping[ptrW + 2] = hwdata[23:16];
 					next_address_mapping[ptrW + 3] = hwdata[31:24];
-					ptrW = ptrW + 4;
+					next_ptrW = ptrW + 4;
+				end
+			end
+		end else if (!tx_transfer_active) begin
+			next_address_mapping[72] = 0;
+		end
+	end
+	
+	if (address_mapping[64] == 1) begin
+		if (STATE == READ) begin
+			if (next_hsize == 2'd0) begin
+				if (ptrR <= ptrW) begin
+					hrdata[15:0] = {8'b0, address_mapping[ptrR]};
+					hrdata[31:16] = 0;
+					next_ptrR = ptrR + 1;
+				end
+			end else if (next_hsize == 2'd1) begin
+				if (ptrR <= ptrW) begin
+					hrdata[15:0] = {address_mapping[ptrR+1], address_mapping[ptrR]};
+					hrdata[31:16] = 0;
+					next_ptrR = ptrR + 2;
+				end
+			end else if ((next_hsize == 2'd2)|(next_hsize == 2'd3)) begin
+				if (ptrR <= ptrW) begin
+					hrdata[15:0] = {address_mapping[ptrR+1], address_mapping[ptrR]};
+					hrdata[31:16] = {address_mapping[ptrR+3], address_mapping[ptrR + 2]};
+					next_ptrR = ptrR + 4;
 				end
 			end
 		end
-	end else begin
-		next_address_mapping[71] = 0;
-		tx_packet_data_size = 0;
 	end
-
-	next_address_mapping[72] = ptrW;
-	next_address_mapping[73] = ptrR;
+	// ??? address 72
+	//next_address_mapping[72] = ptrW;
+	//next_address_mapping[73] = ptrR;
 end
 
 
-always_comb
+/*always_comb
 	begin: TO_MASTER_LOGIC
 
 	hrdata = '0;
@@ -266,5 +292,5 @@ always_comb
 			end
 		end
 	end
-end
+end*/
 endmodule
