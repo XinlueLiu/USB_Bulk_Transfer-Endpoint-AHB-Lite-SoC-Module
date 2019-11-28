@@ -73,7 +73,7 @@ string                 tb_check_tag;
 logic                  tb_mismatch;
 logic                  tb_check;
 integer                tb_i;
-
+bit   [DATA_MAX_BIT:0] tb_test_data_reg72 [];
 
 //*****************************************************************************
 // General System signals
@@ -336,6 +336,7 @@ task enqueue_transaction;
   input bit write_mode;
   input bit [ADDR_MAX_BIT:0] address;
   input bit [DATA_MAX_BIT:0] data [];
+  input bit [2:0] burst_type;
   input bit expected_error;
   input bit [1:0] size;
 begin
@@ -350,7 +351,8 @@ begin
   tb_transaction_data  = data;
   tb_transaction_error = expected_error;
   tb_transaction_size  = {1'b0,size};
-  tb_transaction_burst = 3'b000;
+  //tb_transaction_burst = 3'b000;
+  tb_transaction_burst = burst_type;
 
   // Pulse the enqueue flag
   tb_enqueue_transaction = 1'b1;
@@ -440,50 +442,21 @@ initial begin
   // Clear the bus modelb1
   reset_model();
 
-  //*****************************************************************************
-  // Power-on-Reset Test Case
-  //*****************************************************************************
-  // Update Navigation Info
-  /*tb_test_case     = "Power-on-Reset";
-  tb_test_case_num = tb_test_case_num + 1;
-  b1
-  // Setup provided signals with 'active' values for reset check
-  tb_rx_data_ready = 1'b1;
-  tb_rx_transfer_active = 1'b1;
-  tb_rx_error = 1'b1;
-  tb_tx_transfer_active = 1'b1;
-  tb_tx_error = 1'b1;
-  tb_clear = 1'b1;
-  tb_store_rx_packet_data = 1'bb11;
-  tb_rx_packet_data = '0;
-  tb_get_tx_packet_data = 1'b1;
-
-  // Reset the DUT
-  reset_dut();b1
-
-  // Check outpub1ts for reset state
-  init_expected_outs();
-  check_outputs("after DUT reset");
-
-  // Give some visual spacing between check and next test case start
-  #(CLK_PERIOD *b1 3);
-
-reset_dut();*/
 //*****************************************************************************
   // Power-on-Reset Test Case
   //*****************************************************************************
   // Update Navigation Info
-/*  tb_test_case     = "Power-on-Reset";
+  tb_test_case     = "Power-on-Reset";
   tb_test_case_num = tb_test_case_num + 1;
   
   // Reset the DUT
-  reset_dut();*/
+  reset_dut();
 
   //*****************************************************************************
   // Test Casend_rx_packet_datase: OUT Token Data Buffer response
   //*****************************************************************************
   // Update Navigation Info
-  //tb_test_case     = "OUT token response sequence";
+  tb_test_case     = "OUT token response sequence";
   tb_test_case_num = tb_test_case_num + 1;
 
   // Reset the DUT to isolate from prior test case
@@ -522,11 +495,11 @@ reset_dut();*/
   //tb_test_data = '{32'b11110001011010111010101001010110};
   //enqueue_transaction(1'b1, 1'b0, 8'd0, tb_test_data, 1'b0, 2'd2);
   tb_test_data = '{32'b00000000000000001010101001010110};
-  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
   tb_test_data = '{32'b00000000000000001111000101101011};
-  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
   tb_test_data = '{32'b10011110110100111000001010010101};
-  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
 
   // Run the transactions via the model
   execute_transactions(3);
@@ -550,7 +523,7 @@ reset_dut();*/
 
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data, BURST_INCR, 1'b0, 2'd2);
   execute_transactions(1);
 
   tb_expected_buffer_reserved = 1'b0;
@@ -559,7 +532,7 @@ reset_dut();*/
 
   tb_test_data = '{32'h0000ABCD};
 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, tb_test_data, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, tb_test_data, BURST_INCR, 1'b0, 2'd1);
   execute_transactions(1);
  
   tb_expected_buffer_occupancy = 7'd2;
@@ -569,7 +542,7 @@ reset_dut();*/
   @(posedge tb_clk)
   tb_get_tx_packet_data = 1'b1;
   
-  #(CLK_PERIOD + 0.1);  
+  #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
 
   tb_expected_tx_packet_data = 8'hCD;
@@ -589,7 +562,6 @@ reset_dut();*/
 
 
 
-/*  
   //*****************************************************************************
   // Test Case: INCR4 Burst
   //*****************************************************************************
@@ -606,14 +578,28 @@ reset_dut();*/
   for(tb_i = 0; tb_i < 4; tb_i++)begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
+  //cannot ignore passing the burst type to ahb. Needs error checking.
   // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd64, tb_test_data, BURST_INCR4, 1'b0, 2'd2);
+  tb_test_data_reg72 = '{32'h00000016};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd2);
+  execute_transactions(5);
+
+  tb_tx_transfer_active = 1'b0;
+
   // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, 8'd64, tb_test_data, BURST_INCR4, 1'b0, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(8);
-  
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd2); 
+  execute_transactions(4);
+  tb_rx_data_ready = 1'b0; 
   //*****************************************************************************
   // Test Case: INCR8 Burst
   //*****************************************************************************
@@ -630,13 +616,34 @@ reset_dut();*/
   for(tb_i = 0; tb_i < 8; tb_i++)begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd64, tb_test_data, BURST_INCR8, 1'b0, 2'd2);
+  tb_test_data_reg72 = '{32'h00000020};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd2);
+  execute_transactions(9);
+
+  tb_tx_transfer_active = 1'b0;
+
   // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, 8'd64, tb_test_data, BURST_INCR8, 1'b0, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(16);
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd2);
+  execute_transactions(8);
+  tb_rx_data_ready = 1'b0; 
   
   //*****************************************************************************
   // Test Case: INCR16 Burst
@@ -654,13 +661,50 @@ reset_dut();*/
   for(tb_i = 0; tb_i < 16; tb_i++)begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd64, tb_test_data, BURST_INCR16, 1'b0, 2'd2);
+  tb_test_data_reg72 = '{32'h00000040};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
+  execute_transactions(17);
+
+  tb_tx_transfer_active = 1'b0;
+
   // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, 8'd64, tb_test_data, BURST_INCR16, 1'b0, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(32);
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
+  execute_transactions(16);
+  tb_rx_data_ready = 1'b0; 
   
   //*****************************************************************************
   // Test Case: WRAP4 Burst
@@ -678,13 +722,26 @@ reset_dut();*/
   for(tb_i = 0; tb_i < 4; tb_i++)begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd68, tb_test_data, BURST_WRAP4, 1'b0, 2'd2);
+  tb_test_data_reg72 = '{32'h00000016};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd2);
+  execute_transactions(5);
+
+  tb_tx_transfer_active = 1'b0;
+
   // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, 8'd68, tb_test_data, BURST_WRAP4, 1'b0, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(8);
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd2); 
+  execute_transactions(4);
+  tb_rx_data_ready = 1'b0;
   
   //*****************************************************************************
   // Test Case: WRAP8 Burst
@@ -702,13 +759,34 @@ reset_dut();*/
   for(tb_i = 0; tb_i < 8; tb_i++)begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd68, tb_test_data, BURST_WRAP8, 1'b0, 2'd2);
+  tb_test_data_reg72 = '{32'h00000020};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd2);
+  execute_transactions(9);
+
+  tb_tx_transfer_active = 1'b0;
+
   // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, 8'd68, tb_test_data, BURST_WRAP8, 1'b0, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(16);
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd2);
+  execute_transactions(8);
+  tb_rx_data_ready = 1'b0; 
   
   //*****************************************************************************
   // Test Case: WRAP16 Burst
@@ -726,38 +804,50 @@ reset_dut();*/
   for(tb_i = 0; tb_i < 16; tb_i++)begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd68, tb_test_data, BURST_WRAP16, 1'b0, 2'd2);
+  tb_test_data_reg72 = '{32'h00000040};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
+  execute_transactions(17);
+
+  tb_tx_transfer_active = 1'b0;
+
   // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, 8'd68, tb_test_data, BURST_WRAP16, 1'b0, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(32);
-
-
-  //*****************************************************************************
-  // Test Case: INCR Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "INCR Bursts";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[7];
-  for(tb_i = 0; tb_i < 7; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd64, tb_test_data, BURST_INCR, 1'b0, 2'd2);
-  // Enqueue the 'check' read
-  enqueue_transaction(1'b1, 1'b0, 8'd64, tb_test_data, BURST_INCR, 1'b0, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(14);
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
+  execute_transactions(16);
+  tb_rx_data_ready = 1'b0; 
   
   
   //*****************************************************************************
@@ -766,14 +856,16 @@ reset_dut();*/
   // Update Navigation Info
   tb_test_case     = "Erroneous Single Word Write";
   tb_test_case_num = tb_test_case_num + 1;
-
+  tb_test_data_reg72 = '{32'h00000004};
+  tb_tx_transfer_active = 1'b1;
   // Reset the DUT to isolate from prior test case
   reset_dut();
 
   // Enqueue the needed transactions
   tb_test_data = '{32'd1000}; 
-  enqueue_transaction(1'b1, 1'b1, 8'd32, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
   
+  tb_tx_transfer_active = 1'b0;
   // Run the transactions via the model
   execute_transactions(1);
 
@@ -790,10 +882,12 @@ reset_dut();*/
 
   // Enqueue the needed transactions
   tb_test_data = '{32'd1000}; 
-  enqueue_transaction(1'b1, 1'b0, 8'd128, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
+  tb_rx_data_ready = 1'b1;
+  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
   
   // Run the transactions via the model
   execute_transactions(1);
+  tb_rx_data_ready = 1'b0;
 
 
   //*****************************************************************************
@@ -812,11 +906,27 @@ reset_dut();*/
   for(tb_i = 0; tb_i < 4; tb_i++)begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b1, 8'd32, tb_test_data, BURST_INCR4, 1'b1, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(8);
+
+  tb_test_data_reg72 = '{32'h00000016};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hCBCD}, BURST_INCR4, 1'b1, 2'd2);
+  execute_transactions(5);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd2); 
+  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hCBCD}, BURST_INCR4, 1'b1, 2'd2); 
+  execute_transactions(4);
+  tb_rx_data_ready = 1'b0; 
   
   //*****************************************************************************
   // Test Case: Erroneous INCR4 Read Burst
@@ -835,12 +945,12 @@ reset_dut();*/
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
   // Enqueue the write
-  enqueue_transaction(1'b1, 1'b0, 8'd128, tb_test_data, BURST_INCR4, 1'b1, 2'd2);
+  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_INCR4, 1'b1, 2'd2);
   
   // Run the transactions via the model
   execute_transactions(8);
 
-*/
+
 end
 
 endmodule
