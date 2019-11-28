@@ -76,25 +76,14 @@ always_ff @ (negedge n_rst, posedge clk)
 end
 
 always_comb
-	begin: ERROR_LOGIC
-	hresp = 0;
-	//write to read only addresses & increment k mode that exceeds the limit
-	if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
-		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
-	/*if ((hsel) & ((hwrite) & ((haddr == 7'd64) | (haddr == 7'd65) | (haddr == 7'd66) | (haddr == 7'd67) | (haddr == 7'd68)) 
-		| (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
-		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))) begin*/
-	hresp = 1;
-	end
-end
-
-always_comb
 	begin: NXT_LOGIC_CONTROLLER
 	NXT_STATE = STATE;
 	case(STATE)
 	IDLE: begin
 		if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
 		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
+			NXT_STATE = ERROR;
+		end else if (haddr > 7'd72) begin
 			NXT_STATE = ERROR;
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (!hwrite)) begin
 			NXT_STATE = READ;
@@ -108,6 +97,8 @@ always_comb
 		if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
 		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
 			NXT_STATE = ERROR;
+		end else if (haddr > 7'd72) begin
+			NXT_STATE = ERROR;
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (!hwrite)) begin
 			NXT_STATE = READ;
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
@@ -119,6 +110,8 @@ always_comb
 	WRITE: begin
 		if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
 		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
+			NXT_STATE = ERROR;
+		end else if (haddr > 7'd72) begin
 			NXT_STATE = ERROR;
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (!hwrite)) begin
 			NXT_STATE = READ;
@@ -132,6 +125,8 @@ always_comb
 		if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
 		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
 			NXT_STATE = ERROR;
+		end else if (haddr > 7'd72) begin
+			NXT_STATE = ERROR;
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (!hwrite)) begin
 			NXT_STATE = READ;
 		end else if ((hsel) & ((htrans == 2'd2) | (htrans == 2'd3)) & (hwrite)) begin
@@ -141,6 +136,21 @@ always_comb
 		end
 	end
 	endcase
+end
+
+always_comb
+	begin: ERROR_LOGIC
+	hresp = 0;
+	//write to read only addresses & increment k mode that exceeds the limit
+	if ((hsel) & (((hwrite) & (haddr >= 7'd64) & (haddr <= 7'd68)) | (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
+		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))))) begin
+	/*if ((hsel) & ((hwrite) & ((haddr == 7'd64) | (haddr == 7'd65) | (haddr == 7'd66) | (haddr == 7'd67) | (haddr == 7'd68)) 
+		| (((htrans == 2'd2) | (htrans == 2'd3)) & (((hburst == 3) & (haddr > 7'd48)) | ((hburst == 5) & (haddr > 7'd48))
+		| ((hburst == 7) & (haddr > 7'd0))) | ((haddr == 7'd69) | (haddr == 7'd70) | (haddr == 7'd71))) begin*/
+		hresp = 1;
+	end else if (haddr > 7'd72) begin
+		hresp = 1;
+	end
 end
 
 always_comb
@@ -207,7 +217,7 @@ always_comb
 	if (STATE == WRITE) begin
 		if (next_haddr == 72)
 			next_address_mapping[72] = hwdata[7:0];
-		else if (0 <= next_haddr && next_haddr <= 64) begin
+		else if ((next_haddr >= 0) && (next_haddr <= 64)) begin
 			if (next_hsize == 2'd0) begin
 				if (buffer_occupancy != tx_packet_data_size) begin
 					next_address_mapping[ptrW] = hwdata[7:0];
@@ -228,9 +238,11 @@ always_comb
 					next_ptrW = ptrW + 4;
 				end
 			end
-		end else if (!tx_transfer_active) begin
-			next_address_mapping[72] = 0;
 		end
+	end
+
+	if (!tx_transfer_active) begin
+		next_address_mapping[72] = 0;
 	end
 	
 	if (address_mapping[64] == 1) begin
