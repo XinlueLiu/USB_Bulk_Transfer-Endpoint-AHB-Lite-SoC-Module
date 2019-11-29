@@ -504,9 +504,50 @@ initial begin
   // Run the transactions via the model
   execute_transactions(3);
 
+  //*****************************************************************************
+  // Test Case send_rx_packet_data : OUT Token Error Data Buffer Response
+  //*****************************************************************************
+  // Update Navigation Info
+  //tb_test_case     = "OUT token response sequence";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+  init_expected_outs();
+
+  // assume an OUT token got sent and act as though it did
+  tb_rx_transfer_active = 1'b1;
+  
+// NOTE: send 8 packets... this is ugly but it is fine
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_clear = 1'b1;
+  #(CLK_PERIOD + 0.1);
+  tb_clear = 1'b0;
+
+  tb_expected_buffer_occupancy = 7'd0; // make sure the buffer actually cleared the data after receiving it
+
+  check_outputs("after sending 8 data packets with error");
+  
+  // assume a done got asserted
+  tb_rx_transfer_active = 1'b0;
 
   //*****************************************************************************
-  // Test Case: Full Write Sequence 
+  // Test Case: Full Write Sequence: Small Packet Size
   //*****************************************************************************
   // Update Navigation Info
   tb_test_case     = "Back to back Write/Read";
