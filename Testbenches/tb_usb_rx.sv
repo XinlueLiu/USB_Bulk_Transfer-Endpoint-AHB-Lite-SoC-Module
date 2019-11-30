@@ -290,7 +290,7 @@ module tb_usb_rx();
 /******************************************************************************
 Test case 2: Norminal ACK Packet Reception
 /******************************************************************************/
-    /*//reset_dut();
+    //reset_dut();
     tb_test_num  += 1;
     tb_test_case = " Norminal ACK Packet Reception";
     
@@ -316,34 +316,44 @@ Test case 2: Norminal ACK Packet Reception
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs();
     
- //send data field of the token packet 0000000000101001
+    //send data field of the token packet 0000000000101001
     tb_test_data = 8'b00000000;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
-    tb_test_data = 8'b00101010;
+    tb_test_data = 8'b00101100;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
 
+
+    //send eop
+    send_eop(NORM_DATA_PERIOD);
+
+    //Sync byte
+    tb_test_data       = 8'b10000000; // sync byte  
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
     //send data
     tb_test_data = 8'b10101010;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     tb_test_data = 8'b10101111;
     send_packet(tb_test_data, NORM_DATA_PERIOD);  
 
-   //16 bit crc
+    //16 bit crc
     tb_test_data = 8'b11111111;
     send_packet(tb_test_data,NORM_DATA_PERIOD);
     tb_test_data = 8'b11101000;
     send_packet(tb_test_data,NORM_DATA_PERIOD);
+
+    //send eop
+    send_eop(NORM_DATA_PERIOD);
 
    //host sends a ACK signal
     tb_test_data = 10110100;
     tb_expected_rx_packet_data       = tb_test_data;
     tb_expected_rx_packet            = 3'b011; //?
     tb_expected_store_rx_packet_data = 1'b0;  
-    send_packet(tb_test_data, NORM_DATA_PERIOD);*/
+    send_packet(tb_test_data, NORM_DATA_PERIOD);
     /******************************************************************************
      Test case 3: Invalid token packet reception, tokens for incorrect address/endpoints & incorrect crc
     /******************************************************************************/
-    /*tb_test_num  += 1;
+    tb_test_num  += 1;
     tb_test_case = "Invalid token packet reception, tokens for incorrect address/endpoints & incorrect crc";
     
     // Sync byte
@@ -380,13 +390,13 @@ Test case 2: Norminal ACK Packet Reception
     tb_expected_rx_packet = 3'b101; //DONE signal
     tb_expected_store_rx_packet_data = 1'b0;
     check_outputs();
-    //8'b00011011;*/
+    //8'b00011011;
    
     /******************************************************************************
      Test case 3: Invalid packet reception, including premature EOP errors, incorrect sync fields, 
 		  and invalid or unsupprted PID fields
     /******************************************************************************/
-    /*tb_test_num  += 1;
+    tb_test_num  += 1;
     tb_test_case = "Invalid packet reception";
     
     // Incorrect Sync byte
@@ -414,10 +424,10 @@ Test case 2: Norminal ACK Packet Reception
 
     //premature EOP error
     send_eop(NORM_DATA_PERIOD);
-    tb_expected_rx_packet_data = 0; //this
+    tb_expected_rx_packet_data = 0;
     tb_expected_rx_packet = 3'b101; //DONE signal
     tb_expected_store_rx_packet_data = 1'b0;
-    check_outputs();*/
+    check_outputs();
 
   end
 endmodule 
