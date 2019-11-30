@@ -329,6 +329,10 @@ Test case 2: Norminal ACK Packet Reception
     //Sync byte
     tb_test_data       = 8'b10000000; // sync byte  
     send_packet(tb_test_data, NORM_DATA_PERIOD);
+
+    //DATA0 PID
+    tb_test_data = 8'b00111100; //DATA0 token
+
     //send data
     tb_test_data = 8'b10101010;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
