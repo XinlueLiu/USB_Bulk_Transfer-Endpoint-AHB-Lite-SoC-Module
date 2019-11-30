@@ -442,6 +442,10 @@ initial begin
   // Clear the bus modelb1
   reset_model();
 
+
+  //
+  //TESTCASE for ahb specifically
+  //
 //*****************************************************************************
   // Power-on-Reset Test Case
   //*****************************************************************************
@@ -452,11 +456,637 @@ initial begin
   // Reset the DUT
   reset_dut();
 
-  //*****************************************************************************
-  // Test Casend_rx_packet_datase: OUT Token Data Buffer response
+//*****************************************************************************
+  // Test Case: single value reads/writes 1 byte
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "OUT token response sequence";
+  tb_test_case     = "single value reads/writes 1 byte";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  //cannot ignore passing the burst type to ahb. Needs error checking.
+  // Enqueue the write
+  tb_test_data_reg72 = '{32'h00000002};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(2);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  execute_transactions(1);
+  tb_rx_data_ready = 1'b0; 
+
+  //*****************************************************************************
+  // Test Case: single value reads/writes 2 byte
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "single value reads/writes 2 byte";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  //cannot ignore passing the burst type to ahb. Needs error checking.
+  // Enqueue the write
+  tb_test_data_reg72 = '{32'h00000004};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(3);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1); 
+  execute_transactions(2);
+  tb_rx_data_ready = 1'b0; 
+
+  //*****************************************************************************
+  // Test Case: single value reads/writes 4 byte
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "single value reads/writes 4 byte";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  //cannot ignore passing the burst type to ahb. Needs error checking.
+  // Enqueue the write
+  tb_test_data_reg72 = '{32'h000000008};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hDCBA}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(5);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hDCBA}, BURST_INCR4, 1'b0, 2'd1); 
+  execute_transactions(4);
+  tb_rx_data_ready = 1'b0; 
+
+//*****************************************************************************
+  // Test Case: overlapping single value reads/writes 1 byte
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "overlapping single value reads/writes 1 byte";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  //cannot ignore passing the burst type to ahb. Needs error checking.
+  // Enqueue the write
+  tb_test_data_reg72 = '{32'h00000002};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(2);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  execute_transactions(1);
+  tb_rx_data_ready = 1'b0; 
+
+  //*****************************************************************************
+  // Test Case: overlapping single value reads/writes 2 byte
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "overlapping single value reads/writes 2 byte";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  //cannot ignore passing the burst type to ahb. Needs error checking.
+  // Enqueue the write
+  tb_test_data_reg72 = '{32'h00000004};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(3);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1); 
+  execute_transactions(2);
+  tb_rx_data_ready = 1'b0; 
+
+  //*****************************************************************************
+  // Test Case: overlapping single value reads/writes 4 byte
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "overlapping single value reads/writes 4 byte";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  //cannot ignore passing the burst type to ahb. Needs error checking.
+  // Enqueue the write
+  tb_test_data_reg72 = '{32'h000000008};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBA}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(5);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hDCBA}, BURST_INCR4, 1'b0, 2'd1); 
+  execute_transactions(4);
+  tb_rx_data_ready = 1'b0; 
+
+  //*****************************************************************************
+  // Test Case: INCR4 Burst
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "INCR4 Bursts";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  tb_test_data = new[4];
+  for(tb_i = 0; tb_i < 4; tb_i++)begin
+    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
+  end
+  //cannot ignore passing the burst type to ahb. Needs error checking.
+  // Enqueue the write
+  tb_test_data_reg72 = '{32'h00000008};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(5);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd1); 
+  execute_transactions(4);
+  tb_rx_data_ready = 1'b0; 
+  //*****************************************************************************
+  // Test Case: INCR8 Burst
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "INCR8 Bursts";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  tb_test_data = new[8];
+  for(tb_i = 0; tb_i < 8; tb_i++)begin
+    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
+  end
+  tb_test_data_reg72 = '{32'h00000016};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
+  execute_transactions(9);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
+  execute_transactions(8);
+  tb_rx_data_ready = 1'b0; 
+  
+  //*****************************************************************************
+  // Test Case: INCR16 Burst
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "INCR16 Bursts";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  tb_test_data = new[16];
+  for(tb_i = 0; tb_i < 16; tb_i++)begin
+    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
+  end
+  tb_test_data_reg72 = '{32'h00000032};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  execute_transactions(17);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  execute_transactions(16);
+  tb_rx_data_ready = 1'b0; 
+  
+  //*****************************************************************************
+  // Test Case: WRAP4 Burst
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "WRAP4 Bursts";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  tb_test_data = new[4];
+  for(tb_i = 0; tb_i < 4; tb_i++)begin
+    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
+  end
+  tb_test_data_reg72 = '{32'h00000008};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd1);
+  execute_transactions(5);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd1); 
+  execute_transactions(4);
+  tb_rx_data_ready = 1'b0;
+  
+  //*****************************************************************************
+  // Test Case: WRAP8 Burst
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "WRAP8 Bursts";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  tb_test_data = new[8];
+  for(tb_i = 0; tb_i < 8; tb_i++)begin
+    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
+  end
+  tb_test_data_reg72 = '{32'h00000016};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
+  execute_transactions(9);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
+  execute_transactions(8);
+  tb_rx_data_ready = 1'b0; 
+  
+  //*****************************************************************************
+  // Test Case: WRAP16 Burst
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "WRAP16 Bursts";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  tb_test_data = new[16];
+  for(tb_i = 0; tb_i < 16; tb_i++)begin
+    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
+  end
+  tb_test_data_reg72 = '{32'h00000032};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  execute_transactions(17);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  execute_transactions(16);
+  tb_rx_data_ready = 1'b0; 
+  
+  
+  //*****************************************************************************
+  // Test Case: Write to read only location, 1 byte
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Write to read only location, 1 byte";
+  tb_test_case_num = tb_test_case_num + 1;
+  tb_test_data_reg72 = '{32'h00000004};
+  tb_tx_transfer_active = 1'b1;
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  tb_test_data = '{32'd1000}; 
+  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
+  
+  tb_tx_transfer_active = 1'b0;
+  // Run the transactions via the model
+  execute_transactions(1);
+
+
+  //*****************************************************************************
+  // Test Case: Write to read only location, 2 bytes
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Write to read only location, 2 bytes";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+  tb_test_data_reg72 = '{32'h00000004};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd66, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(2);
+
+  tb_tx_transfer_active = 1'b0;
+
+  //*****************************************************************************
+  // Test Case: Write to read only location, 4 bytes
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Write to read only location, 4 bytes";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+  tb_test_data_reg72 = '{32'h00000006};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd66, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd67, '{32'hBACD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd68, '{32'hBCCD}, BURST_INCR4, 1'b0, 2'd1);
+  execute_transactions(4);
+
+  tb_tx_transfer_active = 1'b0;
+
+
+
+//*****************************************************************************
+  // Test Case: Erroneous Singleton Read
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Erroneous Single Word Read";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  tb_test_data = '{32'd1000}; 
+  tb_rx_data_ready = 1'b1;
+  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
+  
+  // Run the transactions via the model
+  execute_transactions(1);
+  tb_rx_data_ready = 1'b0;
+
+
+  //*****************************************************************************
+  // Test Case: Erroneous INCR4 Write Burst
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Erroneous INCR4 Write Burst";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  tb_test_data = new[4];
+  for(tb_i = 0; tb_i < 4; tb_i++)begin
+    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
+  end
+
+  tb_test_data_reg72 = '{32'h0000008};
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hCBCD}, BURST_INCR4, 1'b1, 2'd1);
+  execute_transactions(5);
+
+  tb_tx_transfer_active = 1'b0;
+
+  // Enqueue the 'check' read
+  tb_rx_data_ready = 1'b1; 
+  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hCBCD}, BURST_INCR4, 1'b1, 2'd1); 
+  execute_transactions(4);
+  tb_rx_data_ready = 1'b0; 
+  
+  //*****************************************************************************
+  // Test Case: Erroneous INCR4 Read Burst
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Erroneous INCR4 Read Burst";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions
+  // Create the Test Data for the burst
+  tb_test_data = new[4];
+  for(tb_i = 0; tb_i < 4; tb_i++)begin
+    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
+  end
+  // Enqueue the write
+  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_INCR4, 1'b1, 2'd2);
+  
+  // Run the transactions via the model
+  execute_transactions(8);
+
+
+
+
+
+
+
+
+  //Testcase for data buffer specifically
+  //*****************************************************************************
+  // Test Casend_rx_packet_datase: small sized data payload filling from the usb rx module
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "small sized data payload filling from the usb rx module";
   tb_test_case_num = tb_test_case_num + 1;
 
   // Reset the DUT to isolate from prior test case
@@ -466,7 +1096,7 @@ initial begin
   // assume an OUT token got sent and act as though it did
   tb_rx_transfer_active = 1'b1;
   
-// NOTE: send 8 packets... this is ugly but it is fine
+// NOTE: send 8 packets from usb_Rx to data buffer
   tb_test_rx_data = 8'b01010110;
   send_rx_packet_data(tb_test_rx_data);
   tb_test_rx_data = 8'b10101010;
@@ -503,6 +1133,385 @@ initial begin
 
   // Run the transactions via the model
   execute_transactions(3);
+
+  //*****************************************************************************
+  // Test Casend_rx_packet_datase: large sized data payload filling from the usb rx module
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "large sized data payload filling from the usb rx module";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+  init_expected_outs();
+
+  // assume an OUT token got sent and act as though it did
+  tb_rx_transfer_active = 1'b1;
+  
+// NOTE: send 8 packets from usb_Rx to data buffer
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_expected_buffer_occupancy = 7'd32; // make sure the buffer actually took the data
+
+  check_outputs("after sending 32 data packets");
+  
+  // assume a done got asserted
+  tb_rx_transfer_active = 1'b0;
+  tb_rx_data_ready = 1'b1; 
+  
+  // Enqueue the needed transactions
+  //tb_test_data = '{32'b11110001011010111010101001010110};
+  //enqueue_transaction(1'b1, 1'b0, 8'd0, tb_test_data, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+
+  // Run the transactions via the model
+  execute_transactions(12);
+
+
+  //*****************************************************************************
+  // Test Casend_rx_packet_datase: large sized data payload filling from the usb rx module
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "large sized data payload filling from the usb rx module";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+  init_expected_outs();
+
+  // assume an OUT token got sent and act as though it did
+  tb_rx_transfer_active = 1'b1;
+  
+// NOTE: send 8 packets from usb_Rx to data buffer
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01010110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10101010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b01101011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11110001;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10010101;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10000010;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b11010011;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_test_rx_data = 8'b10011110;
+  send_rx_packet_data(tb_test_rx_data);
+  tb_expected_buffer_occupancy = 7'd64; // make sure the buffer actually took the data
+
+  check_outputs("after sending 32 data packets");
+  
+  // assume a done got asserted
+  tb_rx_transfer_active = 1'b0;
+  tb_rx_data_ready = 1'b1; 
+  
+  // Enqueue the needed transactions
+  //tb_test_data = '{32'b11110001011010111010101001010110};
+  //enqueue_transaction(1'b1, 1'b0, 8'd0, tb_test_data, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  tb_test_data = '{32'b00000000000000001010101001010110};
+  enqueue_transaction(1'b1, 1'b0, 8'd20, tb_test_data,BURST_INCR, 1'b0, 2'd1);
+  tb_test_data = '{32'b00000000000000001111000101101011};
+  enqueue_transaction(1'b1, 1'b0, 8'd5, tb_test_data, BURST_INCR,1'b0, 2'd1);
+  tb_test_data = '{32'b10011110110100111000001010010101};
+  enqueue_transaction(1'b1, 1'b0, 8'd4, tb_test_data,BURST_INCR, 1'b0, 2'd2);
+  // Run the transactions via the model
+  execute_transactions(24);
+
+
+  //*****************************************************************************
+  // Test Case: small sized data payload draining by the usb tx module
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "small sized data payload draining by the usb tx module";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior test case
+  reset_model();
+  reset_dut();
+  init_expected_outs();
+
+  // writing the ENDPOINT-TO-HOST-SIZE# ** 
+  tb_test_data = '{32'h00000002};
+
+  tb_tx_transfer_active = 1'b1;
+
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data, BURST_INCR, 1'b0, 2'd2);
+  execute_transactions(1);
+
+  tb_expected_buffer_reserved = 1'b0;
+  tb_expected_tx_packet_data_size = 7'd2;
+  check_outputs("after size has been written");
+
+  tb_test_data = '{32'h0000ABCD};
+
+  enqueue_transaction(1'b1, 1'b1, 8'd0, tb_test_data, BURST_INCR, 1'b0, 2'd1);
+  execute_transactions(1);
+ 
+  tb_expected_buffer_occupancy = 7'd2;
+
+  check_outputs("after writing the proper number of bytes");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;
+  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+
+  tb_expected_tx_packet_data = 8'hCD;
+  tb_expected_buffer_occupancy = 1;
+  check_outputs("after reading the first byte");
+
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;
+  
+  #(CLK_PERIOD + 0.1);  
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_buffer_occupancy = 0;
+  tb_expected_tx_packet_data = 8'hAB;
+  tb_tx_transfer_active = 1'b0;
+  check_outputs("after reading the second byte");
 
   //*****************************************************************************
   // Test Case send_rx_packet_data : OUT Token Error Data Buffer Response
@@ -545,452 +1554,6 @@ initial begin
   
   // assume a done got asserted
   tb_rx_transfer_active = 1'b0;
-
-  //*****************************************************************************
-  // Test Case: Full Write Sequence: Small Packet Size
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "Back to back Write/Read";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_model();
-  reset_dut();
-  init_expected_outs();
-
-  // writing the ENDPOINT-TO-HOST-SIZE# ** Error: Incorrect 'buffer_occupancy' output after sending 8 data packets during Initialization test case
-
-  tb_test_data = '{32'h00000002};
-
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data, BURST_INCR, 1'b0, 2'd2);
-  execute_transactions(1);
-
-  tb_expected_buffer_reserved = 1'b0;
-  tb_expected_tx_packet_data_size = 7'd2;
-  check_outputs("after size has been written");
-
-  tb_test_data = '{32'h0000ABCD};
-
-  enqueue_transaction(1'b1, 1'b1, 8'd0, tb_test_data, BURST_INCR, 1'b0, 2'd1);
-  execute_transactions(1);
- 
-  tb_expected_buffer_occupancy = 7'd2;
-
-  check_outputs("after writing the proper number of bytes");
-
-  @(posedge tb_clk)
-  tb_get_tx_packet_data = 1'b1;
-  
-  #(CLK_PERIOD + 0.1);  	
-  tb_get_tx_packet_data = 1'b0;
-
-  tb_expected_tx_packet_data = 8'hCD;
-  tb_expected_buffer_occupancy = 1;
-  check_outputs("after reading the first byte");
-
-
-  @(posedge tb_clk)
-  tb_get_tx_packet_data = 1'b1;
-  
-  #(CLK_PERIOD + 0.1);  
-  tb_get_tx_packet_data = 1'b0;
-  tb_expected_buffer_occupancy = 0;
-  tb_expected_tx_packet_data = 8'hAB;
-  tb_tx_transfer_active = 1'b0;
-  check_outputs("after reading the second byte");
-
-
-
-  //*****************************************************************************
-  // Test Case: INCR4 Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "INCR4 Bursts";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[4];
-  for(tb_i = 0; tb_i < 4; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-  //cannot ignore passing the burst type to ahb. Needs error checking.
-  // Enqueue the write
-  tb_test_data_reg72 = '{32'h00000016};
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd2);
-  execute_transactions(5);
-
-  tb_tx_transfer_active = 1'b0;
-
-  // Enqueue the 'check' read
-  tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd2); 
-  execute_transactions(4);
-  tb_rx_data_ready = 1'b0; 
-  //*****************************************************************************
-  // Test Case: INCR8 Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "INCR8 Bursts";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[8];
-  for(tb_i = 0; tb_i < 8; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-  tb_test_data_reg72 = '{32'h00000020};
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd2);
-  execute_transactions(9);
-
-  tb_tx_transfer_active = 1'b0;
-
-  // Enqueue the 'check' read
-  tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd2);
-  execute_transactions(8);
-  tb_rx_data_ready = 1'b0; 
-  
-  //*****************************************************************************
-  // Test Case: INCR16 Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "INCR16 Bursts";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[16];
-  for(tb_i = 0; tb_i < 16; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-  tb_test_data_reg72 = '{32'h00000040};
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
-  execute_transactions(17);
-
-  tb_tx_transfer_active = 1'b0;
-
-  // Enqueue the 'check' read
-  tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd2);
-  execute_transactions(16);
-  tb_rx_data_ready = 1'b0; 
-  
-  //*****************************************************************************
-  // Test Case: WRAP4 Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "WRAP4 Bursts";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[4];
-  for(tb_i = 0; tb_i < 4; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-  tb_test_data_reg72 = '{32'h00000016};
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd2);
-  execute_transactions(5);
-
-  tb_tx_transfer_active = 1'b0;
-
-  // Enqueue the 'check' read
-  tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd2); 
-  execute_transactions(4);
-  tb_rx_data_ready = 1'b0;
-  
-  //*****************************************************************************
-  // Test Case: WRAP8 Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "WRAP8 Bursts";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[8];
-  for(tb_i = 0; tb_i < 8; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-  tb_test_data_reg72 = '{32'h00000020};
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd2);
-  execute_transactions(9);
-
-  tb_tx_transfer_active = 1'b0;
-
-  // Enqueue the 'check' read
-  tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd2);
-  execute_transactions(8);
-  tb_rx_data_ready = 1'b0; 
-  
-  //*****************************************************************************
-  // Test Case: WRAP16 Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "WRAP16 Bursts";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[16];
-  for(tb_i = 0; tb_i < 16; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-  tb_test_data_reg72 = '{32'h00000040};
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
-  execute_transactions(17);
-
-  tb_tx_transfer_active = 1'b0;
-
-  // Enqueue the 'check' read
-  tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd2);
-  execute_transactions(16);
-  tb_rx_data_ready = 1'b0; 
-  
-  
-  //*****************************************************************************
-  // Test Case: Erroneous Singleton Write
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "Erroneous Single Word Write";
-  tb_test_case_num = tb_test_case_num + 1;
-  tb_test_data_reg72 = '{32'h00000004};
-  tb_tx_transfer_active = 1'b1;
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  tb_test_data = '{32'd1000}; 
-  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
-  
-  tb_tx_transfer_active = 1'b0;
-  // Run the transactions via the model
-  execute_transactions(1);
-
-
-//*****************************************************************************
-  // Test Case: Erroneous Singleton Read
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "Erroneous Single Word Read";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  tb_test_data = '{32'd1000}; 
-  tb_rx_data_ready = 1'b1;
-  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(1);
-  tb_rx_data_ready = 1'b0;
-
-
-  //*****************************************************************************
-  // Test Case: Erroneous INCR4 Write Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "Erroneous INCR4 Write Burst";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[4];
-  for(tb_i = 0; tb_i < 4; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-
-  tb_test_data_reg72 = '{32'h00000016};
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hCBCD}, BURST_INCR4, 1'b1, 2'd2);
-  execute_transactions(5);
-
-  tb_tx_transfer_active = 1'b0;
-
-  // Enqueue the 'check' read
-  tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd2); 
-  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hCBCD}, BURST_INCR4, 1'b1, 2'd2); 
-  execute_transactions(4);
-  tb_rx_data_ready = 1'b0; 
-  
-  //*****************************************************************************
-  // Test Case: Erroneous INCR4 Read Burst
-  //*****************************************************************************
-  // Update Navigation Info
-  tb_test_case     = "Erroneous INCR4 Read Burst";
-  tb_test_case_num = tb_test_case_num + 1;
-
-  // Reset the DUT to isolate from prior test case
-  reset_dut();
-
-  // Enqueue the needed transactions
-  // Create the Test Data for the burst
-  tb_test_data = new[4];
-  for(tb_i = 0; tb_i < 4; tb_i++)begin
-    tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
-  end
-  // Enqueue the write
-  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_INCR4, 1'b1, 2'd2);
-  
-  // Run the transactions via the model
-  execute_transactions(8);
-
 
 end
 
