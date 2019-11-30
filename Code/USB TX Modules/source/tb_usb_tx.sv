@@ -13,11 +13,12 @@ module tb_usb_tx();
 // Timing related constants
 localparam CLK_PERIOD = 10;
 localparam BUS_DELAY  = 800ps; // Based on FF propagation delay
-localparam USB_CLK_PERIOD = CLK_PERIOD * 8.33;
+localparam USB_CLK_PERIOD = CLK_PERIOD * 8.0;
 // Preset Values
 localparam [7:0] SYNC_BYTE = 8'b10000000;
-localparam [7:0] ACK_BYTE = 8'b00101101;
+localparam [7:0] ACK_BYTE = 8'b00100100;
 localparam [7:0] NAK_BYTE = 8'b10100101;
+localparam [7:0] DATA_BYTE = 8'b00111100;;
 localparam [1:0] TX_IDLE = 2'b00;
 localparam [1:0] TX_SEND_DATA = 2'b01;
 localparam [1:0] TX_NAK = 2'b10;
@@ -250,7 +251,9 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_NAK;  //8'b10100101
-  #(USB_CLK_PERIOD);
+  #(USB_CLK_PERIOD + 0.1);
+  tb_tx_packet = 0;
+  #(CLK_PERIOD);
   test_stream(SYNC_BYTE);
   test_stream(NAK_BYTE);
   check_eop();
@@ -270,7 +273,9 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_ACK;
-  #(USB_CLK_PERIOD);
+  #(USB_CLK_PERIOD + 0.1);
+  tb_tx_packet = 0;
+   #(CLK_PERIOD);
   test_stream(SYNC_BYTE);
   test_stream(ACK_BYTE);
   check_eop();
@@ -297,12 +302,14 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
-  #(USB_CLK_PERIOD * (tb_tx_packet_data_size + 2)); // ???
+  #(USB_CLK_PERIOD + 0.1);
+  tb_tx_packet = 0;
+   #(CLK_PERIOD);
   test_stream(SYNC_BYTE);
+  test_stream(DATA_BYTE);
   for(i = 0; i < tb_tx_packet_data_size; i++) begin
     test_stream(result_list[i]);
   end
-  check_eop();
 
   // Give some visual spacing between check and next test case start
   #(USB_CLK_PERIOD * 3);
@@ -323,13 +330,16 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
-  #(USB_CLK_PERIOD * (tb_tx_packet_data_size + 2))
+  #(USB_CLK_PERIOD + 0.1);
+  tb_tx_packet = 0;
+   #(CLK_PERIOD);
+  test_stream(SYNC_BYTE);
+  test_stream(DATA_BYTE);
   test_stream(result_list[0]);
   tb_expected_dplus_out = !prev_dplus;
   tb_expected_dminus_out = prev_dplus;
   tb_expected_get_tx_packet_data = 0;
   check_outputs("during bit stuffing"); // checking if the next one is 0
-  check_eop();
 
   // Give some visual spacing between check and next test case start
   #(USB_CLK_PERIOD * 3);

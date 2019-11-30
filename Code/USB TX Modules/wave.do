@@ -1,29 +1,29 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate -divider USB_TX_TB
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_mismatch
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_check
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/i
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_test_case_num
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/idx_tx_packet_data
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_clk
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_n_rst
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_usb_clk
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_tx_packet_data
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_tx_packet_data_size
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/tb_tx_packet
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/result_list
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/prev_dplus
-add wave -noupdate -group {Test Bench Signals} /tb_usb_tx/data_list
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/tb_mismatch
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/tb_check
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/i
+add wave -noupdate -expand -group {Test Bench Signals} -radix unsigned /tb_usb_tx/tb_test_case_num
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/idx_tx_packet_data
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/tb_clk
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/tb_n_rst
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/tb_usb_clk
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/tb_tx_packet_data
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/tb_tx_packet_data_size
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/tb_tx_packet
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/result_list
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/prev_dplus
+add wave -noupdate -expand -group {Test Bench Signals} /tb_usb_tx/data_list
 add wave -noupdate -divider {Get tx data}
 add wave -noupdate -color Blue /tb_usb_tx/tb_get_tx_packet_data
 add wave -noupdate -color Blue /tb_usb_tx/tb_expected_get_tx_packet_data
-add wave -noupdate -divider D-
-add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_dminus_out
-add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_expected_dminus_out
 add wave -noupdate -divider D+
 add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_dplus_out
 add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_expected_dplus_out
+add wave -noupdate -divider D-
+add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_dminus_out
+add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_expected_dminus_out
 add wave -noupdate -divider TX_CONTROLLER
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/CRC
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/CRC_en
@@ -75,19 +75,19 @@ add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/thr
 add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/three
 add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/timer_en
 add wave -noupdate -divider USB_ENC
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/bytecomplete
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/clk
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/clk12
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/dminus_out
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/dplus_out
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/enc_en
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/eop_en
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/eop_reset
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/n_rst
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/nxt_dminus
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/nxt_dplus
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/serial_out
-add wave -noupdate -expand -group {Encoder signals} /tb_usb_tx/main/D/stuff_bit_en
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/bytecomplete
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/clk
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/clk12
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/dminus_out
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/dplus_out
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/enc_en
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/eop_en
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/eop_reset
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/n_rst
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/nxt_dminus
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/nxt_dplus
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/serial_out
+add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/stuff_bit_en
 add wave -noupdate -divider {CLK 12 FLEX COUNTER}
 add wave -noupdate -group info /tb_usb_tx/main/F/A/NUM_CNT_BITS
 add wave -noupdate -group info /tb_usb_tx/main/F/A/clear
@@ -140,21 +140,41 @@ add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/nxt_bit_stuff_
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/serial_in
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/val
 add wave -noupdate -divider Flex_PTS
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/NUM_BITS
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/SHIFT_MSB
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/clk
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/i
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/load_enable
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/n_rst
-add wave -noupdate -expand -group {Flex PTS Signals} -radix binary /tb_usb_tx/main/C/A/new_parallel_out
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/new_serial_out
-add wave -noupdate -expand -group {Flex PTS Signals} -radix binary /tb_usb_tx/main/C/A/parallel_in
-add wave -noupdate -expand -group {Flex PTS Signals} -radix binary /tb_usb_tx/main/C/A/parallel_out
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/serial_out
-add wave -noupdate -expand -group {Flex PTS Signals} /tb_usb_tx/main/C/A/shift_enable
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/NUM_BITS
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/SHIFT_MSB
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/clk
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/i
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/load_enable
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/n_rst
+add wave -noupdate -group {Flex PTS Signals} -radix binary /tb_usb_tx/main/C/A/new_parallel_out
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/new_serial_out
+add wave -noupdate -group {Flex PTS Signals} -radix binary /tb_usb_tx/main/C/A/parallel_in
+add wave -noupdate -group {Flex PTS Signals} -radix binary /tb_usb_tx/main/C/A/parallel_out
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/serial_out
+add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/shift_enable
+add wave -noupdate -divider {Bit Stuff Counter}
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/clk
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/count_enable
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/rollover_value
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/clear
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/n_rst
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/count_out
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/rollover_flag
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/next_count_out
+add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/next_rollover_flag
+add wave -noupdate -divider {Bytes sent counter}
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/clk
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/count_enable
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/rollover_value
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/clear
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/n_rst
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/count_out
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/rollover_flag
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/next_count_out
+add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/next_rollover_flag
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {978017 ps} 0}
-quietly wave cursor active 1
+WaveRestoreCursors {{Cursor 1} {8838921 ps} 0}
+quietly wave cursor active 0
 configure wave -namecolwidth 238
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
@@ -169,4 +189,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {3850240 ps}
+WaveRestoreZoom {7889107 ps} {8987204 ps}

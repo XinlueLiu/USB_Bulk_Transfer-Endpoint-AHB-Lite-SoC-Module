@@ -8,6 +8,7 @@ input wire [6:0]tx_packet_data_size,
 input wire [15:0]CRC,
 input wire [7:0] prev_parallel,
 input wire bytecomplete,
+input wire bytealmostcomplete,
 input wire bit_stuff_en,
 output reg eop_en,
 output reg eop_reset,
@@ -18,6 +19,7 @@ output reg enc_en,
 output reg timer_en,
 output reg get_tx_packet_data
 );
+reg[15:0] stored_crc;
 reg nxt_eop_en,nxt_eop_reset;
 reg [2:0] tx_pack = 3'b000;
 typedef enum bit [3:0]{IDLE,
@@ -70,7 +72,19 @@ always_ff@(posedge clk,negedge n_rst) begin
 		get_tx_packet_data<=nxt_get_tx_packet_data;
 	end
 end
-flex_counter #(7)E(.clk(clk),.n_rst(n_rst),.count_enable(count_packet),.rollover_value(tx_packet_data_size),.clear(1'b0),.rollover_flag(data_sent),.count_out(current_packet));
+flex_counter #(7) X(.clk(clk),
+		  .count_enable(nxt_get_tx_packet_data),
+		  .clear(1'b0),
+		  .n_rst(n_rst),
+		  .count_out(cnt_out),
+		  .rollover_flag(data_sent),
+	      .rollover_value(tx_packet_data_size+ 1'b1));
+flex_counter #(4) Y(.clk(clk),.n_rst(n_rst),
+			.clear(!serial_out),
+			.count_enable(serial_out),
+			.count_out(cnt_out2),
+			.rollover_flag(bit_stuf_en),
+			.rollover_value(4'b0111));
 
 always_comb begin
 	nxt_count_packet = bytecomplete&&data_set;
@@ -111,12 +125,15 @@ always_comb begin
 		end
 	end
 	PID:begin
+		nxt_get_tx_packet_data = 1'b0;
+		if(bytealmostcomplete == 1'b1&&clk12 == 1'b1 && stored_packet == 2'b01) begin
+			nxt_get_tx_packet_data = 1'b1;
+			end		
 		if(bytecomplete == 1'b1&&clk12 == 1'b1) begin
 			if(stored_packet ==2'b01) begin
 				nxt_state = DATA;
 				nxt_en = 1'b1;
-				nxt_get_tx_packet_data = 1'b1;
-				nxt_data_set = 1'b1;
+				nxt_data = tx_packet_data;
 				
 			end
 			else if (stored_packet == 2'b10) begin
@@ -135,20 +152,71 @@ always_comb begin
 	DATA:begin
 		nxt_get_tx_packet_data = 1'b0;
 		nxt_count_packet = 1'b0;
+		
 		if(bit_stuff_en == 1'b1) begin	
 			nxt_state = STUFFER_BIT;
 		end
-		else if(bytecomplete == 1'b1 && data_sent == 1'b1) begin
-				nxt_state = EOP1;
-				nxt_data_set = 1'b0;
+		else if(bytecomplete == 1'b1 && data_sent == 1'b1 && clk12 == 1'b1) begin
+				nxt_state = WAIT1;
+				nxt_data = 8'b00000000;
+				nxt_en = 1'b1;
 		end
-		else if(bytecomplete == 1'b1) begin
+		else if(bytecomplete == 1'b1&&clk12 == 1'b1) begin
 			nxt_state = DATA;
-			nxt_count_packet = 1'b1;
-			nxt_get_tx_packet_data = 1'b1;
+			nxt_en = 1'b1;
+			nxt_data = tx_packet_data;
 		end
+		else if(bytealmostcomplete == 1'b1&&clk12 == 1'b1) begin
+			nxt_get_tx_packet_data = 1'b1;
+			end
 		else begin
 			nxt_state = DATA;
+			nxt_en = 1'b0;
+		end
+	end
+	WAIT1:begin
+		nxt_en = 1'b0;
+		if(bytecomplete == 1'b1 && clk12 == 1'b1) begin
+			nxt_state = WAIT2;
+			nxt_en = 1'b1;
+			nxt_data = 8'b00000000;		
+		end
+		else begin
+			nxt_state = WAIT1;
+			nxt_en = 1'b0;
+		end
+	end
+	WAIT2:begin
+		
+		if(bytecomplete == 1'b1 && clk12 == 1'b1) begin
+			nxt_state = CRC1;
+			stored_crc = CRC;
+			nxt_data = CRC[7:0];
+			nxt_en = 1'b1;
+		end
+		else begin
+			nxt_state = WAIT2;
+			nxt_en = 1'b0;
+		end
+	end
+	CRC1:begin
+		if(bytecomplete == 1'b1 && clk12 == 1'b1) begin
+			nxt_state = CRC2;
+			nxt_en = 1'b1;		
+			nxt_data = stored_crc[15:8];
+		end
+		else begin
+			nxt_en = 1'b0;
+			nxt_state = CRC1;
+		end
+	end
+	CRC2:begin	
+		nxt_en = 1'b0;
+		if(bytecomplete == 1'b1 && clk12 == 1'b1) begin
+			nxt_state = EOP1;
+		end
+		else begin
+			nxt_state = CRC2;
 		end
 	end
 	EOP1:begin

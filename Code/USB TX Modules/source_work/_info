@@ -9,33 +9,33 @@ z2
 cModel Technology
 Z0 d/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules
 T_opt
-!s110 1574719813
-VZgfoW62g`cO99I8VImEM=1
+!s110 1574802757
+VbA7Z01jaH0^`0f@nR6Ik:2
 Z1 04 9 4 work tb_usb_tx fast 0
-=1-f48e388b92e4-5ddc5145-90ec3-65d2
+=16-f48e388dbf10-5ddd9545-5f62a-7d20
 Z2 o-quiet -auto_acc_if_foreign -work source_work -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim +acc
 n@_opt
 Z3 OL;O;10.3b;59
 R0
 T_opt1
-!s110 1574727757
-V]KSR]0JW^c>hM`:`zCn]G1
+!s110 1574805531
+VgUMG1lA:L3GU>Sf7:0g]g1
 R1
-=7-308d99b2fa67-5ddc704d-8c9aa-7b89
+=5-f48e388dbf10-5ddda01b-67a51-6b7
 R2
 n@_opt1
 R3
 vCDL_CRC_16
 Z4 DXx6 sv_std 3 std 0 22 <EOTafDcUY:cQeO^ICn]m3
-Z5 !s110 1574634140
+Z5 !s110 1574799713
 !i10b 1
-!s100 AJZ3076K9k8^ld=WIGe=;2
-IAMg^A]QkC1Z`IC1JkXK680
+!s100 <]Zc1W3hb]@_G8HeVZ7Ri0
+I[k>zE0<^;K=z?TZozU8M43
 Z6 V`JN@9S9cnhjKRR_L]QIcM3
 !s105 CDL_CRC_16_sv_unit
 S1
 R0
-w1574192233
+w1574799196
 8source/CDL_CRC_16.sv
 Fsource/CDL_CRC_16.sv
 L0 9
@@ -43,7 +43,7 @@ Z7 OL;L;10.3b;59
 r1
 !s85 0
 31
-!s108 1574634140.142953
+!s108 1574799713.509770
 !s107 source/CDL_CRC_16.sv|
 !s90 -sv|-work|source_work|source/CDL_CRC_16.sv|
 !i113 0
@@ -51,61 +51,84 @@ Z8 o-sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 n@c@d@l_@c@r@c_16
 vflex_counter
 R4
-!s110 1574727098
+R5
 !i10b 1
 !s100 gg:cTPZek<>F1UmN_F^JC2
-IHgA;Mlz8:[??f^1_n7gV;1
+IA<ANL2mzW4dleImdM@>DR1
 R6
 !s105 flex_counter_sv_unit
 S1
 R0
-w1574727091
-8/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter.sv
-F/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter.sv
+w1574797937
+8source/flex_counter.sv
+Fsource/flex_counter.sv
 L0 1
 R7
 r1
 !s85 0
 31
-!s108 1574727097.998950
-!s107 /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter.sv|
-!s90 -reportprogress|300|-sv|-work|source_work|-L|mtiAvm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter.sv|
+!s108 1574799713.810347
+!s107 source/flex_counter.sv|
+!s90 -sv|-work|source_work|source/flex_counter.sv|
+!i113 0
+R8
+vflex_counter2
+R4
+!s110 1574803608
+!i10b 1
+!s100 AC32fQ@B=nJP>C[SmEHc[1
+IFf@4z_Y`fIN?_7TmcVQ`_1
+R6
+!s105 flex_counter2_sv_unit
+S1
+R0
+w1574800791
+8source/flex_counter2.sv
+Fsource/flex_counter2.sv
+L0 1
+R7
+r1
+!s85 0
+31
+!s108 1574803608.077558
+!s107 source/flex_counter2.sv|
+!s90 -sv|-work|source_work|source/flex_counter2.sv|
 !i113 0
 R8
 vflex_pts_sr
 R4
-!s110 1574726920
+!s110 1574803607
 !i10b 1
 !s100 fb4kcIN9nnDg;a1]03GCS0
-I=H8UXenYim<lA1z7^FF?Y3
+Ik6ZoY8FUPAIF3U9W50UN72
 R6
 !s105 flex_pts_sr_sv_unit
 S1
 R0
-w1574726914
-8/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv
-F/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv
+w1574801263
+8source/flex_pts_sr.sv
+Fsource/flex_pts_sr.sv
 L0 1
 R7
 r1
 !s85 0
 31
-!s108 1574726920.131807
-!s107 /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv|
-!s90 -reportprogress|300|-sv|-work|source_work|-L|mtiAvm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_pts_sr.sv|
+!s108 1574803607.713791
+!s107 source/flex_pts_sr.sv|
+!s90 -sv|-work|source_work|source/flex_pts_sr.sv|
 !i113 0
 R8
 vtb_usb_tx
 R4
-!s110 1574727748
+!s110 1574805489
 !i10b 1
-!s100 3je5^l]Ej^9zBV2jOX<eH1
-IkAFka`UAWQZANAOoJc8aJ1
+!s100 gc`zallFTn8UkcL[dWP[81
+I^3SiSZDA;l1IoOA@8mgDk2
 R6
 !s105 tb_usb_tx_sv_unit
 S1
 R0
-w1574727316
+w1574804142
 8/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv
 F/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv
 L0 11
@@ -113,14 +136,14 @@ R7
 r1
 !s85 0
 31
-!s108 1574727748.101480
+!s108 1574805489.778238
 !s107 /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv|
 !s90 -reportprogress|300|-sv|-work|source_work|-L|mtiAvm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv|
 !i113 0
 R8
 vusb_bit_stuffer
 R4
-R5
+Z9 !s110 1574799714
 !i10b 1
 !s100 6Oe_RJ6gQj>e4?MV5l`lj0
 IKALQJ[=nhdlD8K>?fi`2G1
@@ -136,22 +159,22 @@ R7
 r1
 !s85 0
 31
-!s108 1574634140.812969
+!s108 1574799714.320585
 !s107 source/usb_bit_stuffer.sv|
 !s90 -sv|-work|source_work|source/usb_bit_stuffer.sv|
 !i113 0
 R8
 vusb_controller
 R4
-!s110 1574727752
+!s110 1574805485
 !i10b 1
-!s100 [=lI2;_6U=OhYUCT;Kh7_2
-I@l15^QYd8XD]OdOV[P9SR0
+!s100 >=i;PR;?@kdF9ihOlJ^kP0
+IB75d0_F>NmzJC[]Ag_c5<1
 R6
 !s105 usb_controller_sv_unit
 S1
 R0
-w1574727735
+w1574805435
 8/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv
 F/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv
 L0 1
@@ -159,14 +182,14 @@ R7
 r1
 !s85 0
 31
-!s108 1574727752.106332
+!s108 1574805485.740282
 !s107 /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv|
 !s90 -reportprogress|300|-sv|-work|source_work|-L|mtiAvm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv|
 !i113 0
 R8
 vusb_encoder
 R4
-Z9 !s110 1574724791
+R9
 !i10b 1
 !s100 1bHcI4gDI:Uc@==Ob]Fa90
 IBW94]6=hmjklkln>E0Whj0
@@ -182,14 +205,14 @@ R7
 r1
 !s85 0
 31
-!s108 1574724791.824064
+!s108 1574799714.690559
 !s107 source/usb_encoder.sv|
 !s90 -sv|-work|source_work|source/usb_encoder.sv|
 !i113 0
 R8
 vusb_pts
 R4
-Z10 !s110 1574724792
+R9
 !i10b 1
 !s100 CIeYD0lS;d[E0`_OFEzch1
 IBfcaAF?O?T^;0zTUM24^a0
@@ -205,22 +228,22 @@ R7
 r1
 !s85 0
 31
-!s108 1574724791.967678
+!s108 1574799714.876860
 !s107 source/usb_pts.sv|
 !s90 -sv|-work|source_work|source/usb_pts.sv|
 !i113 0
 R8
 vusb_timer
 R4
-R10
+!s110 1574799715
 !i10b 1
-!s100 i@G7loVI:@9Q]JUnX9TfP1
-IN2i5Ai@m6dCY<74aDaQHh2
+!s100 0E^YcWh]J44`X:k;[dO_63
+IUzFoXPL[n?E6OBm5L0Z[F1
 R6
 !s105 usb_timer_sv_unit
 S1
 R0
-w1574721119
+w1574799223
 8source/usb_timer.sv
 Fsource/usb_timer.sv
 L0 1
@@ -228,31 +251,31 @@ R7
 r1
 !s85 0
 31
-!s108 1574724792.116790
+!s108 1574799715.085655
 !s107 source/usb_timer.sv|
 !s90 -sv|-work|source_work|source/usb_timer.sv|
 !i113 0
 R8
 vusb_tx
 R4
-R9
+!s110 1574805528
 !i10b 1
-!s100 nR=YLIH@`^Z:lf7L2=`9g1
-IejoKk>>L_GQa8Xim8^FX30
+!s100 >MHA87ZfUZMBeYg@HlJbn3
+IoLGVET6PzRLTAH@SIfoaT2
 R6
 !s105 usb_tx_sv_unit
 S1
 R0
-w1574724743
-8source/usb_tx.sv
-Fsource/usb_tx.sv
+w1574805508
+8/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv
+F/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv
 L0 1
 R7
 r1
 !s85 0
 31
-!s108 1574724791.467631
-!s107 source/usb_tx.sv|
-!s90 -sv|-work|source_work|source/usb_tx.sv|
+!s108 1574805528.737727
+!s107 /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv|
+!s90 -reportprogress|300|-sv|-work|source_work|-L|mtiAvm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_tx.sv|
 !i113 0
 R8
