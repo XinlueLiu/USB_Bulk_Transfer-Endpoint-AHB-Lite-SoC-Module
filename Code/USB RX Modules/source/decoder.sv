@@ -15,6 +15,7 @@ module decoder(input wire clk,
 reg next_d_plus_sync;
 reg next_d_orig;
 reg next_d_minus_sync;
+reg next_eop_detected;
 
 always_ff @ (posedge clk, negedge n_rst) 
 begin
@@ -22,11 +23,13 @@ begin
     next_d_plus_sync <= 1'b1;
     d_orig <= 1'b1;
     next_d_minus_sync <= 1'b0;
+    eop_detected <= 1'b0;
   end
   else begin
     next_d_plus_sync <= d_plus_sync;
     d_orig <= next_d_orig;
-    next_d_minus_sync <= d_minus_sync;
+    next_d_minus_sync <= d_minus_sync;  
+    eop_detected <= next_eop_detected;
   end
 end
 
@@ -44,9 +47,11 @@ begin
    //end
 always_comb
 begin
-	eop_detected = 1'b0;
+	next_eop_detected = eop_detected;
+	eop_detected = 0;
 	if ((next_d_minus_sync == 0) && (next_d_plus_sync == 0)) begin
-		eop_detected = 1'b1;
+		next_eop_detected = 1'b1;
+		//eop_detected = 1'b1;
 	end
 end
 
