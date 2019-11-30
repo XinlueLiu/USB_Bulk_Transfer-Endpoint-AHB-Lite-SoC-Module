@@ -165,7 +165,7 @@ module tb_usb_rx();
   
   task check_outputs;
      input string check_tag;
-  begin
+  /*begin
     tb_check = 1'b1;
     tb_mismatch = 1'b0;
     // Don't need to syncrhonize relative to clock edge for this design's outputs since they should have been stable for quite a while given the 2 Data Period gap between the end of the packet and when this should be used to check the outputs
@@ -192,6 +192,31 @@ module tb_usb_rx();
       tb_mismatch = 1'b1;
     end
    //#(0.1);
+    tb_check = 1'b0;
+  end*/
+begin
+    tb_check = 1'b1;
+    tb_mismatch = 1'b0;
+    // Don't need to syncrhonize relative to clock edge for this design's outputs since they should have been stable for quite a while given the 2 Data Period gap between the end of the packet and when this should be used to check the outputs
+    
+    // Data recieved should match the data sent
+    assert(tb_expected_rx_packet_data != tb_rx_packet_data) begin
+      $error("Test case %0d: Test data %s packet was not correctly received", check_tag, tb_test_num);
+      tb_mismatch = 1'b1;
+     end 
+    // Should tell what kind of packet is being transmitted and/or where the receiver is in processing the current packet (e.g. "DONE")
+    assert(tb_expected_rx_packet != tb_rx_packet) begin
+      $error("Test case %0d: INCORRECT RX_packet token %s signal", check_tag, tb_test_num);
+      tb_mismatch = 1'b1;
+    end
+    // For every 'data packet' regrardless of token, this should be asserted once the data is ready and hasn't failed. 
+    assert(tb_expected_store_rx_packet_data != tb_store_rx_packet_data) begin
+      $error("Test case %0d: DUT DID not correctly asserted the store rx packet data flag", tb_test_num);
+      tb_mismatch = 1'b1;
+    end
+   //#(0.1);
+    tb_check = 1'b0;
+  end
   endtask
   
   always
@@ -312,7 +337,7 @@ module tb_usb_rx();
 
 // SEND DATA0 TOKEN
      // Sync byte
-    tb_test_data       = 8'b10000000; // sync byte   
+/*    tb_test_data       = 8'b10000000; // sync byte   
     //expected output behavior
     tb_expected_rx_packet_data       = 0;
     tb_expected_rx_packet            = 3'b000;
@@ -361,7 +386,7 @@ module tb_usb_rx();
     send_eop(NORM_DATA_PERIOD);
 
     check_outputs("DATA0");
-
+*/
     
     
     
@@ -415,13 +440,13 @@ Test case 2: Norminal ACK Packet Reception
 
     check_outputs("IN");
 
-    reset_dut();
+    reset_dut();*/
 
 //****************************************************
 // SEND AN ACK TOKEN
 
     // sync byte
-    tb_test_data = 8'b10000000;
+    /*tb_test_data = 8'b10000000;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
 
 
