@@ -8,6 +8,7 @@ input wire count_enable,
 input wire  [NUM_CNT_BITS-1:0]rollover_value,
 input wire clear,
 input wire n_rst,
+input wire halt,
 output reg [NUM_CNT_BITS-1:0]count_out,
 output reg rollover_flag,
 output reg one_before_flag
@@ -31,7 +32,11 @@ begin
 end
 always_comb
 begin : NXT_LOGIC
-	if(clear == 1'b1)
+	if(halt == 1'b1) begin
+		next_count_out = count_out;
+		next_rollover_flag = rollover_flag;
+	end
+	else if(clear == 1'b1)
 	begin
 		nxt_one_before_flag = 1'b0;
 		next_count_out = 1;

@@ -39,14 +39,15 @@ usb_controller A(.clk(clk),
 usb_bit_stuffer B(.clk(clk),
 		.clk12(clk12),
 		.n_rst(n_rst),
-		.serial_in(serial_out),
-		.bit_stuff_en(bit_stuff_en));
+		.bit_stuff_en(bit_stuff_en),
+		.serial_in(serial_out));
 
 usb_pts C(	.clk(clk),
 		.n_rst(n_rst),
 		.clk12(clk12),
 		.data(data_out),
 		.en(en_pts),
+		.bit_stuff_en(bit_stuff_en),
 		.serial_data(serial_out),
 		.prev_parallel(prev_parallel));
 usb_encoder D(	.clk(clk),
@@ -56,22 +57,23 @@ usb_encoder D(	.clk(clk),
 		.eop_reset(eop_reset),
 		.enc_en(enc_en),
 		.serial_out(serial_out),
-		.stuff_bit_en(bit_stuff_en),
+		.bit_stuff_en(bit_stuff_en),
 		.bytecomplete(bytecomplete),
 		.dminus_out(dminus_out),
 		.dplus_out(dplus_out));
 
 CDL_CRC_16 E(	.clk(clk),
 		.n_rst(n_rst),
+		.clk12(clk12),
 		.reset_crc(!crc_en),
 		.input_data(serial_out),
 		.inverted_crc(CRC));
 usb_timer F(	.clk(clk),
 		.n_rst(n_rst),
 		.serial_out(serial_out),
+		.bit_stuff_en(bit_stuff_en),
 		.clk12(clk12),
 		.timer_en(timer_en),
 		.bytecomplete(bytecomplete),
 		.bytealmostcomplete(bytealmostcomplete));
-
 endmodule

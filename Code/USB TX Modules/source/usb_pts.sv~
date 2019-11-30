@@ -4,6 +4,7 @@ input wire n_rst,
 input wire clk12,
 input wire [7:0]data,
 input wire en,
+input wire bit_stuff_en,
 output reg serial_data,
 output reg [7:0]prev_parallel);
 

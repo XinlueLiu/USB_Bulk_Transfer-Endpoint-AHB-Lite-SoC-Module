@@ -1,9 +1,9 @@
 QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-Start time: 15:21:54 on Nov 26,2019
+Start time: 17:16:38 on Nov 30,2019
 vlog -sv -work source_work source/usb_bit_stuffer.sv 
 -- Compiling module usb_bit_stuffer
 
 Top level modules:
 	usb_bit_stuffer
-End time: 15:21:54 on Nov 26,2019, Elapsed time: 0:00:00
+End time: 17:16:38 on Nov 30,2019, Elapsed time: 0:00:00
 Errors: 0, Warnings: 0

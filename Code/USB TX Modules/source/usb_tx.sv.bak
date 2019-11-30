@@ -24,7 +24,7 @@ usb_controller A(.clk(clk),
 		.CRC(CRC),
 		.prev_parallel(prev_parallel),
 		.bit_stuff_en(bit_stuff_en),
-		.serial_out(serial_out)
+		.serial_out(serial_out),
 		.bytecomplete(bytecomplete),
 		.en(en_pts),
 		.enc_en(enc_en),

@@ -73,19 +73,15 @@ always_ff@(posedge clk,negedge n_rst) begin
 		get_tx_packet_data<=nxt_get_tx_packet_data;
 	end
 end
-flex_counter #(7) X(.clk(clk),
+flex_counter3#(7) X(.clk(clk),
 		  .count_enable(nxt_get_tx_packet_data),
 		  .clear(1'b0),
 		  .n_rst(n_rst),
+		  .halt(bit_stuff_en),
 		  .count_out(cnt_out),
 		  .rollover_flag(data_sent),
-	      .rollover_value(tx_packet_data_size+ 1'b1));
-flex_counter #(4) Y(.clk(clk),.n_rst(n_rst),
-			.clear(!serial_out),
-			.count_enable(serial_out),
-			.count_out(cnt_out2),
-			.rollover_flag(bit_stuf_en),
-			.rollover_value(4'b0111));
+	      .rollover_value(tx_packet_data_size+1'b1));
+
 
 always_comb begin
 	nxt_count_packet = bytecomplete&&data_set;
@@ -134,6 +130,7 @@ always_comb begin
 			if(stored_packet ==2'b01) begin
 				nxt_state = DATA;
 				nxt_en = 1'b1;
+				nxt_CRC_en = 1'b1;
 				nxt_data = tx_packet_data;
 				
 			end
@@ -161,6 +158,7 @@ always_comb begin
 				nxt_state = WAIT1;
 				nxt_data = 8'b00000000;
 				nxt_en = 1'b1;
+				nxt_CRC_en = 1'b0;
 		end
 		else if(bytecomplete == 1'b1&&clk12 == 1'b1) begin
 			nxt_state = DATA;
