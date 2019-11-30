@@ -253,7 +253,7 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_NAK;  //8'b10100101
-  #(USB_CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 0.1);
   tb_tx_packet = 0;
   test_stream(SYNC_BYTE);
   test_stream(NAK_BYTE);
@@ -274,7 +274,7 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_ACK;
-  #(USB_CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 0.1);
   tb_tx_packet = 0;
   test_stream(SYNC_BYTE);
   test_stream(ACK_BYTE);
@@ -304,7 +304,7 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
-  #(USB_CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 0.1);
   tb_tx_packet = 0;
   test_stream(SYNC_BYTE);
   test_stream(DATA_BYTE); //00111100
@@ -336,7 +336,7 @@ initial begin
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
-  #(USB_CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 0.1);
   tb_tx_packet = 0;
   test_stream(result_list[0]);
   tb_expected_dplus_out = !prev_dplus;
