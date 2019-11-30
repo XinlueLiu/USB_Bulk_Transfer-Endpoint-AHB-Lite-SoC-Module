@@ -473,7 +473,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000002};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   execute_transactions(2);
 
@@ -502,7 +502,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000004};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
   execute_transactions(3);
@@ -533,7 +533,7 @@ initial begin
   tb_test_data_reg72 = '{32'h000000008};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1);
@@ -568,7 +568,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000002};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   execute_transactions(2);
 
@@ -597,7 +597,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000004};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
   execute_transactions(3);
@@ -628,7 +628,7 @@ initial begin
   tb_test_data_reg72 = '{32'h000000008};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1);
@@ -667,7 +667,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000008};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd1);
@@ -703,7 +703,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000016};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
@@ -748,7 +748,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000032};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
@@ -809,7 +809,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000008};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd1);
@@ -846,7 +846,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000016};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
@@ -891,7 +891,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000032};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
@@ -947,7 +947,7 @@ initial begin
 
   // Enqueue the needed transactions
   tb_test_data = '{32'd1000}; 
-  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data, BURST_SINGLE, 1'b1, 2'd0);
   
   tb_tx_transfer_active = 1'b0;
   // Run the transactions via the model
@@ -966,7 +966,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000004};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd66, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   execute_transactions(2);
 
@@ -984,7 +984,7 @@ initial begin
   tb_test_data_reg72 = '{32'h00000006};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd66, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd67, '{32'hBACD}, BURST_INCR4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd68, '{32'hBCCD}, BURST_INCR4, 1'b0, 2'd1);
@@ -1007,7 +1007,7 @@ initial begin
   // Enqueue the needed transactions
   tb_test_data = '{32'd1000}; 
   tb_rx_data_ready = 1'b1;
-  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_SINGLE, 1'b1, 2'd2);
+  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_SINGLE, 1'b1, 2'd0);
   
   // Run the transactions via the model
   execute_transactions(1);
@@ -1034,7 +1034,7 @@ initial begin
   tb_test_data_reg72 = '{32'h0000008};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd1);
@@ -1069,7 +1069,7 @@ initial begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
   // Enqueue the write
-  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_INCR4, 1'b1, 2'd2);
+  enqueue_transaction(1'b1, 1'b0, 8'd80, tb_test_data, BURST_INCR4, 1'b1, 2'd0);
   
   // Run the transactions via the model
   execute_transactions(8);
@@ -1472,46 +1472,125 @@ initial begin
   init_expected_outs();
 
   // writing the ENDPOINT-TO-HOST-SIZE# ** 
-  tb_test_data = '{32'h00000002};
+  tb_test_data = '{32'h00000012};
 
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data, BURST_INCR, 1'b0, 2'd0);
   execute_transactions(1);
 
   tb_expected_buffer_reserved = 1'b0;
-  tb_expected_tx_packet_data_size = 7'd2;
+  tb_expected_tx_packet_data_size = 7'd12;
   check_outputs("after size has been written");
 
-  tb_test_data = '{32'h0000ABCD};
-
-  enqueue_transaction(1'b1, 1'b1, 8'd0, tb_test_data, BURST_INCR, 1'b0, 2'd1);
-  execute_transactions(1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCDDCBA}, BURST_INCR, 1'b0, 2'd2);
+  execute_transactions(3);
  
-  tb_expected_buffer_occupancy = 7'd2;
+  tb_expected_buffer_occupancy = 7'd12;
 
   check_outputs("after writing the proper number of bytes");
 
   @(posedge tb_clk)
-  tb_get_tx_packet_data = 1'b1;
-  
+  tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hAB;
+  tb_expected_buffer_occupancy = 11;
+  check_outputs("after reading the first byte");
 
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hDC;
+  tb_expected_buffer_occupancy = 10;
+  check_outputs("after reading the second byte");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hAB;
+  tb_expected_buffer_occupancy = 9;
+  check_outputs("after reading the first byte");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hCD;
+  tb_expected_buffer_occupancy = 8;
+  check_outputs("after reading the second byte");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hAB;
+  tb_expected_buffer_occupancy = 7;
+  check_outputs("after reading the first byte");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hBC;
+  tb_expected_buffer_occupancy = 6;
+  check_outputs("after reading the second byte");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hBA;
+  tb_expected_buffer_occupancy = 5;
+  check_outputs("after reading the first byte");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hDC;
+  tb_expected_buffer_occupancy = 4;
+  check_outputs("after reading the second byte");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hBA;
+  tb_expected_buffer_occupancy = 3;
+  check_outputs("after reading the first byte");
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
+  tb_expected_tx_packet_data = 8'hDC;
+  tb_expected_buffer_occupancy = 2;
+  check_outputs("after reading the second byte");
+  
+
+  @(posedge tb_clk)
+  tb_get_tx_packet_data = 1'b1;  
+  #(CLK_PERIOD + 0.1);  	
+  tb_get_tx_packet_data = 1'b0;
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 1;
-  check_outputs("after reading the first byte");
+  check_outputs("after reading the third byte");
 
 
   @(posedge tb_clk)
-  tb_get_tx_packet_data = 1'b1;
-  
+  tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  
   tb_get_tx_packet_data = 1'b0;
   tb_expected_buffer_occupancy = 0;
   tb_expected_tx_packet_data = 8'hAB;
   tb_tx_transfer_active = 1'b0;
-  check_outputs("after reading the second byte");
+  check_outputs("after reading the fourth byte");
+
 
   //*****************************************************************************
   // Test Case send_rx_packet_data : OUT Token Error Data Buffer Response
