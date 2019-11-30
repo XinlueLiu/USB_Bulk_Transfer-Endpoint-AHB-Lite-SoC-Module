@@ -68,9 +68,9 @@ timer Timer (.clk(clk), .n_rst(n_rst), .enable_timer(enable_timer), .invalid_bit
 
 //eop_detector EOP_detector (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_minus_sync(d_minus_sync), .shift_enable(shift_enable), .eop(eop));
 
-CDL_CRC_16 CRC_16bit (.clk(clk), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_16bit));
+CDL_CRC_16 CRC_16bit (.clk(shift_enable), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_16bit));
 
-CDL_CRC_5 CRC_5bit (.clk(clk), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_5bit));
+CDL_CRC_5 CRC_5bit (.clk(shift_enable), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_5bit));
 
 
 endmodule
