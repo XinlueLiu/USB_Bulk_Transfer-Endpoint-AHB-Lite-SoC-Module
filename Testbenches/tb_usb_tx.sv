@@ -16,7 +16,7 @@ localparam BUS_DELAY  = 800ps; // Based on FF propagation delay
 localparam USB_CLK_PERIOD = CLK_PERIOD * 8.33;
 // Preset Values
 localparam [7:0] SYNC_BYTE = 8'b10000000;
-localparam [7:0] ACK_BYTE = 8'b00100100;
+localparam [7:0] ACK_BYTE = 8'b00101101;
 localparam [7:0] NAK_BYTE = 8'b10100101;
 localparam [7:0] DATA_BYTE = 8'b00111100;
 localparam [1:0] TX_IDLE = 2'b00;
