@@ -171,7 +171,7 @@ module tb_usb_rx();
     // Don't need to syncrhonize relative to clock edge for this design's outputs since they should have been stable for quite a while given the 2 Data Period gap between the end of the packet and when this should be used to check the outputs
     
     // Data recieved should match the data sent
-    /*assert(tb_expected_rx_packet_data == tb_rx_packet_data)
+    assert(tb_expected_rx_packet_data == tb_rx_packet_data)
       $info("Test case %0d: Test data %s packet correctly received", check_tag, tb_test_num);
     else begin
       $error("Test case %0d: Test data %s packet was not correctly received", check_tag, tb_test_num);
@@ -190,22 +190,8 @@ module tb_usb_rx();
     else begin
       $error("Test case %0d: DUT DID not correctly asserted the store rx packet data flag", tb_test_num);
       tb_mismatch = 1'b1;
-    end*/
+    end
    //#(0.1);
-    assert(tb_expected_rx_packet_data != tb_rx_packet_data) begin
-	$error("Test case %0d: Test data %s packet was not correctly received", check_tag, tb_test_num);
-        tb_mismatch = 1'b1;
-    end
-    assert(tb_expected_rx_packet != tb_rx_packet) begin
-        $error("Test case %0d: INCORRECT RX_packet token %s signal", check_tag, tb_test_num);
-        tb_mismatch = 1'b1;
-    end
-    assert(tb_expected_store_rx_packet_data != tb_store_rx_packet_data) begin
-        $error("Test case %0d: DUT DID not correctly asserted the store rx packet data flag", tb_test_num);
-        tb_mismatch = 1'b1;
-    end
-    tb_check = 1'b0;
-  end
   endtask
   
   always
