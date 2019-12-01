@@ -78,9 +78,10 @@ flex_counter3#(7) X(.clk(clk),
 		  .clear(1'b0),
 		  .n_rst(n_rst),
 		  .halt(bit_stuff_en),
-		  .count_out(cnt_out),
+  .count_out(cnt_out),
 		  .rollover_flag(data_sent),
-	      .rollover_value(tx_packet_data_size+1'b1));
+	      .rollover_value(tx_packet_data_size +1'b1));
+
 
 always_comb begin
 	nxt_count_packet = bytecomplete&&data_set;
@@ -154,10 +155,15 @@ always_comb begin
 			nxt_state = STUFFER_BIT;
 		end
 		else if(bytecomplete == 1'b1 && data_sent == 1'b1 && clk12 == 1'b1) begin
+				/*nxt_state = CRC1;
+				stored_crc = CRC;
+				nxt_data = CRC[7:0];
+				nxt_en = 1'b1;	
+				nxt_CRC_en = 1'b0;	*/		
 				nxt_state = WAIT1;
 				nxt_data = 8'b00000000;
 				nxt_en = 1'b1;
-				nxt_CRC_en = 1'b0;
+				//nxt_CRC_en = 1'b0;
 		end
 		else if(bytecomplete == 1'b1&&clk12 == 1'b1) begin
 			nxt_state = DATA;
@@ -172,6 +178,23 @@ always_comb begin
 			nxt_en = 1'b0;
 		end
 	end
+	STUFFER_BIT: begin
+		
+		if(clk12 == 1'b1 && bytecomplete == 1'b1&&data_sent == 1'b1) begin
+		nxt_state = CRC1;
+		stored_crc = CRC;
+		nxt_data = CRC[7:0];
+
+		nxt_en = 1'b1;		
+		end
+		else if(clk12 == 1'b1 && bytecomplete == 1'b1) begin
+		nxt_state = DATA;
+		end
+		else begin
+		nxt_state = STUFFER_BIT;
+		
+		end
+		end
 	WAIT1:begin
 		nxt_en = 1'b0;
 		if(bytecomplete == 1'b1 && clk12 == 1'b1) begin
@@ -191,6 +214,7 @@ always_comb begin
 			stored_crc = CRC;
 			nxt_data = CRC[7:0];
 			nxt_en = 1'b1;
+			nxt_CRC_en = 1'b0;
 		end
 		else begin
 			nxt_state = WAIT2;
@@ -209,9 +233,13 @@ always_comb begin
 		end
 	end
 	CRC2:begin	
+
 		nxt_en = 1'b0;
+		if(bytealmostcomplete == 1'b1 && clk12 == 1'b1) begin
+		end
 		if(bytecomplete == 1'b1 && clk12 == 1'b1) begin
 			nxt_state = EOP1;
+			nxt_eop_en = 1'b1;
 		end
 		else begin
 			nxt_state = CRC2;
@@ -221,27 +249,28 @@ always_comb begin
 	nxt_eop_en = 1'b1;
 	if(clk12 == 1'b1) begin
 		nxt_state = EOP2;
+		nxt_eop_en = 1'b1;
 	end
 	else begin
 		nxt_state = EOP1;
 	end	
 	end
 	EOP2:begin
-	nxt_eop_en = 1'b1;
 	if(clk12 == 1'b1) begin		
 		nxt_state = EOP3;
+		nxt_eop_en = 1'b0;
+		nxt_eop_reset = 1'b1;
 	end 
 	else begin
 		nxt_state = EOP2;
 	end
 	end
 	EOP3:begin
-	nxt_eop_en = 1'b0;
-	nxt_eop_reset = 1'b1;
 	if(clk12 == 1'b1) begin	
 		nxt_state = IDLE;
 		nxt_en = 1'b0;
 		nxt_timer_en = 1'b0;
+		nxt_eop_reset = 1'b1;
 	end
 	else begin
 		nxt_state = EOP3;

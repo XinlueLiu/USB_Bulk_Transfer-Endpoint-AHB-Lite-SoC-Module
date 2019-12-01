@@ -25,7 +25,8 @@ add wave -noupdate -divider D-
 add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_dminus_out
 add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_expected_dminus_out
 add wave -noupdate -divider TX_CONTROLLER
-add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/CRC
+add wave -noupdate -radix binary /tb_usb_tx/main/A/stored_crc
+add wave -noupdate -expand -group Controller_signals -radix binary /tb_usb_tx/main/A/CRC
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/CRC_en
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/bit_stuff_en
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/bytecomplete
@@ -62,18 +63,19 @@ add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/tx_packet
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/tx_packet_data
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/tx_packet_data_size
 add wave -noupdate -divider {USB TIMER}
-add wave -noupdate -group Timer_signals -color Gold /tb_usb_tx/main/F/bytecomplete
-add wave -noupdate -group Timer_signals -color Gold /tb_usb_tx/main/F/clk
-add wave -noupdate -group Timer_signals -color Gold /tb_usb_tx/main/F/clk12
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/cnt_out
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/cnt_out2
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/cnt_out3
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/n_rst
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/rollover_valedit
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/serial_out
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/thr
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/three
-add wave -noupdate -group Timer_signals /tb_usb_tx/main/F/timer_en
+add wave -noupdate -expand -group Timer_signals -color Gold /tb_usb_tx/main/F/bytecomplete
+add wave -noupdate -expand -group Timer_signals -color Gold /tb_usb_tx/main/F/clk
+add wave -noupdate -expand -group Timer_signals -color Gold /tb_usb_tx/main/F/clk12
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/cnt_out
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/cnt_out2
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/cnt_out3
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/n_rst
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/rollover_valedit
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/serial_out
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/thr
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/three
+add wave -noupdate -expand -group Timer_signals /tb_usb_tx/main/F/timer_en
+add wave -noupdate /tb_usb_tx/main/F/nxt_rollover_valedit
 add wave -noupdate -divider USB_ENC
 add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/bytecomplete
 add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/clk
@@ -87,7 +89,6 @@ add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/n_rst
 add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/nxt_dminus
 add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/nxt_dplus
 add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/serial_out
-add wave -noupdate -group {Encoder signals} /tb_usb_tx/main/D/stuff_bit_en
 add wave -noupdate -divider {CLK 12 FLEX COUNTER}
 add wave -noupdate -group info /tb_usb_tx/main/F/A/NUM_CNT_BITS
 add wave -noupdate -group info /tb_usb_tx/main/F/A/clear
@@ -133,12 +134,10 @@ add wave -noupdate -divider {Bit Stuffer}
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/bit_stuff_en
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/clk
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/clk12
-add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/count_6_en
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/count_out
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/n_rst
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/nxt_bit_stuff_en
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/serial_in
-add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/val
 add wave -noupdate -divider Flex_PTS
 add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/NUM_BITS
 add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/SHIFT_MSB
@@ -153,15 +152,6 @@ add wave -noupdate -group {Flex PTS Signals} -radix binary /tb_usb_tx/main/C/A/p
 add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/serial_out
 add wave -noupdate -group {Flex PTS Signals} /tb_usb_tx/main/C/A/shift_enable
 add wave -noupdate -divider {Bit Stuff Counter}
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/clk
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/count_enable
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/rollover_value
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/clear
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/n_rst
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/count_out
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/rollover_flag
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/next_count_out
-add wave -noupdate -group {Bit Counter Flex Counter} /tb_usb_tx/main/A/Y/next_rollover_flag
 add wave -noupdate -divider {Bytes sent counter}
 add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/clk
 add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/count_enable
@@ -173,10 +163,10 @@ add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/rollov
 add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/next_count_out
 add wave -noupdate -expand -group {Byte sent counter} /tb_usb_tx/main/A/X/next_rollover_flag
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {8838921 ps} 0}
-quietly wave cursor active 0
-configure wave -namecolwidth 238
-configure wave -valuecolwidth 100
+WaveRestoreCursors {{Cursor 1} {7095000 ps} 0}
+quietly wave cursor active 1
+configure wave -namecolwidth 296
+configure wave -valuecolwidth 170
 configure wave -justifyvalue left
 configure wave -signalnamewidth 1
 configure wave -snapdistance 10
@@ -189,4 +179,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {7889107 ps} {8987204 ps}
+WaveRestoreZoom {0 ps} {13486474 ps}

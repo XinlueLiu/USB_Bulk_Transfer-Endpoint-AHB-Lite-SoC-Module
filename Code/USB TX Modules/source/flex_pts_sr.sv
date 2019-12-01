@@ -55,6 +55,7 @@ begin
 			new_serial_out = new_parallel_out[NUM_BITS-1];
  	  		end
 	  		else begin
+
 			new_parallel_out[NUM_BITS-1] = 0;
 			/*for(i = 0;i<=NUM_BITS-2 ; i = i+1)
 			begin

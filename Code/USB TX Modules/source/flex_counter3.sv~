@@ -29,8 +29,8 @@ end
 always_comb
 begin : NXT_LOGIC
         if(halt == 1'b1) begin
-		nxt_count_out = count_out;
-		nxt_rollover_flag = rollover_flag;
+		next_count_out = count_out;
+		next_rollover_flag = rollover_flag;
 	end
 	else if(clear == 1'b1)
 	begin
