@@ -26,6 +26,8 @@ module rcu(input wire clk,
 
 //typedef enum bit [4:0] {IDLE, RECEIVE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK16, EOP, ERROR, DONE} stateType;
 typedef enum bit [4:0] {IDLE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK16, EOP, ERROR, DONE} stateType;
+//typedef enum bit [4:0] {IDLE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK5_BUFFER, CHECK16, CHECK16_BUFFER, BUFFER_DONE, EOP, ERROR, DONE} stateType;
+
 stateType state;
 stateType next_state;
 
@@ -117,18 +119,26 @@ begin : NEXT_STATE_LOGIC
           next_state = DATAINOUT;
        end
        else begin //only know to check crc when eop is asserted, and 3 bits required to tell
-          next_state = CHECK5;
+          next_state = CHECK5; //CHECK5_BUFFER
        end
     end
+    /*CHECK5_BUFFER:
+    begin
+       next_state = CHECK5;
+    end*/
     DATA01:
     begin
        if(eop_detected != 1'b1) begin
          next_state = DATA01;
        end
        else begin
-         next_state = CHECK16;
+         next_state = CHECK16; //CHECK16_BUFFER
        end
     end
+    /*CHECK16_BUFFER:
+    begin
+       next_state = CHECK16;
+    end*/
     CHECK5:
     begin 
       if(crc_status == 2'b10) begin
@@ -156,7 +166,7 @@ begin : NEXT_STATE_LOGIC
     EOP:
     begin
       if(eop_detected) begin
-        next_state = DONE;
+        next_state = DONE; //buffer_done
       end
       else begin
         next_state = EOP;
@@ -166,6 +176,10 @@ begin : NEXT_STATE_LOGIC
     begin
       next_state = DONE;
     end
+/*    BUFFER_DONE:
+    begin
+	next_state = DONE;
+    end*/
     DONE:
     begin
       next_state = IDLE;
