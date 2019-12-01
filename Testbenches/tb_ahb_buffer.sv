@@ -72,7 +72,6 @@ reg              [7:0] tb_test_rx_data;
 string                 tb_check_tag;
 logic                  tb_mismatch;
 logic                  tb_check;
-integer                tb_i;
 bit   [DATA_MAX_BIT:0] tb_test_data_reg72 [];
 
 //*****************************************************************************
