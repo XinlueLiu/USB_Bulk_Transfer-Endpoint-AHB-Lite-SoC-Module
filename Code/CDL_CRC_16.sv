@@ -60,11 +60,11 @@ always_comb
 	if (STATE == IDLE) begin
 		next_crc = 16'hFFFF;
 	end else begin
-		next_crc[0] =  next_crc[15] ^ input_data;
-    		next_crc[1] =  next_crc[0];
-		next_crc[2] = next_crc[15] ^ next_crc[1];
-		next_crc[14:3] = next_crc[13:2];
-		next_crc[15] = next_crc[15] ^ next_crc[14];
+		next_crc[0] =  crc[15] ^ input_data;
+    		next_crc[1] =  crc[0];
+		next_crc[2] = crc[15] ^ crc[1];
+		next_crc[14:3] = crc[13:2];
+		next_crc[15] = crc[15] ^ crc[14];
 	end
 end
 
