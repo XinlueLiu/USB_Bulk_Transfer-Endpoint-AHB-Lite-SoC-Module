@@ -48,7 +48,7 @@ begin
 always_comb
 begin
 	next_eop_detected = eop_detected;
-	eop_detected = 0;
+	//eop_detected = 0;
 	if ((next_d_minus_sync == 0) && (next_d_plus_sync == 0)) begin
 		next_eop_detected = 1'b1;
 		//eop_detected = 1'b1;
