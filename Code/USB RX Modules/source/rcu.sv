@@ -16,6 +16,7 @@ module rcu(input wire clk,
            input wire [2:0] pid_status,
            input wire [1:0] crc_status,
            output reg enable_timer,
+           output reg clear,
            output reg check_pid,
            output reg check_sync,
            output reg load_sync,
@@ -26,8 +27,6 @@ module rcu(input wire clk,
 
 //typedef enum bit [4:0] {IDLE, RECEIVE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK16, EOP, ERROR, DONE} stateType;
 typedef enum bit [4:0] {IDLE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK16, EOP, ERROR, DONE} stateType;
-//typedef enum bit [4:0] {IDLE, SYNC, CHECK_SYNC, PID, CHECK_PID, DATAINOUT, DATA01, CHECK5, CHECK5_BUFFER, CHECK16, CHECK16_BUFFER, BUFFER_DONE, EOP, ERROR, DONE} stateType;
-
 stateType state;
 stateType next_state;
 
@@ -119,26 +118,18 @@ begin : NEXT_STATE_LOGIC
           next_state = DATAINOUT;
        end
        else begin //only know to check crc when eop is asserted, and 3 bits required to tell
-          next_state = CHECK5; //CHECK5_BUFFER
+          next_state = CHECK5;
        end
     end
-    /*CHECK5_BUFFER:
-    begin
-       next_state = CHECK5;
-    end*/
     DATA01:
     begin
        if(eop_detected != 1'b1) begin
          next_state = DATA01;
        end
        else begin
-         next_state = CHECK16; //CHECK16_BUFFER
+         next_state = CHECK16;
        end
     end
-    /*CHECK16_BUFFER:
-    begin
-       next_state = CHECK16;
-    end*/
     CHECK5:
     begin 
       if(crc_status == 2'b10) begin
@@ -166,7 +157,7 @@ begin : NEXT_STATE_LOGIC
     EOP:
     begin
       if(eop_detected) begin
-        next_state = DONE; //buffer_done
+        next_state = DONE;
       end
       else begin
         next_state = EOP;
@@ -176,10 +167,6 @@ begin : NEXT_STATE_LOGIC
     begin
       next_state = DONE;
     end
-/*    BUFFER_DONE:
-    begin
-	next_state = DONE;
-    end*/
     DONE:
     begin
       next_state = IDLE;
@@ -192,6 +179,12 @@ begin : OUTPUT_LOGIC
   //if(state == RECEIVE) begin
   crc_check_5 = 0;
   crc_check_16 = 1'b0;
+  if(state == IDLE) begin
+    clear = 1'b1;
+  end
+  else begin
+    clear = 1'b0;
+  end
   if(state == SYNC) begin
     enable_timer = 1'b1;
   end

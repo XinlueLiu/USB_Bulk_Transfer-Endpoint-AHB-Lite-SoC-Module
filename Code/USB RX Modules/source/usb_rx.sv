@@ -1,4 +1,4 @@
-/// $Id: $
+// $Id: $
 // File name:   usb_rx.sv
 // Created:     11/12/2019
 // Author:      David Evans
@@ -36,6 +36,7 @@ reg crc_check_16;
 reg d_edge;
 reg [4:0] crc_5bit;
 reg [15:0] crc_16bit;
+reg clear;
 
 
 sync_high sync_high (.clk(clk), .n_rst(n_rst), .async_in(d_plus), .sync_out(d_plus_sync));
@@ -46,11 +47,11 @@ start_bit_det Start_bit_detector (.clk(clk), .n_rst(n_rst), .serial_in(d_plus_sy
 
 rcu controller_rcu (.clk(clk), .n_rst(n_rst), .d_edge(d_edge), .byte_complete(byte_complete), .eop_detected(eop_detected), 
         .crc_check_5(crc_check_5), 
-        .crc_check_16(crc_check_16), .sync_status(sync_status), .pid_status(pid_status), .crc_status(crc_status), .enable_timer(enable_timer), 
+        .crc_check_16(crc_check_16), .sync_status(sync_status), .pid_status(pid_status), .crc_status(crc_status), .enable_timer(enable_timer), .clear(clear), 
 	.check_pid(check_pid), .check_sync(check_sync), 
         .load_sync(load_sync), .load_pid(load_pid), .load_data(load_data), .load_error(load_error), .load_done(load_done));
 
-rx_data_buffer Rx_data_buffer (.clk(clk), .n_rst(n_rst), .byte_complete(byte_complete), .Packet_Data(Packet_Data), .clear(1'b0), .load_data(load_data), 
+rx_data_buffer Rx_data_buffer (.clk(clk), .n_rst(n_rst), .byte_complete(byte_complete), .Packet_Data(Packet_Data), .clear(clear), .load_data(load_data), 
                     .load_sync(load_sync), .load_pid(load_pid), .load_error(load_error), .load_done(load_done), 
                     .check_sync(check_sync), .check_pid(check_pid), .crc_check_5(crc_check_5), .crc_check_16(crc_check_16),   
                      .crc_5bit(crc_5bit), .crc_16bit(crc_16bit), .sync_status(sync_status), .pid_status(pid_status), .rx_packet(rx_packet), 

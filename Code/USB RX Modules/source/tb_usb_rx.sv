@@ -221,14 +221,10 @@ module tb_usb_rx();
     tb_d_plus  = 1'b1; // Initially idle
     tb_d_minus = 1'b0; // Initially idle
     
-
-
-    //11001100 00110011
     /******************************************************************************
 	Test case 0: Basic Power on Reset
     /******************************************************************************/   
-    /*
-    tb_test_num  = 0;
+/*    tb_test_num  = 0;
     tb_test_case = "Power-on-Reset";
     
     // Power-on Reset Test case: Simply populate the expected outputs
@@ -240,11 +236,10 @@ module tb_usb_rx();
     tb_expected_store_rx_packet_data       = 1'b0;
     
     // DUT Reset
-    reset_dut();
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     reset_dut();
     // Check outputs
-    check_outputs();*/
+    check_outputs("RESET"); */
 
     /******************************************************************************
      Test case 1: Norminal Token Packet Reception
@@ -264,7 +259,7 @@ module tb_usb_rx();
     // Send packet
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     // Check outputs
-    //check_outputs("SYNC");
+    check_outputs("SYNC");
 
     //OUT PID
     tb_test_data = 8'b00011110; //Out token
@@ -274,6 +269,8 @@ module tb_usb_rx();
     tb_expected_store_rx_packet_data = 1'b0;
 
     send_packet(tb_test_data, NORM_DATA_PERIOD);
+    check_outputs("OUT");
+
 
     /*//send address for the intended device
     //8'b00000000
@@ -293,14 +290,14 @@ module tb_usb_rx();
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs("OUT");
     
-    tb_test_data = 8'b00101001;
+    tb_test_data = 8'b00100001;
     tb_expected_rx_packet_data       = tb_test_data;
     tb_expected_rx_packet            = 3'b010;
     tb_expected_store_rx_packet_data = 1'b1;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs("OUT");
 
-    #(CLK_PERIOD);
+    //#(CLK_PERIOD + 0.1);
 
     //send EOP signal and Done signal
     send_eop(NORM_DATA_PERIOD); //cuts off the last bit with no delay
@@ -312,7 +309,6 @@ module tb_usb_rx();
     check_outputs("OUT");
     //8'b00011011;
 
-    reset_dut();
 
 // SEND DATA0 TOKEN
      // Sync byte
@@ -338,33 +334,24 @@ module tb_usb_rx();
     check_outputs("DATA0");
 
     //send data
-    tb_test_data = 8'b11001100;
+    tb_test_data = 8'b10101010;
     tb_expected_rx_packet_data       = tb_test_data;
     tb_expected_rx_packet            = 3'b000;
     tb_expected_store_rx_packet_data = 1'b1;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs("DATA0");
 
-    tb_test_data = 8'b00110011;
+    tb_test_data = 8'b10101111;
     tb_expected_rx_packet_data       = tb_test_data;
     tb_expected_rx_packet            = 3'b000;
     tb_expected_store_rx_packet_data = 1'b1;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs("DATA0");  
 
-    #(CLK_PERIOD);
-   
-    tb_expected_rx_packet_data       = 0;
-    tb_expected_rx_packet            = 3'b101;
-    tb_expected_store_rx_packet_data = 1'b0;    
-
-    send_eop(NORM_DATA_PERIOD);
-
-    check_outputs("DATA0");
-    //16 bit crc
-    tb_test_data = 8'b01011010;
+   //16 bit crc
+    tb_test_data = 8'b11111111;
     send_packet(tb_test_data,NORM_DATA_PERIOD);
-    tb_test_data = 8'b11101011;
+    tb_test_data = 8'b11101000;
     send_packet(tb_test_data,NORM_DATA_PERIOD);
 
     tb_expected_rx_packet_data       = 0;
@@ -375,12 +362,13 @@ module tb_usb_rx();
 
     check_outputs("DATA0");
 
-
+    
+    
     
 /******************************************************************************
 Test case 2: Norminal ACK Packet Reception
 /******************************************************************************/
-    /*reset_dut();
+    reset_dut();
     tb_test_num  += 1;
     tb_test_case = " Norminal ACK Packet Reception";
     
@@ -408,14 +396,14 @@ Test case 2: Norminal ACK Packet Reception
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs("IN");
     
- //send data field of the token packet 0000000 0001 01001
+ //send data field of the token packet 0000000 0001 00001
     tb_test_data = 8'b00000000;
     tb_expected_rx_packet_data       = 0;
     tb_expected_rx_packet            = 3'b001;
     tb_expected_store_rx_packet_data = 1'b1;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
     check_outputs("IN");
-    tb_test_data = 8'b00101010;
+    tb_test_data = 8'b00100001;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
 
     tb_expected_rx_packet_data       = 0;
@@ -427,13 +415,16 @@ Test case 2: Norminal ACK Packet Reception
 
     check_outputs("IN");
 
-    reset_dut();*/
 
 //****************************************************
 // SEND AN ACK TOKEN
 
+    reset_dut();
+    tb_test_num  += 1;
+    tb_test_case = " Norminal ACK Packet Reception";
+
     // sync byte
-    /*tb_test_data = 8'b10000000;
+    tb_test_data = 8'b10000000;
     send_packet(tb_test_data, NORM_DATA_PERIOD);
 
 
@@ -451,7 +442,7 @@ Test case 2: Norminal ACK Packet Reception
    
     send_eop(NORM_DATA_PERIOD);
 
-    check_outputs("ACK");*/
+    check_outputs("ACK");
     /******************************************************************************
      Test case 3: Invalid token packet reception, tokens for incorrect address/endpoints & incorrect crc
     /******************************************************************************
@@ -498,7 +489,7 @@ Test case 2: Norminal ACK Packet Reception
      Test case 3: Invalid packet reception, including premature EOP errors, incorrect sync fields, 
 		  and invalid or unsupprted PID fields
     /******************************************************************************/
-    /*reset_dut();
+    reset_dut();
     tb_test_num  += 1;
     tb_test_case = "Invalid packet reception";
     
@@ -530,7 +521,8 @@ Test case 2: Norminal ACK Packet Reception
     tb_expected_rx_packet_data = 0; //this
     tb_expected_rx_packet = 3'b101; //DONE signal
     tb_expected_store_rx_packet_data = 1'b0;
-    check_outputs("EOP");*/
+    check_outputs("EOP");
 
   end
 endmodule 
+
