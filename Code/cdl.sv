@@ -107,20 +107,4 @@ protocol_controller PROTOCOL_CONTROLLER (.clk(clk), .n_rst(n_rst),
 				.TX_Packet(tx_packet),
 				.clear(clear));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+endmodule
