@@ -52,6 +52,7 @@ begin
   if(n_rst == 1'b0) begin
     pid <= 8'b0;
     rx_packet_data <= 8'b0;
+    store_rx_packet_data <= 0;
     rx_packet <= IDLE;
     sync_byte <= 0;
   end
