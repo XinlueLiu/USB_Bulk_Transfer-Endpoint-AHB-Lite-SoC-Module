@@ -249,6 +249,7 @@ begin
    tb_store_rx_packet_data = 1'b1;
    #(CLK_PERIOD + 0.1);
    tb_store_rx_packet_data = 1'b0;
+   #(CLK_PERIOD + 0.1);
 end
 endtask
 
@@ -460,7 +461,7 @@ initial begin
   // Test Case: single value reads/writes 1 byte
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "single value reads/writes 1 byte";
+  /*tb_test_case     = "single value reads/writes 1 byte";
   tb_test_case_num = tb_test_case_num + 1;
 
   // Reset the DUT to isolate from prior test case
@@ -1073,7 +1074,7 @@ initial begin
   
   // Run the transactions via the model
   execute_transactions(8);
-
+*/
 
 
 
@@ -1092,7 +1093,6 @@ initial begin
   // Reset the DUT to isolate from prior test case
   reset_dut();
   init_expected_outs();
-
   // assume an OUT token got sent and act as though it did
   tb_rx_transfer_active = 1'b1;
   
@@ -1497,6 +1497,7 @@ initial begin
 
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 1;
@@ -1508,6 +1509,7 @@ initial begin
 
   #(CLK_PERIOD + 0.1);  
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_buffer_occupancy = 0;
   tb_expected_tx_packet_data = 8'hAB;
   tb_tx_transfer_active = 1'b0;
@@ -1553,6 +1555,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDB;
   tb_expected_buffer_occupancy = 15;
   check_outputs("after reading the first byte");
@@ -1561,6 +1564,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAC;
   tb_expected_buffer_occupancy = 14;
   check_outputs("after reading the second byte");
@@ -1569,6 +1573,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 13;
   check_outputs("after reading the first byte");
@@ -1577,6 +1582,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 12;
   check_outputs("after reading the second byte");
@@ -1585,6 +1591,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 11;
   check_outputs("after reading the first byte");
@@ -1593,6 +1600,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 10;
   check_outputs("after reading the second byte");
@@ -1601,6 +1609,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 9;
   check_outputs("after reading the first byte");
@@ -1609,6 +1618,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 8;
   check_outputs("after reading the second byte");
@@ -1617,6 +1627,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 7;
   check_outputs("after reading the first byte");
@@ -1625,6 +1636,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBC;
   tb_expected_buffer_occupancy = 6;
   check_outputs("after reading the second byte");
@@ -1633,6 +1645,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBA;
   tb_expected_buffer_occupancy = 5;
   check_outputs("after reading the first byte");
@@ -1641,6 +1654,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 4;
   check_outputs("after reading the second byte");
@@ -1649,6 +1663,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBA;
   tb_expected_buffer_occupancy = 3;
   check_outputs("after reading the first byte");
@@ -1657,6 +1672,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 2;
   check_outputs("after reading the second byte");
@@ -1666,6 +1682,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 1;
   check_outputs("after reading the third byte");
@@ -1675,6 +1692,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_buffer_occupancy = 0;
   tb_expected_tx_packet_data = 8'hAB;
   tb_tx_transfer_active = 1'b0;
@@ -1730,6 +1748,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDB;
   tb_expected_buffer_occupancy = 63;
   check_outputs("after reading the first byte");
@@ -1738,6 +1757,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAC;
   tb_expected_buffer_occupancy = 62;
   check_outputs("after reading the second byte");
@@ -1746,6 +1766,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 61;
   check_outputs("after reading the first byte");
@@ -1754,6 +1775,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 60;
   check_outputs("after reading the second byte");
@@ -1762,6 +1784,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 59;
   check_outputs("after reading the first byte");
@@ -1770,6 +1793,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 58;
   check_outputs("after reading the second byte");
@@ -1778,6 +1802,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 57;
   check_outputs("after reading the first byte");
@@ -1786,14 +1811,16 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 56;
   check_outputs("after reading the second byte");
 
-@(posedge tb_clk)
+  @(posedge tb_clk)
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 55;
   check_outputs("after reading the first byte");
@@ -1802,6 +1829,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBC;
   tb_expected_buffer_occupancy = 54;
   check_outputs("after reading the second byte");
@@ -1810,6 +1838,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBA;
   tb_expected_buffer_occupancy = 53;
   check_outputs("after reading the first byte");
@@ -1818,6 +1847,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 52;
   check_outputs("after reading the second byte");
@@ -1826,6 +1856,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDB;
   tb_expected_buffer_occupancy = 51;
   check_outputs("after reading the first byte");
@@ -1834,6 +1865,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAC;
   tb_expected_buffer_occupancy = 50;
   check_outputs("after reading the second byte");
@@ -1842,6 +1874,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 49;
   check_outputs("after reading the first byte");
@@ -1850,6 +1883,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 48;
   check_outputs("after reading the second byte");
@@ -1858,6 +1892,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 47;
   check_outputs("after reading the first byte");
@@ -1866,6 +1901,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 46;
   check_outputs("after reading the second byte");
@@ -1874,6 +1910,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 45;
   check_outputs("after reading the first byte");
@@ -1882,14 +1919,16 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 44;
   check_outputs("after reading the second byte");
 
-@(posedge tb_clk)
+  @(posedge tb_clk)
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 43;
   check_outputs("after reading the first byte");
@@ -1898,6 +1937,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBC;
   tb_expected_buffer_occupancy = 42;
   check_outputs("after reading the second byte");
@@ -1906,6 +1946,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBA;
   tb_expected_buffer_occupancy = 41;
   check_outputs("after reading the first byte");
@@ -1914,6 +1955,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 40;
   check_outputs("after reading the second byte");
@@ -1922,6 +1964,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDB;
   tb_expected_buffer_occupancy = 39;
   check_outputs("after reading the first byte");
@@ -1930,6 +1973,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAC;
   tb_expected_buffer_occupancy = 38;
   check_outputs("after reading the second byte");
@@ -1938,6 +1982,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 37;
   check_outputs("after reading the first byte");
@@ -1946,6 +1991,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 36;
   check_outputs("after reading the second byte");
@@ -1954,6 +2000,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 35;
   check_outputs("after reading the first byte");
@@ -1962,6 +2009,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 34;
   check_outputs("after reading the second byte");
@@ -1970,6 +2018,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 33;
   check_outputs("after reading the first byte");
@@ -1978,6 +2027,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 32;
   check_outputs("after reading the second byte");
@@ -1986,6 +2036,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 31;
   check_outputs("after reading the first byte");
@@ -1994,6 +2045,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBC;
   tb_expected_buffer_occupancy = 30;
   check_outputs("after reading the second byte");
@@ -2002,6 +2054,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBA;
   tb_expected_buffer_occupancy = 29;
   check_outputs("after reading the first byte");
@@ -2010,6 +2063,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 28;
   check_outputs("after reading the second byte");
@@ -2018,6 +2072,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDB;
   tb_expected_buffer_occupancy = 27;
   check_outputs("after reading the first byte");
@@ -2026,6 +2081,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAC;
   tb_expected_buffer_occupancy = 26;
   check_outputs("after reading the second byte");
@@ -2034,6 +2090,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 25;
   check_outputs("after reading the first byte");
@@ -2042,6 +2099,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 24;
   check_outputs("after reading the second byte");
@@ -2050,6 +2108,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 23;
   check_outputs("after reading the first byte");
@@ -2058,6 +2117,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 22;
   check_outputs("after reading the second byte");
@@ -2066,6 +2126,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 21;
   check_outputs("after reading the first byte");
@@ -2074,6 +2135,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 20;
   check_outputs("after reading the second byte");
@@ -2082,6 +2144,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 19;
   check_outputs("after reading the first byte");
@@ -2090,6 +2153,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBC;
   tb_expected_buffer_occupancy = 18;
   check_outputs("after reading the second byte");
@@ -2098,6 +2162,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBA;
   tb_expected_buffer_occupancy = 17;
   check_outputs("after reading the first byte");
@@ -2106,6 +2171,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 16;
   check_outputs("after reading the second byte");
@@ -2114,6 +2180,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDB;
   tb_expected_buffer_occupancy = 15;
   check_outputs("after reading the first byte");
@@ -2122,6 +2189,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAC;
   tb_expected_buffer_occupancy = 14;
   check_outputs("after reading the second byte");
@@ -2130,6 +2198,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 13;
   check_outputs("after reading the first byte");
@@ -2138,6 +2207,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 12;
   check_outputs("after reading the second byte");
@@ -2146,6 +2216,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 11;
   check_outputs("after reading the first byte");
@@ -2154,6 +2225,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 10;
   check_outputs("after reading the second byte");
@@ -2162,6 +2234,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 9;
   check_outputs("after reading the first byte");
@@ -2170,6 +2243,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 8;
   check_outputs("after reading the second byte");
@@ -2178,6 +2252,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hAB;
   tb_expected_buffer_occupancy = 7;
   check_outputs("after reading the first byte");
@@ -2186,6 +2261,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBC;
   tb_expected_buffer_occupancy = 6;
   check_outputs("after reading the second byte");
@@ -2194,6 +2270,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBA;
   tb_expected_buffer_occupancy = 5;
   check_outputs("after reading the first byte");
@@ -2202,6 +2279,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 4;
   check_outputs("after reading the second byte");
@@ -2210,6 +2288,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hBA;
   tb_expected_buffer_occupancy = 3;
   check_outputs("after reading the first byte");
@@ -2218,6 +2297,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hDC;
   tb_expected_buffer_occupancy = 2;
   check_outputs("after reading the second byte");
@@ -2227,6 +2307,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  	
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_tx_packet_data = 8'hCD;
   tb_expected_buffer_occupancy = 1;
   check_outputs("after reading the third byte");
@@ -2236,6 +2317,7 @@ initial begin
   tb_get_tx_packet_data = 1'b1;  
   #(CLK_PERIOD + 0.1);  
   tb_get_tx_packet_data = 1'b0;
+  #(CLK_PERIOD + 0.1); 
   tb_expected_buffer_occupancy = 0;
   tb_expected_tx_packet_data = 8'hAB;
   tb_tx_transfer_active = 1'b0;
@@ -2276,6 +2358,7 @@ initial begin
   tb_clear = 1'b1;
   #(CLK_PERIOD + 0.1);
   tb_clear = 1'b0;
+  #(CLK_PERIOD + 0.1); 
 
   tb_expected_buffer_occupancy = 7'd0; // make sure the buffer actually cleared the data after receiving it
 
