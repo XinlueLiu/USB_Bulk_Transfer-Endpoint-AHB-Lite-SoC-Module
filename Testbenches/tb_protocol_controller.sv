@@ -242,7 +242,7 @@ initial begin
   tb_RX_Packet = 3'b010;
   tb_expected_D_Mode = 1;
   tb_expected_RX_Transfer_Active = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during OUT_MODE");
 
   tb_Buffer_Occupancy = 5;
@@ -253,7 +253,7 @@ initial begin
   init_expected_outputs();
   tb_expected_RX_Data_Ready = 1'b1;
   tb_expected_TX_Packet = 2'b11;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during OUT_ACK");
 
   #(CLK_PERIOD);
@@ -261,7 +261,7 @@ initial begin
   @(posedge tb_clk);
   tb_Buffer_Occupancy = 0;
   init_expected_outputs();
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IDLE after OUT_ACK");
 
   // Give some visual spacing between check and next test case start
@@ -284,12 +284,12 @@ initial begin
   // Check outputs for reset stateIN_MODE
   @(posedge tb_clk);
   tb_Buffer_Reserved = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
 
   tb_Buffer_Occupancy = 64;
   tb_TX_Packet_Data_Size = 64;
   tb_Buffer_Reserved = 0;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   
   @(posedge tb_clk);
   tb_RX_Packet = 3'b001;
@@ -297,13 +297,13 @@ initial begin
   tb_expected_D_Mode = 1'b0;
   tb_expected_TX_Transfer_Active = 1;
   tb_expected_TX_Packet = 2'b01;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IN_MODE");
 
   @(posedge tb_clk);
   tb_RX_Packet = 3'b011;
   init_expected_outputs();
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IDLE after IN_MODE");
 
   // Give some visual spacing between check and next test case start
@@ -330,7 +330,7 @@ initial begin
   tb_expected_D_Mode = 1;
   tb_expected_RX_Transfer_Active = 1;
   tb_expected_clear = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during OUT_WAIT");
   
   @(posedge tb_clk);
@@ -339,11 +339,11 @@ initial begin
   tb_expected_clear = 1'b1;
   tb_expected_TX_Packet = 2'b10;
   tb_expected_RX_Error = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during OUT_NAK");
 
   init_expected_outputs();
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IDLE after OUT_NAK");
 
 
@@ -355,7 +355,7 @@ initial begin
   @(posedge tb_clk);
   tb_Buffer_Occupancy = 0;
   tb_RX_Packet = 3'b010;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   
   @(posedge tb_clk);
   tb_RX_Packet = 3'b100;
@@ -363,7 +363,7 @@ initial begin
   tb_expected_D_Mode = 1;
   tb_expected_RX_Transfer_Active = 1;
   tb_expected_clear = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during OUT_WAIT from OUT_MODE");
   
   @(posedge tb_clk);
@@ -372,11 +372,11 @@ initial begin
   tb_expected_clear = 1'b1;
   tb_expected_TX_Packet = 2'b10;
   tb_expected_RX_Error = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during OUT_NAK");
 
   init_expected_outputs();
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IDLE after OUT_NAK");
 
   // Give some visual spacing between check and next test case start
@@ -402,9 +402,9 @@ initial begin
   tb_expected_TX_Packet = 2'b10;
   tb_expected_clear = 1;
   tb_expected_TX_Error = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IN_NAK");
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
 
   // From RESERVED to IN_NAK
   init_expected_outputs();
@@ -413,7 +413,7 @@ initial begin
   @(posedge tb_clk);
   tb_Buffer_Reserved = 1;
   tb_Buffer_Occupancy = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
 
   @(posedge tb_clk);
   tb_RX_Packet = 3'b001;
@@ -421,13 +421,13 @@ initial begin
   tb_expected_TX_Packet = 2'b10;
   tb_expected_clear = 1;
   tb_expected_TX_Error = 1;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IN_NAK");
   tb_Buffer_Reserved = 0;
 
   init_expected_outputs();
   tb_RX_Packet = 3'b000;
-  #(CLK_PERIOD + 0.1);
+  #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IDLE from IN_NAK");
 
   // Give some visual spacing between check and next test case start
