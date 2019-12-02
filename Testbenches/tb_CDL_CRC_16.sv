@@ -121,13 +121,8 @@ initial
     reset_dut();
     tb_reset_crc = 1'b0;
     //x^16 + x^15 + x^2 + 1
-    tb_test_data = 8'b00110011;
-    for(i = 0; i < 8; i = i + 1)
-    begin
-      tb_input_data = tb_test_data[i];
-      #CLK_PERIOD;
-    end
-
+    //data 11001100 00110011
+    //tb_test_data = 8'b00110011;
     tb_test_data = 8'b11001100;
     for(i = 0; i < 8; i = i + 1)
     begin
@@ -135,10 +130,29 @@ initial
       #CLK_PERIOD;
     end
 
+    //tb_test_data = 8'b11001100;
+    tb_test_data = 8'b00110011;
+    for(i = 0; i < 8; i = i + 1)
+    begin
+      tb_input_data = tb_test_data[i];
+      #CLK_PERIOD;
+    end
+    //for not preset to 1 and not post invert 1010100010101000
+    tb_test_data = 8'b00010101;
+    for(i = 0; i < 8; i = i + 1)
+    begin
+      tb_input_data = tb_test_data[i];
+      #CLK_PERIOD;
+    end
 
-    //for not preset to 1 and poset invert 1010100010101000
-    //1010110001001101 for preset to 1
-    //0101001110110010 for preset to 1 and post invert
+    //tb_test_data = 8'b11001100;
+    tb_test_data = 8'b00010101;
+    for(i = 0; i < 8; i = i + 1)
+    begin
+      tb_input_data = tb_test_data[i];
+      #CLK_PERIOD;
+    end
+    //for not preset to 1 and not post invert 0000000000000000
     reset_dut();
     tb_reset_crc = 1'b1;
 end
