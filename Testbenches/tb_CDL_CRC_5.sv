@@ -136,7 +136,7 @@ initial
       #CLK_PERIOD;
     end
 
-    tb_test_data = 8'b00100001;
+    tb_test_data = 8'b10000100;
     for(i = 0; i < 8; i = i + 1)
     begin
       tb_input_data = tb_test_data[i];
