@@ -121,14 +121,14 @@ initial
     reset_dut();
     tb_reset_crc = 1'b0;
     //x^16 + x^15 + x^2 + 1
-    tb_test_data = 8'b11001100;
+    tb_test_data = 8'b00110011;
     for(i = 0; i < 8; i = i + 1)
     begin
       tb_input_data = tb_test_data[i];
       #CLK_PERIOD;
     end
 
-    tb_test_data = 8'b00110011;
+    tb_test_data = 8'b11001100;
     for(i = 0; i < 8; i = i + 1)
     begin
       tb_input_data = tb_test_data[i];
