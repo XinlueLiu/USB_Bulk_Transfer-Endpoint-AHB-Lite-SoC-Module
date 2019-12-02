@@ -15,61 +15,39 @@ module CDL_CRC_5
 	output reg [4:0] inverted_crc
 );
 
-typedef enum bit {IDLE, CRC} stateType;
-
-stateType STATE;
-stateType NXT_STATE;
-reg [4:0] next_crc;
 reg [4:0] crc;
+reg [4:0] next_crc;
 
 always_ff @ (negedge n_rst, posedge clk)
 	begin: REG_LOGIC
 	if (!n_rst) begin
-		STATE <= IDLE;
-		crc <= 5'b11111;
+		//crc <= 5'b11111;
+		crc <= 0;
 	end else begin
-		STATE <= NXT_STATE;
 		crc <= next_crc;
 	end
 end
 
-always_comb
-	begin: STATE_LOGIC
-	NXT_STATE = STATE;
-	case(STATE)
-	IDLE: begin
-		if (reset_crc == 1) begin
-			NXT_STATE = IDLE;
-		end else begin
-			NXT_STATE = CRC;
-		end
-	end
-	CRC: begin
-		if (reset_crc == 1) begin
-			NXT_STATE = IDLE;
-		end else begin
-			NXT_STATE = CRC;
-		end
-	end
-	endcase
-end
-	
+assign inv = input_data ^ crc[4];
+
 always_comb 
 	begin: CRC_LOGIC
 	next_crc = crc;
-	if (STATE == IDLE) begin
+	if (reset_crc == 1) begin
 		next_crc = 5'b11111;
+		//next_crc = 0;
 	end else begin
-		next_crc[0] =  crc[4] ^ input_data;
-    		next_crc[1] =  crc[0];
-		next_crc[2] =  crc[1] ^ crc[4];
-		next_crc[3] =  crc[2];
-		next_crc[4] =  crc[3] ^ crc[4];
+		next_crc[4] =  crc[3];
+    		next_crc[3] =  crc[2];
+		next_crc[2] =  crc[1] ^ inv;
+		next_crc[1] =  crc[0];
+		next_crc[0] =  inv;
 	end
 end
 
 always_comb
 	begin: Invertion
 	inverted_crc = ~crc;
+	//inverted_crc = crc;
 	end
 endmodule 
