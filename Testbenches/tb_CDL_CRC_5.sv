@@ -1,4 +1,11 @@
 // $Id: $
+// File name:   tb_CDL_CRC_5.sv
+// Created:     12/1/2019
+// Author:      Xinlue LIu
+// Lab Section: 337-02
+// Version:     1.0  Initial Design Entry
+// Description: testbench for crc 5
+// $Id: $
 // File name:   tb_crc.sv
 // Created:     12/1/2019
 // Author:      Xinlue LIu
@@ -8,7 +15,7 @@
 
 `timescale 1ns / 10ps
 
-module tb_CDL_CRC_16();
+module tb_CDL_CRC_5();
 
 parameter CLK_PERIOD = 10;
 
@@ -16,7 +23,7 @@ reg tb_clk;
 reg tb_n_rst;
 reg tb_input_data;
 reg tb_reset_crc;
-reg [15:0] tb_inverted_crc;
+reg [4:0] tb_inverted_crc;
 
 logic tb_check;
 logic tb_mismatch;
@@ -27,7 +34,7 @@ string  tb_test_case;
 reg [7:0] tb_test_data;
 integer i;
 
-CDL_CRC_16 DUT
+CDL_CRC_5 DUT
 (
 	.clk (tb_clk),
 	.n_rst(tb_n_rst),
@@ -119,29 +126,25 @@ initial
     tb_test_case = "test crc behavior"; 
 
     reset_dut();
-    tb_reset_crc = 1'b0;
+
     //x^16 + x^15 + x^2 + 1
-    //data 11001100 00110011
-    tb_test_data = 8'b00110011;
+    tb_test_data = 8'b00000000;
+    tb_reset_crc = 1'b0;
     for(i = 0; i < 8; i = i + 1)
     begin
       tb_input_data = tb_test_data[i];
       #CLK_PERIOD;
     end
 
-    tb_test_data = 8'b11001100;
+    tb_test_data = 8'b10000100;
     for(i = 0; i < 8; i = i + 1)
     begin
       tb_input_data = tb_test_data[i];
       #CLK_PERIOD;
     end
-
-
-    //for not preset to 1 and not post invert 0010100010100101
-    //1001011000111111 for preset to 1
-    //0110100111000000 for preset to 1 and post invert
     reset_dut();
     tb_reset_crc = 1'b1;
+    
 end
 
 
