@@ -66,10 +66,17 @@ always_comb begin: PROTOCOL_CONTROLLER_NEXT_STATE_LOGIC
 		RESERVED: begin
 			if (RX_Packet == RX_IN)
 				next_state = IN_NAK;
+			else if (RX_Packet == RX_OUT)
+				next_state = OUT_WAIT;
 			else if (Buffer_Occupancy == TX_Packet_Data_Size)
 				next_state = IN_WAIT;
 		end
-		IN_WAIT: next_state = (RX_Packet == RX_IN) ? IN_MODE : IN_WAIT;
+		IN_WAIT: begin
+			if (RX_Packet == RX_OUT)
+				next_state = OUT_WAIT;
+			else if (RX_Packet == RX_IN)
+				next_state = IN_MODE;
+		end
 		IN_MODE: begin
 			if (RX_Packet == RX_NAK)
 				next_state = IN_NAK;
