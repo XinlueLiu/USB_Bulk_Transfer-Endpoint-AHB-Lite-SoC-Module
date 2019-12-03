@@ -216,10 +216,10 @@ initial begin
   #(CLK_PERIOD * 3);
 
   //*****************************************************************************
-  // Host to Endpoint Packet Sequences
+  // Valid Host to Endpoint Transfer
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Host-to-Endpoint";
+  tb_test_case     = "Valid Host to Endpoint Transfer";
   tb_test_case_num = tb_test_case_num + 1;
   
   // Expected Outputs
@@ -262,10 +262,10 @@ initial begin
   #(CLK_PERIOD * 3);
 
   //*****************************************************************************
-  // Endpoint to Host Packet Sequences
+  // Valid Endpoint to Host Transfer
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Endpoint-to-Host";
+  tb_test_case     = "Valid Endpoint to Host Transfer";
   tb_test_case_num = tb_test_case_num + 1;
   
   // Expected Outputs
@@ -307,10 +307,10 @@ initial begin
   #(CLK_PERIOD * 3);
 
   //*****************************************************************************
-  // Host to Endpoint Unavailable
+  // Endpoint sends a NAK when the buffer is not empty during a Host to Endpoint transfer
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Host-to-Endpoint Unavailable";
+  tb_test_case     = "Endpoint sends a NAK when the buffer is not empty during a Host to Endpoint transfer";
   tb_test_case_num = tb_test_case_num + 1;
   
   // Expected Outputs
@@ -384,10 +384,10 @@ initial begin
   #(CLK_PERIOD * 3);
 
   //*****************************************************************************
-  // Endpoint to Host Unavailable
+  // Endpoint sends a NAK when the data is not ready or host is unable to accept data during an Endpoint to Host transfer.
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Endpoint-to-Host Unavailable";
+  tb_test_case     = "Endpoint sends a NAK when the data is not ready or host is unable to accept data during an Endpoint to Host transfer.";
   tb_test_case_num = tb_test_case_num + 1;
   
   // Expected Outputs
@@ -465,10 +465,10 @@ initial begin
   #(CLK_PERIOD * 3);
 
   //*****************************************************************************
-  // Endpoint Unable To Accept Data From Host
+  // Endpoint sends a NAK when the buffer is reserved during a Host to Endpoint transfer
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Endpoint-to-Host Unavailable";
+  tb_test_case     = "Endpoint sends a NAK when the buffer is reserved during a Host to Endpoint transfer";
   tb_test_case_num = tb_test_case_num + 1;
   
   // Expected Outputs
