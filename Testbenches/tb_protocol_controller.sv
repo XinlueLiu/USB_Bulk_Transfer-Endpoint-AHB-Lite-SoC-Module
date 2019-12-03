@@ -432,6 +432,35 @@ initial begin
   #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IDLE from IN_NAK");
 
+
+  // From IN_MODE to IN_NAK
+  // From IDLE to RESERVED
+  @(posedge tb_clk);
+  tb_Buffer_Reserved = 1;
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+
+  // From RESERVED to IN_WAIT
+  tb_Buffer_Occupancy = 64;
+  tb_TX_Packet_Data_Size = 64;
+  tb_Buffer_Reserved = 0;
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+  
+  // From IN_WAIT to IN_MODE
+  @(posedge tb_clk);
+  tb_RX_Packet = 3'b001;
+  init_expected_outputs();
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+
+  // From IN_MODE to IN_NAK
+  @(posedge tb_clk);
+  tb_RX_Packet = 3'b110;
+  init_expected_outputs();
+  tb_expected_TX_Packet = 2'b10;
+  tb_expected_clear = 1;
+  tb_expected_TX_Error = 1;
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+  check_outputs("during IN_NAK from IN_MODE");
+
   // Give some visual spacing between check and next test case start
   #(CLK_PERIOD * 3);
 
