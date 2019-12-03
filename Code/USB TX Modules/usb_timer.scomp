@@ -1,9 +1,0 @@
-QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-Start time: 16:32:10 on Dec 02,2019
-vlog -sv -work source_work source/usb_timer.sv 
--- Compiling module usb_timer
-
-Top level modules:
-	usb_timer
-End time: 16:32:10 on Dec 02,2019, Elapsed time: 0:00:00
-Errors: 0, Warnings: 0

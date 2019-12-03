@@ -8,1259 +8,243 @@
 # //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
 # //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
 # //
-# vsim -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB "+no_glitch_msg" -coverage -voptargs="+acc" -i -t ps source_work.tb_usb_tx 
-# Start time: 17:10:56 on Dec 02,2019
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: source/tb_usb_tx.sv(214): (vopt-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
+# vsim -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB "+no_glitch_msg" -coverage -voptargs="+acc" -i -t ps mapped_work.tb_usb_tx 
+# Start time: 05:29:46 on Dec 03,2019
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: mapped/usb_tx.v(220): (vopt-2685) [TFMPC] - Too few port connections for 'X'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(220): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: source/tb_usb_tx.sv(220): (vopt-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
+# ** Warning: mapped/usb_tx.v(946): (vopt-2685) [TFMPC] - Too few port connections for 'A'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(946): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(949): (vopt-2685) [TFMPC] - Too few port connections for 'B'.  Expected 9, found 8.
+# ** Warning: mapped/usb_tx.v(949): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(953): (vopt-2685) [TFMPC] - Too few port connections for 'C'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(953): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(522): (vopt-2685) [TFMPC] - Too few port connections for 'Y'.  Expected 9, found 8.
+# ** Warning: mapped/usb_tx.v(522): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
 # Loading sv_std.std
 # Loading work.tb_usb_tx(fast)
 # Loading work.usb_tx(fast)
 # Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
+# Loading work.flex_counter3_NUM_CNT_BITS7(fast)
+# Loading work.flex_counter3_NUM_CNT_BITS7_DW01_inc_0(fast)
+# Loading work.usb_controller_DW01_inc_0(fast)
 # Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
+# Loading work.flex_counter4_NUM_CNT_BITS4(fast)
 # Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
+# Loading work.flex_pts_sr_8_0(fast)
 # Loading work.usb_encoder(fast)
 # Loading work.CDL_CRC_16(fast)
 # Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
+# Loading work.flex_counter_NUM_CNT_BITS4_1(fast)
+# Loading work.flex_counter2_NUM_CNT_BITS4(fast)
+# Loading work.flex_counter_NUM_CNT_BITS4_0(fast)
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.math_real(body)
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.dffsr(metastabilitywrapperarch)#1
+# Loading ieee.vital_timing(body)
+# Loading ieee.vital_primitives(body)
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.prim(body)
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.dffsr_core(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.hax1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.invx2(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.xor2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.oai21x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nand2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.and2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.mux2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.aoi21x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.invx1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nor2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.aoi22x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.or2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nand3x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.xnor2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.oai22x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.bufx2(behavioral)#1
+# 
+# stdin: <EOF>
 do wave.do
-# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/E/STATE'.
-# Executing ONERROR command at macro ./wave.do line 108
+# ** Error: Unable to lock WLF file "vsim.wlf". Retrying 1 times, errno 11
+# ** Error: Unable to lock WLF file "vsim.wlf". Retrying 2 times, errno 11
+# ** Error: Unable to lock WLF file "vsim.wlf". Retrying 3 times, errno 11
+# ** Error: Cannot lock WLF file: "vsim.wlf"
+#           errno 11: Resource temporarily unavailable.
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: mg76  Hostname: ecegrid-thin4.ecn.purdue.edu  ProcessID: 9942
+#           Attempting to use alternate WLF file "./wlft9HTqUw".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft9HTqUw
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/A/stored_crc'.
+# Executing ONERROR command at macro ./wave.do line 28
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/A/nxt_CRC_en'.
+# Executing ONERROR command at macro ./wave.do line 42
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/A/stored_crc'.
+# Executing ONERROR command at macro ./wave.do line 43
+# ** Error: (vish-4014) N# make[1]: Entering directory `/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules'
+# Simulating Mapped Design
+# Reading pref.tcl
+# Done simulating the mapped design
+# 
+# 
+# make[1]: Leaving directory `/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules'
+# End time: 05:32:03 on Dec 03,2019, Elapsed time: 0:02:35
+# Errors: 24, Warnings: 11
+/wave.do line 48
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/A/nxt_eop_reset'.
+# Executing ONERROR command at macro ./wave.do line 49
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/E/crc'.
+# Executing ONERROR command at macro ./wave.do line 110
 run 20000ns
-# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
-#    Time: 1884350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Send NAK test case
-#    Time: 1884350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
-#    Time: 1967650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Send ACK test case
-#    Time: 3883550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Send ACK test case
-#    Time: 3883550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Send ACK test case
-#    Time: 3966850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Send DATA test case
-#    Time: 8548350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Send DATA test case
-#    Time: 8548350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Send DATA test case
-#    Time: 8631650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.156 ns; At : 2375.188 ns
+#    Time: 2375188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[7] /CELL_CORE
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.171 ns; At : 2375.188 ns
+#    Time: 2375188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/en_reg/CELL_CORE
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 2375800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/en_reg
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 2375800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[7] 
+# ** Warning: */DFFSR_CORE SETUP  Low VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.055 ns; At : 9705.188 ns
+#    Time: 9705188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/reset_crc_reg/CELL_CORE
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.144 ns; At : 9705.188 ns
+#    Time: 9705188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\state_reg[0] /CELL_CORE
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 9705800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\state_reg[0] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 9705800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/reset_crc_reg
 # ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+#    Time: 9814610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
 # ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+#    Time: 9814610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
 # ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+#    Time: 9981210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
 # ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+#    Time: 9981210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
 # ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+#    Time: 10147810 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
 # ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+#    Time: 10147810 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
 # ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+#    Time: 10314410 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
 # ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+#    Time: 10314410 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
 # ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11963650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+#    Time: 10397710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
 # ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11963650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+#    Time: 10397710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
 # ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+#    Time: 10564310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
 # ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+#    Time: 10564310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10647610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10647610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10730910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10730910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10814210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10814210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10897510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10897510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11064110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11064110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11230710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11230710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11314010 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11314010 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11397310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11397310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11480610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11480610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11563910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11563910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11647210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11647210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11730510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11730510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output stuff bit during Bit Stuffing test case
+#    Time: 11897110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output stuff bit during Bit Stuffing test case
+#    Time: 11897110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12063710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12063710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12230310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12230310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12396910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12396910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12563510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12563510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12730110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12730110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12896710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12896710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13063310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13063310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13146610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13146610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13313210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13313210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13479810 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13479810 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13729710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13729710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13896310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13896310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
 # ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+#    Time: 13979610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
 # ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12630050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# Causality operation skipped due to absence of debug database file
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 19:44:28 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 19:44:28 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Note: (vopt-143) Recognized 1 FSM in module "usb_controller(fast)".
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11963650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11963650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12630050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:05:38 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv 
-# -- Compiling module flex_counter2
-# ** Error: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv(48): near "else": syntax error, unexpected else
-# ** Error: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv(58): near "=": syntax error, unexpected '=', expecting IDENTIFIER or TYPE_IDENTIFIER
-# ** Error: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv(62): near "=": syntax error, unexpected '=', expecting IDENTIFIER or TYPE_IDENTIFIER
-# ** Error: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv(67): near "=": syntax error, unexpected '=', expecting IDENTIFIER or TYPE_IDENTIFIER
-# ** Error: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv(72): near "=": syntax error, unexpected '=', expecting IDENTIFIER or TYPE_IDENTIFIER
-# End time: 20:05:38 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 5, Warnings: 0
-# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:05:41 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 20:05:41 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:07:51 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 20:07:51 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:07:52 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv 
-# -- Compiling module flex_counter2
-# 
-# Top level modules:
-# 	flex_counter2
-# End time: 20:07:52 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12630050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12630050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:13:34 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 20:13:35 on Dec 02,2019, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Note: (vopt-143) Recognized 1 FSM in module "usb_controller(fast)".
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12213550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12213550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12296850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12296850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12380150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12380150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:16:20 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 20:16:20 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-8009) Loading existing optimized design _opt
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12213550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12213550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12296850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12296850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12380150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12380150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:17:51 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 20:17:52 on Dec 02,2019, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:17:54 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv 
-# -- Compiling module flex_counter2
-# 
-# Top level modules:
-# 	flex_counter2
-# End time: 20:17:55 on Dec 02,2019, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12130250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12130250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12630050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:18:40 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/flex_counter2.sv 
-# -- Compiling module flex_counter2
-# 
-# Top level modules:
-# 	flex_counter2
-# End time: 20:18:41 on Dec 02,2019, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12213550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12213550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12296850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12296850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12380150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12380150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-add wave -position insertpoint  \
-sim:/tb_usb_tx/main/F/B/halt
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/CDL_CRC_16.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:24:23 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/CDL_CRC_16.sv 
-# -- Compiling module CDL_CRC_16
-# 
-# Top level modules:
-# 	CDL_CRC_16
-# End time: 20:24:23 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-add wave -position insertpoint  \
-sim:/tb_usb_tx/main/F/B/halt
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7298850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7298850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7715350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7715350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11380550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11380550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11463850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11547150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11547150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11797050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11797050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12630050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:40:35 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# ** Error: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv(201): near "end": syntax error, unexpected end, expecting ';'
-# End time: 20:40:35 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
-run -over
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:41:04 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 20:41:04 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Note: (vopt-143) Recognized 1 FSM in module "usb_controller(fast)".
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7798650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7798650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8381750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8381750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11713750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12630050 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:52:42 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 20:52:42 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:52:44 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv 
-# -- Compiling module tb_usb_tx
-# ** Warning: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv(214): (vlog-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
-# 
-# Top level modules:
-# 	tb_usb_tx
-# End time: 20:52:44 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 1
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv(214): (vopt-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7798650 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7798650 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8381750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8381750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11130650 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11213950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11213950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11297250 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11547150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11547150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12130250 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12130250 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12380150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12380150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12630050 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:59:41 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv 
-# -- Compiling module tb_usb_tx
-# ** Warning: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv(214): (vlog-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
-# 
-# Top level modules:
-# 	tb_usb_tx
-# End time: 20:59:41 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 1
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:59:46 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 20:59:46 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv(214): (vopt-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7215550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7298850 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7298850 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7382150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7465450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7548750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7632050 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7715350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7715350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8048550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8215150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8381750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8381750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8465050 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Send DATA test case
-#    Time: 8631650 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 10714150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 10714150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 10880750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 10880750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11047350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11047350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11380550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11380550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11547150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11547150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12713350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-vlog -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact {/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv}
-# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 21:14:01 on Dec 02,2019
-# vlog -reportprogress 300 -sv -work source_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/usb_controller.sv 
-# -- Compiling module usb_controller
-# 
-# Top level modules:
-# 	usb_controller
-# End time: 21:14:01 on Dec 02,2019, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart -f; run 20000ns
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Note: (vopt-143) Recognized 1 FSM in module "usb_controller(fast)".
-# Loading sv_std.std
-# Loading work.tb_usb_tx(fast)
-# Loading work.usb_tx(fast)
-# Loading work.usb_controller(fast)
-# Loading work.flex_counter3(fast)
-# Loading work.usb_bit_stuffer(fast)
-# Loading work.flex_counter4(fast)
-# Loading work.usb_pts(fast)
-# Loading work.flex_pts_sr(fast)
-# Loading work.usb_encoder(fast)
-# Loading work.CDL_CRC_16(fast)
-# Loading work.usb_timer(fast)
-# Loading work.flex_counter(fast)
-# Loading work.flex_counter2(fast)
-# ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7798650 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7798650 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7881950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 7965250 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 7965250 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8131850 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8298450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dminus' output during test_stream during Send DATA test case
-#    Time: 8465050 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Send DATA test case
-#    Time: 8631650 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 10714150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 10714150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 10880750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 10880750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11047350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11047350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11380550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11380550 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11547150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11547150 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11630450 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 11880350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
-#    Time: 12046950 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12713350 ps  Scope: tb_usb_tx.check_outputs File: /home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules/source/tb_usb_tx.sv Line: 134
+#    Time: 14062910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# End time: 05:31:47 on Dec 03,2019, Elapsed time: 0:02:01
+# Errors: 28, Warnings: 21

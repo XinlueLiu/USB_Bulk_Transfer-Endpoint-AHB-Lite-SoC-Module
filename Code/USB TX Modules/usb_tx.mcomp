@@ -1,23 +1,10 @@
 QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-Start time: 16:59:08 on Dec 02,2019
-vlog -sv -work mapped_work mapped/usb_tx.v 
--- Compiling module flex_counter3_NUM_CNT_BITS7_DW01_inc_0
--- Compiling module flex_counter3_NUM_CNT_BITS7
--- Compiling module usb_controller_DW01_inc_0
--- Compiling module usb_controller
--- Compiling module flex_counter4_NUM_CNT_BITS4
--- Compiling module usb_bit_stuffer
--- Compiling module flex_pts_sr_8_0
--- Compiling module usb_pts
--- Compiling module usb_encoder
--- Compiling module CDL_CRC_16
--- Compiling module flex_counter_NUM_CNT_BITS4_1
--- Compiling module flex_counter2_NUM_CNT_BITS4
--- Compiling module flex_counter_NUM_CNT_BITS4_0
--- Compiling module usb_timer
--- Compiling module usb_tx
+Start time: 05:29:24 on Dec 03,2019
+vlog -sv -work mapped_work source/tb_usb_tx.sv 
+-- Compiling module tb_usb_tx
+** Warning: source/tb_usb_tx.sv(220): (vlog-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
 
 Top level modules:
-	usb_tx
-End time: 16:59:09 on Dec 02,2019, Elapsed time: 0:00:01
-Errors: 0, Warnings: 0
+	tb_usb_tx
+End time: 05:29:24 on Dec 03,2019, Elapsed time: 0:00:00
+Errors: 0, Warnings: 1

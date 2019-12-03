@@ -1,9 +1,0 @@
-QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-Start time: 17:10:51 on Dec 02,2019
-vlog -sv -work source_work source/CDL_CRC_16.sv 
--- Compiling module CDL_CRC_16
-
-Top level modules:
-	CDL_CRC_16
-End time: 17:10:52 on Dec 02,2019, Elapsed time: 0:00:01
-Errors: 0, Warnings: 0

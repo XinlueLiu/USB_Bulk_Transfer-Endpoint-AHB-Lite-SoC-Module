@@ -9,18 +9,19 @@
 # //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
 # //
 # vsim -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB "+no_glitch_msg" -coverage -voptargs="+acc" -i -t ps mapped_work.tb_usb_tx 
-# Start time: 16:59:14 on Dec 02,2019
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: mapped/usb_tx.v(248): (vopt-2685) [TFMPC] - Too few port connections for 'X'.  Expected 8, found 7.
-# ** Warning: mapped/usb_tx.v(248): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
-# ** Warning: mapped/usb_tx.v(1034): (vopt-2685) [TFMPC] - Too few port connections for 'A'.  Expected 8, found 7.
-# ** Warning: mapped/usb_tx.v(1034): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
-# ** Warning: mapped/usb_tx.v(1037): (vopt-2685) [TFMPC] - Too few port connections for 'B'.  Expected 9, found 8.
-# ** Warning: mapped/usb_tx.v(1037): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
-# ** Warning: mapped/usb_tx.v(1041): (vopt-2685) [TFMPC] - Too few port connections for 'C'.  Expected 8, found 7.
-# ** Warning: mapped/usb_tx.v(1041): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
-# ** Warning: mapped/usb_tx.v(610): (vopt-2685) [TFMPC] - Too few port connections for 'Y'.  Expected 9, found 8.
-# ** Warning: mapped/usb_tx.v(610): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# Start time: 05:29:46 on Dec 03,2019
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: mapped/usb_tx.v(220): (vopt-2685) [TFMPC] - Too few port connections for 'X'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(220): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: source/tb_usb_tx.sv(220): (vopt-2182) 'idx_tx_packet_data' might be read before written in always_comb or always @* block.
+# ** Warning: mapped/usb_tx.v(946): (vopt-2685) [TFMPC] - Too few port connections for 'A'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(946): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(949): (vopt-2685) [TFMPC] - Too few port connections for 'B'.  Expected 9, found 8.
+# ** Warning: mapped/usb_tx.v(949): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(953): (vopt-2685) [TFMPC] - Too few port connections for 'C'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(953): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(522): (vopt-2685) [TFMPC] - Too few port connections for 'Y'.  Expected 9, found 8.
+# ** Warning: mapped/usb_tx.v(522): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
 # Loading sv_std.std
 # Loading work.tb_usb_tx(fast)
 # Loading work.usb_tx(fast)
@@ -47,118 +48,203 @@
 # Loading ieee.vital_primitives(body)
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.prim(body)
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.dffsr_core(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.latch(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.hax1(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.invx2(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.xor2x1(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.mux2x1(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nor2x1(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.invx1(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.oai21x1(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.aoi21x1(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.and2x1(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.aoi22x1(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nand2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.and2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.mux2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.aoi21x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.invx1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nor2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.aoi22x1(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.or2x1(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.or2x2(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nand3x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.xnor2x1(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.oai22x1(behavioral)#1
 # Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.bufx2(behavioral)#1
-# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.xnor2x1(behavioral)#1
+# 
+# stdin: <EOF>
 do wave.do
+# ** Error: Unable to lock WLF file "vsim.wlf". Retrying 1 times, errno 11
+# ** Error: Unable to lock WLF file "vsim.wlf". Retrying 2 times, errno 11
+# ** Error: Unable to lock WLF file "vsim.wlf". Retrying 3 times, errno 11
+# ** Error: Cannot lock WLF file: "vsim.wlf"
+#           errno 11: Resource temporarily unavailable.
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: mg76  Hostname: ecegrid-thin4.ecn.purdue.edu  ProcessID: 9942
+#           Attempting to use alternate WLF file "./wlft9HTqUw".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft9HTqUw
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/A/stored_crc'.
+# Executing ONERROR command at macro ./wave.do line 28
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/A/nxt_CRC_en'.
+# Executing ONERROR command at macro ./wave.do line 42
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/A/stored_crc'.
+# Executing ONERROR command at macro ./wave.do line 43
+# ** Error: (vish-4014) N# make[1]: Entering directory `/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules'
+# Simulating Mapped Design
+# Reading pref.tcl
+# Done simulating the mapped design
+# 
+# 
+# make[1]: Leaving directory `/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules'
+# End time: 05:32:03 on Dec 03,2019, Elapsed time: 0:02:35
+# Errors: 24, Warnings: 11
+/wave.do line 48
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/A/nxt_eop_reset'.
+# Executing ONERROR command at macro ./wave.do line 49
+# ** Error: (vish-4014) No objects found matching '/tb_usb_tx/main/E/crc'.
+# Executing ONERROR command at macro ./wave.do line 110
 run 20000ns
-# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
-#    Time: 1967650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Send ACK test case
-#    Time: 3883550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Send ACK test case
-#    Time: 3883550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Send ACK test case
-#    Time: 3966850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dplus' output EOP check during Send DATA test case
-#    Time: 8548350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Send DATA test case
-#    Time: 8548350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Error: Incorrect 'dplus' output EOP check during Send DATA test case
-#    Time: 8631650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.156 ns; At : 2375.188 ns
+#    Time: 2375188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[7] /CELL_CORE
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.171 ns; At : 2375.188 ns
+#    Time: 2375188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/en_reg/CELL_CORE
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 2375800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/en_reg
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 2375800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[7] 
 # ** Warning: */DFFSR_CORE SETUP  Low VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.086 ns; At : 11045.188 ns
-#    Time: 11045188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/C/rollover_flag_reg/CELL_CORE
-# ** Warning: */DFFSR_CORE SETUP  Low VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.088 ns; At : 11045.188 ns
-#    Time: 11045188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/C/\count_out_reg[1] /CELL_CORE
+#   Expected := 0.094 ns; Observed := 0.055 ns; At : 9705.188 ns
+#    Time: 9705188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/reset_crc_reg/CELL_CORE
 # ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.188 ns; Observed := 0.163 ns; At : 11045.188 ns
-#    Time: 11045188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[0] /CELL_CORE
-# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.188 ns; Observed := 0.145 ns; At : 11045.188 ns
-#    Time: 11045188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\state_reg[0] /CELL_CORE
-# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.066 ns; At : 11045.254 ns
-#    Time: 11045254 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[3] /CELL_CORE
-# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
-#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[5] /CELL_CORE
-# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
-#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[4] /CELL_CORE
-# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
-#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[3] /CELL_CORE
-# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
-#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[2] /CELL_CORE
-# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
-#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[1] /CELL_CORE
+#   Expected := 0.188 ns; Observed := 0.144 ns; At : 9705.188 ns
+#    Time: 9705188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\state_reg[0] /CELL_CORE
 # ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\state_reg[0] 
+#    Time: 9705800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\state_reg[0] 
 # ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[5] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[4] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[3] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[2] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[1] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[0] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[3] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/C/\count_out_reg[1] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/C/rollover_flag_reg
-# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.188 ns; Observed := 0.163 ns; At : 11765.188 ns
-#    Time: 11765188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[0] /CELL_CORE
-# ** Warning: DFFSR instance metastable output value decayed to a '0' value
-#    Time: 11765698 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[0] 
+#    Time: 9705800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/reset_crc_reg
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 9814610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 9814610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 9981210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 9981210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10147810 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10147810 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10314410 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10314410 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10397710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10397710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10564310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10564310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10647610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10647610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10730910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10730910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10814210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10814210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 10897510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 10897510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11064110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11064110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11230710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11230710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11314010 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11314010 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11397310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11397310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11480610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11480610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11563910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11563910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11647210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11647210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 11730510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 11730510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output stuff bit during Bit Stuffing test case
+#    Time: 11897110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output stuff bit during Bit Stuffing test case
+#    Time: 11897110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12063710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12063710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12230310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12230310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12396910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12396910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12563510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12563510 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12730110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12730110 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 12896710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 12896710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13063310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13063310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13146610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13146610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13313210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13313210 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13479810 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13479810 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13729710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13729710 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
+# ** Error: Incorrect 'dplus' output during test_stream during Bit Stuffing test case
+#    Time: 13896310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output during test_stream during Bit Stuffing test case
+#    Time: 13896310 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 141
 # ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
-#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
-# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
-#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
-# ** Warning: */DFFSR_CORE SETUP  Low VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.088 ns; At : 13135.188 ns
-#    Time: 13135188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[1] /CELL_CORE
-# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.188 ns; Observed := 0.045 ns; At : 13135.188 ns
-#    Time: 13135188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/rollover_flag_reg/CELL_CORE
-# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.188 ns; Observed := 0.041 ns; At : 13135.188 ns
-#    Time: 13135188 ps  Iteration: 0  Instance: /tb_usb_tx/main/C/A/serial_out_reg/CELL_CORE
-# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
-#   Expected := 0.094 ns; Observed := 0.085 ns; At : 13135.273 ns
-#    Time: 13135273 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[2] /CELL_CORE
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 13135800 ps  Iteration: 0  Instance: /tb_usb_tx/main/C/A/serial_out_reg
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 13135800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/rollover_flag_reg
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 13135800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[1] 
-# ** Warning: DFFSR instance metastable output value decayed to a '1' value
-#    Time: 13135800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[2] 
-# End time: 17:03:49 on Dec 02,2019, Elapsed time: 0:04:35
-# Errors: 0, Warnings: 40
+#    Time: 13979610 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
+#    Time: 14062910 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# End time: 05:31:47 on Dec 03,2019, Elapsed time: 0:02:01
+# Errors: 28, Warnings: 21

@@ -14,6 +14,6 @@ flex_counter4 #(4) Y(.clk(clk),.n_rst(n_rst),
 			.count_out(count_out),
 			.halt(1'b0),
 			.rollover_flag(bit_stuff_en),
-			.rollover_value(4'b0111));
+			.rollover_value(4'b0110));
 
 endmodule	

@@ -11,6 +11,7 @@ module CDL_CRC_16
 	input wire clk,
 	input wire n_rst,
 	input wire clk12,
+	input wire crc_en,
 	input wire input_data, //orginal data
 	input wire reset_crc, 
 	output reg [15:0] inverted_crc
@@ -39,12 +40,15 @@ if(clk12 == 1'b1) begin
 	if (reset_crc == 1) begin
 		next_crc = 16'h0000;
 		//next_crc = 0;
-	end else begin //x^16 + x^15 + x^2 + 1
+	end else if (crc_en == 1'b1) begin //x^16 + x^15 + x^2 + 1
 		next_crc[15] = crc[14] ^ inv;
 		next_crc[14:3] = crc[13:2];
 		next_crc[2] = crc[1] ^ inv;
 		next_crc[1] = crc[0];
 		next_crc[0] = inv;
+	end
+	else begin	
+		next_crc = crc;
 	end
 end
 	else begin

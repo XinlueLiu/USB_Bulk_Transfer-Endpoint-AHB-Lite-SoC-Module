@@ -10,10 +10,12 @@ output reg get_tx_packet_data
 );
 reg byteccomplete;
 reg clk12,serial_out;
+reg crc_en;
 reg [15:0]CRC;
 reg [7:0] prev_parallel,data_out;
 reg eop_reset,eop_en;
 reg enc_en;
+reg reset_crc;
 reg bytealmostcomplete;
 usb_controller A(.clk(clk),
 		.n_rst(n_rst),
@@ -28,6 +30,7 @@ usb_controller A(.clk(clk),
 		.bytecomplete(bytecomplete),
 		.en(en_pts),
 		.enc_en(enc_en),
+                .reset_crc(reset_crc),
 		.timer_en(timer_en),
 		.eop_en(eop_en),
 		.eop_reset(eop_reset),
@@ -65,7 +68,8 @@ usb_encoder D(	.clk(clk),
 CDL_CRC_16 E(	.clk(clk),
 		.n_rst(n_rst),
 		.clk12(clk12),
-		.reset_crc(!crc_en),
+		.crc_en(CRC_en),
+		.reset_crc(reset_crc),
 		.input_data(serial_out),
 		.inverted_crc(CRC));
 usb_timer F(	.clk(clk),

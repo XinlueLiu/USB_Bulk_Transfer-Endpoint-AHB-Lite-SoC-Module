@@ -133,10 +133,16 @@ begin
     tb_mismatch = 1'b1;
     $error("Incorrect 'dplus' output %s during %s test case", check_tag, tb_test_case);
   end
+   /*else begin
+    $info("Correct 'dplus' output %s during %s test case", check_tag, tb_test_case);
+  end*/
   if(tb_expected_dminus_out != tb_dminus_out) begin // Check failed
     tb_mismatch = 1'b1;
     $error("Incorrect 'dminus' output %s during %s test case", check_tag, tb_test_case);
-  end
+  end 
+ /* else begin
+    $info("Correct 'dminus' output %s during %s test case", check_tag, tb_test_case);
+  end*/
 end
 endtask
 
@@ -303,8 +309,8 @@ initial begin
     data_list[i] = data_list[i-1] ^ 8'b11111111;
   end
 
-  CRC_byte1 = 8'b10101000;
-  CRC_byte2 = 8'b10101000;
+  CRC_byte1 = 8'b00010101;
+  CRC_byte2 = 8'b00010101;
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
@@ -318,7 +324,7 @@ initial begin
   end
  // test_stream(8'b00000000);
   //test_stream(8'b00000000);
-  #(USB_CLK_PERIOD);
+  test_stream(8'b00000000);
   test_stream(CRC_byte1);
   test_stream(CRC_byte2);
   //#(USB_CLK_PERIOD*16);
@@ -338,25 +344,30 @@ initial begin
   // Reset the DUT
   reset_tb();
   tb_tx_packet_data_size = 7'b1;
-  data_list[0] = 8'b10000010;  //111111010
-  result_list[0] = 8'b01111110; // 0 in the next bit 111111010
-  CRC_byte1 = 8'b00101000;
-  CRC_byte2 = 8'b00000111;
+  data_list[0] = 8'b11111100;  //111111000
+  result_list[0] = 8'b11111100; // 0 in the next bit 111111000
+  CRC_byte1 = 8'b01000000;
+  CRC_byte2 = 8'b00010000;
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
-  #(USB_CLK_PERIOD + 0.1);
+  #(USB_CLK_PERIOD*1.2 + 0.2);
   tb_tx_packet = 0;
   #(CLK_PERIOD);
   test_stream(SYNC_BYTE);
   test_stream(DATA_BYTE); //00111100
   test_stream(result_list[0]);
-  tb_expected_dplus_out = prev_dplus;
-  tb_expected_dminus_out = !prev_dplus;
-  check_outputs("during bit stuffing"); // checking if the next one is 0
-  //test_stream(8'b00000000);
-  //test_stream(8'b00000000);
+  tb_expected_dplus_out = !prev_dplus;
+  tb_expected_dminus_out =  prev_dplus;
+  check_outputs("stuff bit");
   #(USB_CLK_PERIOD);
+  tb_expected_dplus_out = prev_dplus;
+  tb_expected_dminus_out = ! prev_dplus;
+  check_outputs("stuff bit");
+  #(USB_CLK_PERIOD);
+  //check_outputs("during stuff bit"); // checking if the next one is 0
+  //test_stream(8'b00000000);
+  test_stream(8'b00000000);
   test_stream(CRC_byte1);
   test_stream(CRC_byte2);
   //#(USB_CLK_PERIOD*16);

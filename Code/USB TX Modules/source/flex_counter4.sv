@@ -19,11 +19,11 @@ always_ff@(posedge clk,negedge n_rst)
 begin
 	if(n_rst == 1'b0) begin
 		count_out<= 'd0;
-		//rollover_flag <=1'b0;
+		rollover_flag <=1'b0;
 	end 
 		else begin
 		count_out <= next_count_out;
-		//rollover_flag <= next_rollover_flag;
+		rollover_flag <= next_rollover_flag;
 	
 	end
 end
@@ -37,34 +37,34 @@ if(clk12 == 1'b1) begin
 	if(clear == 1'b1)
 	begin
 		next_count_out = 0;
-		rollover_flag = 0;
+		next_rollover_flag = 0;
 	end
 	else if(count_enable == 1'b1)
 	begin
 		if(rollover_flag==1)
 		begin
 			next_count_out = 1;
-			rollover_flag = 0;
+			next_rollover_flag = 0;
 		end
 		else if(count_out == rollover_value - 1)
 		begin
 			next_count_out = count_out +1 ;
-			rollover_flag = 1;
+			next_rollover_flag = 1;
 		end
 		else 
 		begin
 			next_count_out = count_out + 1'b1;
-			rollover_flag = 1'b0;
+			next_rollover_flag = 1'b0;
 		end
 	 end
 	 else begin
 		next_count_out = count_out;
-		rollover_flag = 0;
+		next_rollover_flag = 0;
 	end
 end
 else begin
 	next_count_out = count_out;
-	rollover_flag = 0;
+	next_rollover_flag = rollover_flag;
 end
 end
 endmodule

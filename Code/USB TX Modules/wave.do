@@ -25,7 +25,7 @@ add wave -noupdate -divider D-
 add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_dminus_out
 add wave -noupdate -color {Dark Orchid} /tb_usb_tx/tb_expected_dminus_out
 add wave -noupdate -divider TX_CONTROLLER
-add wave -noupdate -radix binary -childformat {{{/tb_usb_tx/main/A/stored_crc[15]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[14]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[13]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[12]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[11]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[10]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[9]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[8]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[7]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[6]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[5]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[4]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[3]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[2]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[1]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[0]} -radix binary}} -subitemconfig {{/tb_usb_tx/main/A/stored_crc[15]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[14]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[13]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[12]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[11]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[10]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[9]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[8]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[7]} {-radix binary} {/tb_usb_tx/main/A/stored_crc[6]} {-radix binary} {/tb_usb_tx/main/A/stored_crc[5]} {-radix binary} {/tb_usb_tx/main/A/stored_crc[4]} {-radix binary} {/tb_usb_tx/main/A/stored_crc[3]} {-radix binary} {/tb_usb_tx/main/A/stored_crc[2]} {-radix binary} {/tb_usb_tx/main/A/stored_crc[1]} {-radix binary} {/tb_usb_tx/main/A/stored_crc[0]} {-radix binary}} /tb_usb_tx/main/A/stored_crc
+add wave -noupdate -radix binary -childformat {{{/tb_usb_tx/main/A/stored_crc[15]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[14]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[13]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[12]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[11]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[10]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[9]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[8]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[7]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[6]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[5]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[4]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[3]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[2]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[1]} -radix binary} {{/tb_usb_tx/main/A/stored_crc[0]} -radix binary}} -subitemconfig {{/tb_usb_tx/main/A/stored_crc[15]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[14]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[13]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[12]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[11]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[10]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[9]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[8]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[7]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[6]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[5]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[4]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[3]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[2]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[1]} {-height 17 -radix binary} {/tb_usb_tx/main/A/stored_crc[0]} {-height 17 -radix binary}} /tb_usb_tx/main/A/stored_crc
 add wave -noupdate -expand -group Controller_signals -radix binary /tb_usb_tx/main/A/CRC
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/CRC_en
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/bit_stuff_en
@@ -40,6 +40,7 @@ add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/eop_reset
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/get_tx_packet_data
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/n_rst
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/nxt_CRC_en
+add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/stored_crc
 add wave -noupdate -expand -group Controller_signals -radix binary /tb_usb_tx/main/A/nxt_data
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/data
 add wave -noupdate -expand -group Controller_signals /tb_usb_tx/main/A/nxt_en
@@ -100,13 +101,13 @@ add wave -noupdate -group {PTS Signals} /tb_usb_tx/main/C/en
 add wave -noupdate -group {PTS Signals} -color {Medium Blue} /tb_usb_tx/main/C/serial_data
 add wave -noupdate -group {PTS Signals} -radix binary /tb_usb_tx/main/C/prev_parallel
 add wave -noupdate -divider {CRC Gen}
-add wave -noupdate -group {CRC GEN signals} /tb_usb_tx/main/E/clk
-add wave -noupdate -group {CRC GEN signals} /tb_usb_tx/main/E/n_rst
-add wave -noupdate -group {CRC GEN signals} -color {Orange Red} -itemcolor {Orange Red} /tb_usb_tx/main/E/input_data
-add wave -noupdate -group {CRC GEN signals} /tb_usb_tx/main/E/reset_crc
-add wave -noupdate -group {CRC GEN signals} -radix binary /tb_usb_tx/main/E/inverted_crc
-add wave -noupdate -group {CRC GEN signals} /tb_usb_tx/main/E/STATE
-add wave -noupdate -group {CRC GEN signals} -radix binary /tb_usb_tx/main/E/crc
+add wave -noupdate -expand -group {CRC GEN signals} /tb_usb_tx/main/E/clk
+add wave -noupdate -expand -group {CRC GEN signals} /tb_usb_tx/main/E/n_rst
+add wave -noupdate -expand -group {CRC GEN signals} -color {Orange Red} -itemcolor {Orange Red} /tb_usb_tx/main/E/input_data
+add wave -noupdate -expand -group {CRC GEN signals} /tb_usb_tx/main/E/crc_en
+add wave -noupdate -expand -group {CRC GEN signals} /tb_usb_tx/main/E/reset_crc
+add wave -noupdate -expand -group {CRC GEN signals} -radix binary /tb_usb_tx/main/E/inverted_crc
+add wave -noupdate -expand -group {CRC GEN signals} -radix binary /tb_usb_tx/main/E/crc
 add wave -noupdate -divider {Bit Stuffer}
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/bit_stuff_en
 add wave -noupdate -group {Bit Stuffer Signals} /tb_usb_tx/main/B/clk
@@ -138,7 +139,7 @@ add wave -noupdate /tb_usb_tx/main/F/C/count_enable
 add wave -noupdate /tb_usb_tx/main/F/C/count_out
 add wave -noupdate /tb_usb_tx/main/F/C/rollover_flag
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {25031199 ps} 0}
+WaveRestoreCursors {{Cursor 1} {11891219 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 296
 configure wave -valuecolwidth 170
@@ -154,4 +155,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {28555008 ps}
+WaveRestoreZoom {11685570 ps} {12080179 ps}
