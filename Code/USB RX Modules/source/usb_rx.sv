@@ -39,6 +39,7 @@ reg [15:0] crc_16bit;
 reg clear;
 
 
+
 sync_high sync_high (.clk(clk), .n_rst(n_rst), .async_in(d_plus), .sync_out(d_plus_sync));
 
 sync_low sync_low (.clk(clk), .n_rst(n_rst), .async_in(d_minus), .sync_out(d_minus_sync));
@@ -46,7 +47,7 @@ sync_low sync_low (.clk(clk), .n_rst(n_rst), .async_in(d_minus), .sync_out(d_min
 start_bit_det Start_bit_detector (.clk(clk), .n_rst(n_rst), .serial_in(d_plus_sync), .start_bit_detected(d_edge));
 
 rcu controller_rcu (.clk(clk), .n_rst(n_rst), .d_edge(d_edge), .byte_complete(byte_complete), .eop_detected(eop_detected), 
-        .crc_check_5(crc_check_5), 
+         .crc_check_5(crc_check_5), 
         .crc_check_16(crc_check_16), .sync_status(sync_status), .pid_status(pid_status), .crc_status(crc_status), .enable_timer(enable_timer), .clear(clear), 
 	.check_pid(check_pid), .check_sync(check_sync), 
         .load_sync(load_sync), .load_pid(load_pid), .load_data(load_data), .load_error(load_error), .load_done(load_done));
@@ -69,9 +70,9 @@ timer Timer (.clk(clk), .n_rst(n_rst), .enable_timer(enable_timer), .invalid_bit
 
 //eop_detector EOP_detector (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_minus_sync(d_minus_sync), .shift_enable(shift_enable), .eop(eop));
 
-CDL_CRC_16 CRC_16bit (.clk(shift_enable), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_16bit));
+CDL_CRC_16 CRC_16bit (.clk(clk), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_16bit));
 
-CDL_CRC_5 CRC_5bit (.clk(shift_enable), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_5bit));
+CDL_CRC_5 CRC_5bit (.clk(clk), .n_rst(n_rst), .input_data(d_orig), .reset_crc(1'b0), .inverted_crc(crc_5bit));
 
 
 endmodule

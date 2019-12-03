@@ -52,9 +52,9 @@ begin
   if(n_rst == 1'b0) begin
     pid <= 8'b0;
     rx_packet_data <= 8'b0;
-    store_rx_packet_data <= 0;
     rx_packet <= IDLE;
     sync_byte <= 0;
+    store_rx_packet_data <= 0;
   end
   else begin
     pid <= next_pid;
@@ -131,18 +131,18 @@ begin : ERROR_CHECKING_LOGIC
        crc_status = 2'b01;
      end
      else begin
-       crc_status = 2'b0;
-     end
+       crc_status = 2'b10;
+     end 
  end
  else if(crc_check_16) begin
    if(crc_16bit == 16'hFFFF) begin
      crc_status = 2'b0;      
    end 
-   else if(crc_16bit == 16'b1000000000001101) begin
+   else if(crc_16bit == 16'b0000000000000000) begin
     crc_status = 2'b01;
    end
    else begin
-    crc_status = 2'b01;
+    crc_status = 2'b10;
    end
  end
  else begin
@@ -172,5 +172,9 @@ begin : RX_PACKET_LOGIC
   	if(load_done) begin
   	  next_rx_packet = DONE;
   	end
+        if(clear) begin
+          next_rx_packet = IDLE;
+        end
+        
 end
 endmodule
