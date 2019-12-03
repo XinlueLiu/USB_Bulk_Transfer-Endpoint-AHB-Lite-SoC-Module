@@ -34,8 +34,8 @@ always_comb
 	begin: CRC_LOGIC
 	next_crc = crc;
 	if (reset_crc == 1) begin
-		next_crc = 5'b11111;
-		//next_crc = 0;
+		//next_crc = 5'b11111;
+		next_crc = 0;
 	end else begin
 		next_crc[4] =  crc[3];
     		next_crc[3] =  crc[2];
@@ -47,7 +47,7 @@ end
 
 always_comb
 	begin: Invertion
-	inverted_crc = ~crc;
-	//inverted_crc = crc;
+	//inverted_crc = ~crc;
+	inverted_crc = crc;
 	end
 endmodule 
