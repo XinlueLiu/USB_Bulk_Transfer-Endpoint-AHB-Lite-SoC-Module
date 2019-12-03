@@ -75,10 +75,6 @@ always_ff @ (negedge n_rst, posedge clk)
 	end
 end
 
-/*if ((hsel & ((hwrite) & ((haddr >= 7'd64) & (haddr <= 7'd68)))) | ((haddr > 7'd72) | ((haddr >= 68) & (haddr <= 7'd71))) | ((htrans == 2'd3) & (((hburst == 3'd3) & 
-    (haddr > 7'd60)) | ((hburst == 3'd5) & (haddr > 7'd56)) | ((hburst == 3'd7) & (haddr > 7'48))))) begin
-    NXT_STATE = ERROR;*/
-
 always_comb
 	begin: NXT_LOGIC_CONTROLLER
 	NXT_STATE = STATE;
@@ -297,4 +293,3 @@ end
 	end
 end*/
 endmodule
- 
