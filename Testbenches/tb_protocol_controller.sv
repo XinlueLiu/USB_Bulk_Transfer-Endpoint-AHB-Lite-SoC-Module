@@ -118,52 +118,44 @@ endtask
 task check_outputs;
   input string check_tag;
 begin
-//  if (tb_expected_RX_Error == tb_RX_Error)
-//    $info("Correct 'RX_Error' output %s during %s test case", check_tag, tb_test_case);
-//  else 
-  if (tb_expected_RX_Error != tb_RX_Error)
+  if (tb_expected_RX_Error == tb_RX_Error)
+    $info("Correct 'RX_Error' output %s during %s test case", check_tag, tb_test_case);
+  else
     $error("Incorrect 'RX_Error' output %s during %s test case", check_tag, tb_test_case);
 
-//  if (tb_expected_TX_Error == tb_TX_Error)
-//    $info("Correct 'TX_Error' output %s during %s test case", check_tag, tb_test_case);
-//  else
-  if (tb_expected_TX_Error != tb_TX_Error)
+  if (tb_expected_TX_Error == tb_TX_Error)
+    $info("Correct 'TX_Error' output %s during %s test case", check_tag, tb_test_case);
+  else
     $error("Incorrect 'TX_Error' output %s during %s test case", check_tag, tb_test_case);
 
-//  if (tb_expected_RX_Transfer_Active == tb_RX_Transfer_Active)
-//    $info("Correct 'RX_Transfer_Active' output %s during %s test case", check_tag, tb_test_case);
-//  else 
-  if (tb_expected_RX_Transfer_Active != tb_RX_Transfer_Active)
+  if (tb_expected_RX_Transfer_Active == tb_RX_Transfer_Active)
+    $info("Correct 'RX_Transfer_Active' output %s during %s test case", check_tag, tb_test_case);
+  else
     $error("Incorrect 'RX_Transfer_Active' output %s during %s test case", check_tag, tb_test_case);
 
-//  if (tb_expected_TX_Transfer_Active == tb_TX_Transfer_Active)
-//    $info("Correct 'TX_Transfer_Active' output %s during %s test case", check_tag, tb_test_case);
-//  else 
-  if (tb_expected_TX_Transfer_Active != tb_TX_Transfer_Active)
+  if (tb_expected_TX_Transfer_Active == tb_TX_Transfer_Active)
+    $info("Correct 'TX_Transfer_Active' output %s during %s test case", check_tag, tb_test_case);
+  else
     $error("Incorrect 'TX_Transfer_Active' output %s during %s test case", check_tag, tb_test_case);
 
-//  if (tb_expected_RX_Data_Ready == tb_RX_Data_Ready)
-//    $info("Correct 'RX_Data_Ready' output %s during %s test case", check_tag, tb_test_case);
-//  else 
-  if (tb_expected_RX_Data_Ready != tb_RX_Data_Ready)
+  if (tb_expected_RX_Data_Ready == tb_RX_Data_Ready)
+    $info("Correct 'RX_Data_Ready' output %s during %s test case", check_tag, tb_test_case);
+  else
     $error("Incorrect 'RX_Data_Ready' output %s during %s test case", check_tag, tb_test_case);
 
-//  if (tb_expected_D_Mode == tb_D_Mode)
-//    $info("Correct 'D_Mode' output %s during %s test case", check_tag, tb_test_case);
-//  else 
-  if (tb_expected_D_Mode != tb_D_Mode)
+  if (tb_expected_D_Mode == tb_D_Mode)
+    $info("Correct 'D_Mode' output %s during %s test case", check_tag, tb_test_case);
+  else
     $error("Incorrect 'D_Mode' output %s during %s test case", check_tag, tb_test_case);
 
-//  if (tb_expected_TX_Packet == tb_TX_Packet)
-//    $info("Correct 'RX_Error' output %s during %s test case", check_tag, tb_test_case);
-//  else 
-  if (tb_expected_TX_Packet != tb_TX_Packet)
+  if (tb_expected_TX_Packet == tb_TX_Packet)
+    $info("Correct 'RX_Error' output %s during %s test case", check_tag, tb_test_case);
+  else
     $error("Incorrect 'RX_Error' output %s during %s test case", check_tag, tb_test_case);
 
-//  if (tb_expected_clear == tb_clear)
-//    $info("Correct 'clear' output %s during %s test case", check_tag, tb_test_case);
-//  else 
-  if (tb_expected_clear != tb_clear)
+  if (tb_expected_clear == tb_clear)
+    $info("Correct 'clear' output %s during %s test case", check_tag, tb_test_case);
+  else
     $error("Incorrect 'clear' output %s during %s test case", check_tag, tb_test_case);
 end
 endtask
@@ -236,7 +228,7 @@ initial begin
   // Reset the DUT
   reset_dut();
 
-  // Check outputs for reset state
+  // From IDLE to OUT_MODE
   @(posedge tb_clk);
   tb_Buffer_Occupancy = 0;
   tb_RX_Packet = 3'b010;
@@ -248,6 +240,7 @@ initial begin
   tb_Buffer_Occupancy = 5;
   #(CLK_PERIOD);
   
+  // From OUT_MODE to OUT_ACK
   @(posedge tb_clk);
   tb_RX_Packet = 3'b101;
   init_expected_outputs();
@@ -258,6 +251,7 @@ initial begin
 
   #(CLK_PERIOD);
 
+  // From OUT_ACK to IDLE
   @(posedge tb_clk);
   tb_Buffer_Occupancy = 0;
   init_expected_outputs();
@@ -281,16 +275,18 @@ initial begin
   // Reset the DUT
   reset_dut();
 
-  // Check outputs for reset stateIN_MODE
+  // From IDLE to RESERVED
   @(posedge tb_clk);
   tb_Buffer_Reserved = 1;
   #(CLK_PERIOD + 2 * BUS_DELAY);
 
+  // From RESERVED to IN_WAIT
   tb_Buffer_Occupancy = 64;
   tb_TX_Packet_Data_Size = 64;
   tb_Buffer_Reserved = 0;
   #(CLK_PERIOD + 2 * BUS_DELAY);
   
+  // From IN_WAIT to IN_MODE
   @(posedge tb_clk);
   tb_RX_Packet = 3'b001;
   init_expected_outputs();
@@ -300,6 +296,7 @@ initial begin
   #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during IN_MODE");
 
+  // From IN_MODE to IDLE
   @(posedge tb_clk);
   tb_RX_Packet = 3'b011;
   init_expected_outputs();
@@ -326,15 +323,16 @@ initial begin
   // From IDLE to OUT_WAIT
   @(posedge tb_clk);
   tb_Buffer_Occupancy = 1;
-  tb_RX_Packet = 3'b010;
+  tb_RX_Packet = 3'b010; // OUT
   tb_expected_D_Mode = 1;
   tb_expected_RX_Transfer_Active = 1;
   tb_expected_clear = 1;
   #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during OUT_WAIT");
   
+  // From OUT_WAIT to OUT_NAK
   @(posedge tb_clk);
-  tb_RX_Packet = 3'b101;
+  tb_RX_Packet = 3'b101; // DONE
   init_expected_outputs();
   tb_expected_clear = 1'b1;
   tb_expected_TX_Packet = 2'b10;
@@ -347,16 +345,18 @@ initial begin
   check_outputs("during IDLE after OUT_NAK");
 
 
-  // From OUT_MODE to OUT_WAIT
+  // SECOND BRANCH
   reset_dut();
   init_inputs();
   init_expected_outputs();
-  // Check outputs for reset state
+
+  // From IDLE to OUT_MODE
   @(posedge tb_clk);
   tb_Buffer_Occupancy = 0;
   tb_RX_Packet = 3'b010;
   #(CLK_PERIOD + 2 * BUS_DELAY);
   
+  // From OUT_MODE to OUT_WAIT
   @(posedge tb_clk);
   tb_RX_Packet = 3'b100;
   init_expected_outputs();
@@ -366,6 +366,7 @@ initial begin
   #(CLK_PERIOD + 2 * BUS_DELAY);
   check_outputs("during OUT_WAIT from OUT_MODE");
   
+  // From OUT_WAIT to OUT_NAK
   @(posedge tb_clk);
   tb_RX_Packet = 3'b101;
   init_expected_outputs();
@@ -406,6 +407,7 @@ initial begin
   check_outputs("during IN_NAK");
   #(CLK_PERIOD + 2 * BUS_DELAY);
 
+
   // From RESERVED to IN_NAK
   init_expected_outputs();
   init_inputs();
@@ -433,6 +435,61 @@ initial begin
   // Give some visual spacing between check and next test case start
   #(CLK_PERIOD * 3);
 
+  //*****************************************************************************
+  // Endpoint Unable To Accept Data From Host
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Endpoint-to-Host Unavailable";
+  tb_test_case_num = tb_test_case_num + 1;
+  
+  // Expected Outputs
+  init_expected_outputs();
+  init_inputs();
+
+  // Reset the DUT
+  reset_dut();
+
+  // From IDLE to RESERVED
+  @(posedge tb_clk);
+  tb_Buffer_Reserved = 1;
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+
+  // From RESERVED to OUT_WAIT
+  @(posedge tb_clk);
+  tb_RX_Packet = 3'b010;
+  tb_RX_Packet = 3'b010; // OUT
+  tb_expected_D_Mode = 1;
+  tb_expected_RX_Transfer_Active = 1;
+  tb_expected_clear = 1;
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+  check_outputs("during OUT_WAIT from RESERVED");
+
+
+  // Second Branch
+  init_expected_outputs();
+  init_inputs();
+  reset_dut();
+
+  // From IDLE to RESERVED
+  @(posedge tb_clk);
+  tb_Buffer_Reserved = 1;
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+
+  // From RESERVED to IN_WAIT
+  tb_Buffer_Occupancy = 64;
+  tb_TX_Packet_Data_Size = 64;
+  tb_Buffer_Reserved = 0;
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+
+  // From IN_WAIT to OUT_WAIT
+  @(posedge tb_clk);
+  tb_RX_Packet = 3'b010;
+  tb_RX_Packet = 3'b010; // OUT
+  tb_expected_D_Mode = 1;
+  tb_expected_RX_Transfer_Active = 1;
+  tb_expected_clear = 1;
+  #(CLK_PERIOD + 2 * BUS_DELAY);
+  check_outputs("during OUT_WAIT from RESERVED");
 
 end
 
