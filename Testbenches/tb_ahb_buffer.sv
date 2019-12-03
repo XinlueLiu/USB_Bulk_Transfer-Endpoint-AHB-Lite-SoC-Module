@@ -73,6 +73,7 @@ string                 tb_check_tag;
 logic                  tb_mismatch;
 logic                  tb_check;
 bit   [DATA_MAX_BIT:0] tb_test_data_reg72 [];
+integer tb_i;
 
 //*****************************************************************************
 // General System signals
@@ -460,7 +461,7 @@ initial begin
   // Test Case: single value reads/writes 1 byte
   //*****************************************************************************
   // Update Navigation Info
-  /*tb_test_case     = "single value reads/writes 1 byte";
+  tb_test_case     = "single value reads/writes 1 byte";
   tb_test_case_num = tb_test_case_num + 1;
 
   // Reset the DUT to isolate from prior test case
@@ -473,15 +474,15 @@ initial begin
   tb_test_data_reg72 = '{32'h00000002};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_SINGLE, 1'b0, 2'd0);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1);
   execute_transactions(2);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1); 
   execute_transactions(1);
   tb_rx_data_ready = 1'b0; 
 
@@ -502,17 +503,17 @@ initial begin
   tb_test_data_reg72 = '{32'h00000004};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_SINGLE, 1'b0, 2'd0);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hBCDA}, BURST_SINGLE, 1'b0, 2'd1);
   execute_transactions(3);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hBCDA}, BURST_SINGLE, 1'b0, 2'd1); 
   execute_transactions(2);
   tb_rx_data_ready = 1'b0; 
 
@@ -533,21 +534,21 @@ initial begin
   tb_test_data_reg72 = '{32'h000000008};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hDCBA}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_SINGLE, 1'b0, 2'd0);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hBCDA}, BURST_SINGLE, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hCDAB}, BURST_SINGLE, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hDCBA}, BURST_SINGLE, 1'b0, 2'd1);
   execute_transactions(5);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hDCBA}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hBCDA}, BURST_SINGLE, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hCDAB}, BURST_SINGLE, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hDCBA}, BURST_SINGLE, 1'b0, 2'd1); 
   execute_transactions(4);
   tb_rx_data_ready = 1'b0; 
 
@@ -568,15 +569,15 @@ initial begin
   tb_test_data_reg72 = '{32'h00000002};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_SINGLE, 1'b0, 2'd0);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1);
   execute_transactions(2);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1); 
   execute_transactions(1);
   tb_rx_data_ready = 1'b0; 
 
@@ -597,17 +598,17 @@ initial begin
   tb_test_data_reg72 = '{32'h00000004};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_SINGLE, 1'b0, 2'd0);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hBCDA}, BURST_SINGLE, 1'b0, 2'd1);
   execute_transactions(3);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hBCDA}, BURST_SINGLE, 1'b0, 2'd1); 
   execute_transactions(2);
   tb_rx_data_ready = 1'b0; 
 
@@ -628,21 +629,21 @@ initial begin
   tb_test_data_reg72 = '{32'h000000008};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBA}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_SINGLE, 1'b0, 2'd0);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hBCDA}, BURST_SINGLE, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDAB}, BURST_SINGLE, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBA}, BURST_SINGLE, 1'b0, 2'd1);
   execute_transactions(5);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hBCDA}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCDAB}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hDCBA}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_SINGLE, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hBCDA}, BURST_SINGLE, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCDAB}, BURST_SINGLE, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hDCBA}, BURST_SINGLE, 1'b0, 2'd1); 
   execute_transactions(4);
   tb_rx_data_ready = 1'b0; 
 
@@ -669,9 +670,9 @@ initial begin
 
   enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd1);
   execute_transactions(5);
 
   tb_tx_transfer_active = 1'b0;
@@ -679,9 +680,9 @@ initial begin
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
   enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hABCE}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hABCF}, BURST_INCR4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hCBCD}, BURST_INCR4, 1'b0, 2'd1); 
   execute_transactions(4);
   tb_rx_data_ready = 1'b0; 
   //*****************************************************************************
@@ -705,27 +706,27 @@ initial begin
 
   enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd4, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd5, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd6, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd7, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
   execute_transactions(9);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd4, '{32'hABCD}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd5, '{32'hABCE}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd6, '{32'hABCF}, BURST_INCR8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd7, '{32'hCBCD}, BURST_INCR8, 1'b0, 2'd1);
   execute_transactions(8);
   tb_rx_data_ready = 1'b0; 
   
@@ -750,43 +751,43 @@ initial begin
 
   enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd4, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd5, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd6, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd7, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd8, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd9, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd10, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd11, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd12, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd13, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd14, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd15, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
   execute_transactions(17);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd4, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd5, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd6, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd7, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd8, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd9, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd10, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd11, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd12, '{32'hABCD}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd13, '{32'hABCE}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd14, '{32'hABCF}, BURST_INCR16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd15, '{32'hCBCD}, BURST_INCR16, 1'b0, 2'd1);
   execute_transactions(16);
   tb_rx_data_ready = 1'b0; 
   
@@ -810,20 +811,20 @@ initial begin
   tb_tx_transfer_active = 1'b1;
 
   enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd1);
   execute_transactions(5);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hABCD}, BURST_WRAP4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hABCE}, BURST_WRAP4, 1'b0, 2'd1); 
   enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCF}, BURST_WRAP4, 1'b0, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd1); 
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hCBCD}, BURST_WRAP4, 1'b0, 2'd1); 
   execute_transactions(4);
   tb_rx_data_ready = 1'b0;
   
@@ -847,28 +848,28 @@ initial begin
   tb_tx_transfer_active = 1'b1;
 
   enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
+  enqueue_transaction(1'b1, 1'b1, 8'd4, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd5, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd6, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd7, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
   execute_transactions(9);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd4, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd5, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd6, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd7, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hABCD}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hABCE}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hABCF}, BURST_WRAP8, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hCBCD}, BURST_WRAP8, 1'b0, 2'd1);
   execute_transactions(8);
   tb_rx_data_ready = 1'b0; 
   
@@ -892,44 +893,44 @@ initial begin
   tb_tx_transfer_active = 1'b1;
 
   enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd9, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd10, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd11, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd12, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd13, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd14, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd15, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd1, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd2, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd3, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd4, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd5, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd6, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd7, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b1, 8'd8, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
   execute_transactions(17);
 
   tb_tx_transfer_active = 1'b0;
 
   // Enqueue the 'check' read
   tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd9, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd10, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd11, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd12, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd13, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd14, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd15, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd0, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd1, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd2, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd3, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd4, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd5, '{32'hABCD}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd6, '{32'hABCE}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd7, '{32'hABCF}, BURST_WRAP16, 1'b0, 2'd1);
+  enqueue_transaction(1'b1, 1'b0, 8'd8, '{32'hCBCD}, BURST_WRAP16, 1'b0, 2'd1);
   execute_transactions(16);
   tb_rx_data_ready = 1'b0; 
   
@@ -966,9 +967,11 @@ initial begin
   tb_test_data_reg72 = '{32'h00000004};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd66, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
-  execute_transactions(2);
+  enqueue_transaction(1'b1, 1'b1, 8'd64, tb_test_data_reg72, BURST_SINGLE, 1'b1, 2'd0);
+  execute_transactions(1);
+  #(CLK_PERIOD + 0.1);
+  enqueue_transaction(1'b1, 1'b1, 8'd65, '{32'hABCD}, BURST_SINGLE, 1'b1, 2'd1);
+  execute_transactions(1);
 
   tb_tx_transfer_active = 1'b0;
 
@@ -984,11 +987,17 @@ initial begin
   tb_test_data_reg72 = '{32'h00000006};
   tb_tx_transfer_active = 1'b1;
 
-  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd66, '{32'hABCD}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd67, '{32'hBACD}, BURST_INCR4, 1'b0, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd68, '{32'hBCCD}, BURST_INCR4, 1'b0, 2'd1);
-  execute_transactions(4);
+  enqueue_transaction(1'b1, 1'b1, 8'd64, tb_test_data_reg72, BURST_SINGLE, 1'b1, 2'd0);
+  execute_transactions(1);
+  #(CLK_PERIOD + 0.1);
+  enqueue_transaction(1'b1, 1'b1, 8'd65, '{32'hABCD}, BURST_SINGLE, 1'b1, 2'd1);
+  execute_transactions(1);
+  #(CLK_PERIOD + 0.1);
+  enqueue_transaction(1'b1, 1'b1, 8'd66, '{32'hBACD}, BURST_SINGLE, 1'b1, 2'd1);
+  execute_transactions(1);
+  #(CLK_PERIOD + 0.1);
+  enqueue_transaction(1'b1, 1'b1, 8'd67, '{32'hBCCD}, BURST_SINGLE, 1'b1, 2'd1);
+  execute_transactions(1);
 
   tb_tx_transfer_active = 1'b0;
 
@@ -1030,27 +1039,10 @@ initial begin
   for(tb_i = 0; tb_i < 4; tb_i++)begin
     tb_test_data[tb_i] = {16'hABCD,tb_i[15:0]};
   end
-
-  tb_test_data_reg72 = '{32'h0000008};
-  tb_tx_transfer_active = 1'b1;
-
-  enqueue_transaction(1'b1, 1'b1, 8'd72, tb_test_data_reg72, BURST_INCR, 1'b0, 2'd0);
-  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd1);
-  enqueue_transaction(1'b1, 1'b1, 8'd62, '{32'hCBCD}, BURST_INCR4, 1'b1, 2'd1);
-  execute_transactions(5);
-
-  tb_tx_transfer_active = 1'b0;
-
-  // Enqueue the 'check' read
-  tb_rx_data_ready = 1'b1; 
-  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCD}, BURST_INCR4, 1'b1, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCE}, BURST_INCR4, 1'b1, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hABCF}, BURST_INCR4, 1'b1, 2'd1); 
-  enqueue_transaction(1'b1, 1'b0, 8'd62, '{32'hCBCD}, BURST_INCR4, 1'b1, 2'd1); 
-  execute_transactions(4);
-  tb_rx_data_ready = 1'b0; 
+  enqueue_transaction(1'b1, 1'b1, 8'd65, tb_test_data, BURST_INCR4, 1'b1, 2'd2);
+  
+  // Run the transactions via the model
+  execute_transactions(8);
   
   //*****************************************************************************
   // Test Case: Erroneous INCR4 Read Burst
@@ -1073,7 +1065,6 @@ initial begin
   
   // Run the transactions via the model
   execute_transactions(8);
-*/
 
 
 
@@ -1541,9 +1532,9 @@ initial begin
   check_outputs("after size has been written");
 
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCDDCBA}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd4, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd8, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd12, '{32'hABCDDCBA}, BURST_INCR, 1'b0, 2'd2);
   execute_transactions(3);
  
   tb_expected_buffer_occupancy = 7'd12;
@@ -1722,21 +1713,21 @@ initial begin
   check_outputs("after size has been written");
 
   enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
-  enqueue_transaction(1'b1, 1'b1, 8'd0, '{32'hABCDDCBA}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd4, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd8, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd12, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd16, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd20, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd24, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd28, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd32, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd36, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd40, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd44, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd48, '{32'hDCABACDB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd52, '{32'hCDABDCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd56, '{32'hDCBABCAB}, BURST_INCR, 1'b0, 2'd2);
+  enqueue_transaction(1'b1, 1'b1, 8'd60, '{32'hABCDDCBA}, BURST_INCR, 1'b0, 2'd2);
   execute_transactions(16);
  
   tb_expected_buffer_occupancy = 7'd64;
