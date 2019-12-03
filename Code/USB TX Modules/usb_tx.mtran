@@ -1,0 +1,164 @@
+# //  Questa Sim-64
+# //  Version 10.3b linux_x86_64 May 29 2014
+# //
+# //  Copyright 1991-2014 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# vsim -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB "+no_glitch_msg" -coverage -voptargs="+acc" -i -t ps mapped_work.tb_usb_tx 
+# Start time: 16:59:14 on Dec 02,2019
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: mapped/usb_tx.v(248): (vopt-2685) [TFMPC] - Too few port connections for 'X'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(248): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(1034): (vopt-2685) [TFMPC] - Too few port connections for 'A'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(1034): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(1037): (vopt-2685) [TFMPC] - Too few port connections for 'B'.  Expected 9, found 8.
+# ** Warning: mapped/usb_tx.v(1037): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(1041): (vopt-2685) [TFMPC] - Too few port connections for 'C'.  Expected 8, found 7.
+# ** Warning: mapped/usb_tx.v(1041): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# ** Warning: mapped/usb_tx.v(610): (vopt-2685) [TFMPC] - Too few port connections for 'Y'.  Expected 9, found 8.
+# ** Warning: mapped/usb_tx.v(610): (vopt-2718) [TFMPC] - Missing connection for port 'count_out'.
+# Loading sv_std.std
+# Loading work.tb_usb_tx(fast)
+# Loading work.usb_tx(fast)
+# Loading work.usb_controller(fast)
+# Loading work.flex_counter3_NUM_CNT_BITS7(fast)
+# Loading work.flex_counter3_NUM_CNT_BITS7_DW01_inc_0(fast)
+# Loading work.usb_controller_DW01_inc_0(fast)
+# Loading work.usb_bit_stuffer(fast)
+# Loading work.flex_counter4_NUM_CNT_BITS4(fast)
+# Loading work.usb_pts(fast)
+# Loading work.flex_pts_sr_8_0(fast)
+# Loading work.usb_encoder(fast)
+# Loading work.CDL_CRC_16(fast)
+# Loading work.usb_timer(fast)
+# Loading work.flex_counter_NUM_CNT_BITS4_1(fast)
+# Loading work.flex_counter2_NUM_CNT_BITS4(fast)
+# Loading work.flex_counter_NUM_CNT_BITS4_0(fast)
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.math_real(body)
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.dffsr(metastabilitywrapperarch)#1
+# Loading ieee.vital_timing(body)
+# Loading ieee.vital_primitives(body)
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.prim(body)
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.dffsr_core(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.latch(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.hax1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.invx2(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.xor2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.mux2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nor2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.invx1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.oai21x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.aoi21x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.and2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.aoi22x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nand2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.or2x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.or2x2(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.nand3x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.oai22x1(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.bufx2(behavioral)#1
+# Loading /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work.xnor2x1(behavioral)#1
+do wave.do
+run 20000ns
+# ** Error: Incorrect 'dplus' output EOP check during Send NAK test case
+#    Time: 1967650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dplus' output EOP check during Send ACK test case
+#    Time: 3883550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output EOP check during Send ACK test case
+#    Time: 3883550 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+# ** Error: Incorrect 'dplus' output EOP check during Send ACK test case
+#    Time: 3966850 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dplus' output EOP check during Send DATA test case
+#    Time: 8548350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output EOP check during Send DATA test case
+#    Time: 8548350 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+# ** Error: Incorrect 'dplus' output EOP check during Send DATA test case
+#    Time: 8631650 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Warning: */DFFSR_CORE SETUP  Low VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.086 ns; At : 11045.188 ns
+#    Time: 11045188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/C/rollover_flag_reg/CELL_CORE
+# ** Warning: */DFFSR_CORE SETUP  Low VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.088 ns; At : 11045.188 ns
+#    Time: 11045188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/C/\count_out_reg[1] /CELL_CORE
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.163 ns; At : 11045.188 ns
+#    Time: 11045188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[0] /CELL_CORE
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.145 ns; At : 11045.188 ns
+#    Time: 11045188 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\state_reg[0] /CELL_CORE
+# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.066 ns; At : 11045.254 ns
+#    Time: 11045254 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[3] /CELL_CORE
+# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
+#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[5] /CELL_CORE
+# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
+#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[4] /CELL_CORE
+# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
+#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[3] /CELL_CORE
+# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
+#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[2] /CELL_CORE
+# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.079 ns; At : 11045.267 ns
+#    Time: 11045267 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[1] /CELL_CORE
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\state_reg[0] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[5] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[4] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[3] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[2] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/A/\data_reg[1] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[0] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[3] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/C/\count_out_reg[1] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 11045800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/C/rollover_flag_reg
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.163 ns; At : 11765.188 ns
+#    Time: 11765188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[0] /CELL_CORE
+# ** Warning: DFFSR instance metastable output value decayed to a '0' value
+#    Time: 11765698 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[0] 
+# ** Error: Incorrect 'dplus' output EOP check during Bit Stuffing test case
+#    Time: 12463450 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 134
+# ** Error: Incorrect 'dminus' output EOP check during Bit Stuffing test case
+#    Time: 12546750 ps  Scope: tb_usb_tx.check_outputs File: source/tb_usb_tx.sv Line: 138
+# ** Warning: */DFFSR_CORE SETUP  Low VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.088 ns; At : 13135.188 ns
+#    Time: 13135188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[1] /CELL_CORE
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.045 ns; At : 13135.188 ns
+#    Time: 13135188 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/rollover_flag_reg/CELL_CORE
+# ** Warning: */DFFSR_CORE SETUP High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.188 ns; Observed := 0.041 ns; At : 13135.188 ns
+#    Time: 13135188 ps  Iteration: 0  Instance: /tb_usb_tx/main/C/A/serial_out_reg/CELL_CORE
+# ** Warning: */DFFSR_CORE HOLD High VIOLATION ON D WITH RESPECT TO CLK;
+#   Expected := 0.094 ns; Observed := 0.085 ns; At : 13135.273 ns
+#    Time: 13135273 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[2] /CELL_CORE
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 13135800 ps  Iteration: 0  Instance: /tb_usb_tx/main/C/A/serial_out_reg
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 13135800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/rollover_flag_reg
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 13135800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[1] 
+# ** Warning: DFFSR instance metastable output value decayed to a '1' value
+#    Time: 13135800 ps  Iteration: 0  Instance: /tb_usb_tx/main/F/B/\count_out_reg[2] 
+# End time: 17:03:49 on Dec 02,2019, Elapsed time: 0:04:35
+# Errors: 0, Warnings: 40

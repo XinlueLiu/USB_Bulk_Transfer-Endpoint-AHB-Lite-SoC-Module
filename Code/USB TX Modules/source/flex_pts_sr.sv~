@@ -21,6 +21,7 @@ always_ff @(posedge clk,negedge n_rst)
 begin 
 	if(n_rst == 1'b0) begin
 		serial_out <= '0;
+		parallel_out<='0;
 	end
 	else begin
 		serial_out <=new_serial_out;
@@ -54,8 +55,7 @@ begin
 			new_parallel_out[0] = 0;
 			new_serial_out = new_parallel_out[NUM_BITS-1];
  	  		end
-	  		else beginsim:/tb_usb_sim:/tb_usb_tx/main/A/nxt_state
-tx/main/A/nxt_state
+	  		else begin
 
 			new_parallel_out[NUM_BITS-1] = 0;
 			/*for(i = 0;i<=NUM_BITS-2 ; i = i+1)

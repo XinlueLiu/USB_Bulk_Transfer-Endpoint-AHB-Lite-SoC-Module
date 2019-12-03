@@ -11,76 +11,50 @@ module CDL_CRC_16
 	input wire clk,
 	input wire n_rst,
 	input wire clk12,
-	input wire input_data, //orginal data + 16 bit 0's
+	input wire input_data, //orginal data
 	input wire reset_crc, 
 	output reg [15:0] inverted_crc
 );
 
-typedef enum bit {IDLE, CRC} stateType;
-
-stateType STATE;
-stateType NXT_STATE;
 reg [15:0] next_crc;
 reg [15:0] crc;
 
 always_ff @ (negedge n_rst, posedge clk)
 	begin: REG_LOGIC
 	if (!n_rst) begin
-		STATE <= IDLE;
-		crc <= 16'hFFFF;
+		crc <= 0;
 	end else begin
-		STATE <= NXT_STATE;
 		crc <= next_crc;
 	end
 end
 
-always_comb
-	begin: STATE_LOGIC
-	if(clk12 == 1'b1) begin	
-	NXT_STATE = STATE;
-	case(STATE)
-	IDLE: begin
-		if (reset_crc == 1) begin
-			NXT_STATE = IDLE;
-		end else begin
-			NXT_STATE = CRC;
-		end
-	end
-	CRC: begin
-		if (reset_crc == 1) begin
-			NXT_STATE = IDLE;
-		end else begin
-			NXT_STATE = CRC;
-		end
-	end
-	endcase
-	end
-	else begin
-		NXT_STATE = STATE;
-	end
-end
+
+assign inv = input_data ^ crc[15];
 	
 always_comb 
 	begin: CRC_LOGIC
-	if(clk12 == 1'b1) begin
+if(clk12 == 1'b1) begin
+
 	next_crc = crc;
-	if (STATE == IDLE) begin
-		next_crc = 16'hFFFF;
-	end else begin
-		next_crc[0] =  next_crc[15] ^ input_data;
-    		next_crc[1] =  next_crc[0];
-		next_crc[2] = next_crc[15] ^ next_crc[1];
-		next_crc[14:3] = next_crc[13:2];
-		next_crc[15] = next_crc[15] ^ next_crc[14];
+	if (reset_crc == 1) begin
+		next_crc = 16'h0000;
+		//next_crc = 0;
+	end else begin //x^16 + x^15 + x^2 + 1
+		next_crc[15] = crc[14] ^ inv;
+		next_crc[14:3] = crc[13:2];
+		next_crc[2] = crc[1] ^ inv;
+		next_crc[1] = crc[0];
+		next_crc[0] = inv;
 	end
-	end
+end
 	else begin
-	next_crc = crc;
+		next_crc = crc;
 	end
 end
 
 always_comb
 	begin: Invertion
-	inverted_crc = ~crc;
+	inverted_crc = crc;	
+	//inverted_crc = crc;
 	end
 endmodule 

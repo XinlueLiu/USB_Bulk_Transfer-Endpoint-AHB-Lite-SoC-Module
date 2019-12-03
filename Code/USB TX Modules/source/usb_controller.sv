@@ -15,7 +15,7 @@ output reg eop_en,
 output reg eop_reset,
 output reg en,
 output reg CRC_en,
-output reg [7:0]nxt_data,
+output reg [7:0]data,
 output reg enc_en,
 output reg timer_en,
 output reg get_tx_packet_data
@@ -39,12 +39,11 @@ typedef enum bit [3:0]{IDLE,
 StateType state,nxt_state;
 reg[6:0] current_packet;
 reg [1:0]stored_packet;
+reg [6:0]cnt_out;
 reg data_sent;
-reg data_set,nxt_data_set;
-reg count_packet,nxt_count_packet;
 reg nxt_get_tx_packet_data;
 reg nxt_en,nxt_CRC_en,nxt_enc_en,nxt_timer_en;
-reg [7:0] data;
+reg [7:0] nxt_data;
 always_ff@(posedge clk,negedge n_rst) begin
 	if(n_rst == 1'b0) begin
 		state<= IDLE;
@@ -54,39 +53,40 @@ always_ff@(posedge clk,negedge n_rst) begin
 		CRC_en<=1'b0;
 		enc_en<=1'b0;
 		timer_en<=1'b0;
-		//data<= 8'b0;
-		data_set<=1'b0;
-		count_packet<= 1'b0;
+		data<= 8'b0;
 		get_tx_packet_data<=1'b0;
 	end
 	else begin
 		eop_en<=nxt_eop_en;
 		eop_reset<=nxt_eop_reset;
 		state<=nxt_state;
-		//data<=nxt_data;
+		data<=nxt_data;
 		en<=nxt_en;
 		CRC_en<=nxt_CRC_en;
 		enc_en<=nxt_enc_en;
 		timer_en<=nxt_timer_en;
-		data_set<=nxt_data_set;
-		count_packet<=nxt_count_packet;
 		get_tx_packet_data<=nxt_get_tx_packet_data;
 	end
 end
-flex_counter3#(7) X(.clk(clk),
+flex_counter3 #(7) X(.clk(clk),
 		  .count_enable(nxt_get_tx_packet_data),
 		  .clear(1'b0),
 		  .n_rst(n_rst),
 		  .halt(bit_stuff_en),
-  .count_out(cnt_out),
+ 		  .count_out(cnt_out),
 		  .rollover_flag(data_sent),
-	      .rollover_value(tx_packet_data_size +1'b1));
+	      	  .rollover_value(tx_packet_data_size +1'b1));
 
 
 always_comb begin
-	nxt_count_packet = bytecomplete&&data_set;
+	nxt_get_tx_packet_data = get_tx_packet_data;
+	nxt_eop_en = eop_en;
+	nxt_eop_reset = eop_reset;
+	nxt_timer_en = timer_en;
+	nxt_data = data;
 	case(state)
 	IDLE:begin
+		nxt_CRC_en = 1'b0;
 		nxt_enc_en = 1'b0;
 		nxt_eop_reset = 1'b0;
 		if(tx_packet != 2'b00) begin
@@ -125,12 +125,12 @@ always_comb begin
 		nxt_get_tx_packet_data = 1'b0;
 		if(bytealmostcomplete == 1'b1&&clk12 == 1'b1 && stored_packet == 2'b01) begin
 			nxt_get_tx_packet_data = 1'b1;
+			nxt_CRC_en = 1'b1;
 			end		
 		if(bytecomplete == 1'b1&&clk12 == 1'b1) begin
 			if(stored_packet ==2'b01) begin
 				nxt_state = DATA;
 				nxt_en = 1'b1;
-				nxt_CRC_en = 1'b1;
 				nxt_data = tx_packet_data;
 				
 			end
@@ -149,15 +149,14 @@ always_comb begin
 	end
 	DATA:begin
 		nxt_get_tx_packet_data = 1'b0;
-		nxt_count_packet = 1'b0;
+		
 		
 		if(bit_stuff_en == 1'b1) begin	
 			nxt_state = STUFFER_BIT;
 		end
 		else if(bytecomplete == 1'b1 && data_sent == 1'b1 && clk12 == 1'b1) begin
-				nxt_state = CRC1;
-				stored_crc = CRC;
-				nxt_data = CRC[7:0];
+				nxt_state = WAIT1;
+				nxt_data = 8'b11111111;
 				nxt_en = 1'b1;	
 				nxt_CRC_en = 1'b0;			
 				//nxt_state = WAIT1;
@@ -180,14 +179,10 @@ always_comb begin
 	end
 	STUFFER_BIT: begin
 		
-		if(clk12 == 1'b1 && bytecomplete == 1'b1&&data_sent == 1'b1) begin
-		nxt_state = CRC1;
-		stored_crc = CRC;
-		nxt_data = CRC[7:0];
-
-		nxt_en = 1'b1;		
+		if(clk12 == 1'b1 &&data_sent == 1'b1) begin
+		nxt_state = WAIT1;
 		end
-		else if(clk12 == 1'b1 && bytecomplete == 1'b1) begin
+		else if(clk12 == 1'b1) begin
 		nxt_state = DATA;
 		end
 		else begin
@@ -196,11 +191,13 @@ always_comb begin
 		end
 		end
 	WAIT1:begin
-		nxt_en = 1'b0;
-		if(bytecomplete == 1'b1 && clk12 == 1'b1) begin
-			nxt_state = WAIT2;
+		
+		if(clk12 == 1'b1) begin
+			nxt_state = CRC1;
 			nxt_en = 1'b1;
-			nxt_data = 8'b00000000;		
+			nxt_data = 8'b00000000;
+			stored_crc = CRC;
+			nxt_data = CRC[7:0];		
 		end
 		else begin
 			nxt_state = WAIT1;
@@ -214,6 +211,7 @@ always_comb begin
 			stored_crc = CRC;
 			nxt_data = CRC[7:0];
 			nxt_en = 1'b1;
+			nxt_CRC_en = 1'b0;
 		end
 		else begin
 			nxt_state = WAIT2;
@@ -236,6 +234,8 @@ always_comb begin
 		nxt_en = 1'b0;
 		if(bytealmostcomplete == 1'b1 && clk12 == 1'b1) begin
 		end
+
+
 		if(bytecomplete == 1'b1 && clk12 == 1'b1) begin
 			nxt_state = EOP1;
 			nxt_eop_en = 1'b1;
@@ -269,7 +269,7 @@ always_comb begin
 		nxt_state = IDLE;
 		nxt_en = 1'b0;
 		nxt_timer_en = 1'b0;
-		nxt_eop_reset = 1'b1;
+		nxt_eop_reset = 1'b0;
 	end
 	else begin
 		nxt_state = EOP3;

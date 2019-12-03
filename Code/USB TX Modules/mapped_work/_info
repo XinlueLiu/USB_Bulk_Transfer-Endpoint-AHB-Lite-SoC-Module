@@ -1,0 +1,394 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/ecegrid/a/mg76/ece337/ECE337_CDLdesign/Code/USB TX Modules
+T_opt
+!s110 1575323954
+VX_<6Bg4TT`kJzm36g8dLM2
+04 9 4 work tb_usb_tx fast 0
+=1-5cb9017b479f-5de58932-8746b-4485
+o-quiet -auto_acc_if_foreign -work mapped_work -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim +acc
+n@_opt
+OL;O;10.3b;59
+vCDL_CRC_16
+Z1 DXx6 sv_std 3 std 0 22 <EOTafDcUY:cQeO^ICn]m3
+Z2 !s110 1575323949
+!i10b 1
+!s100 5ikm>j>ITRQZdfk8`f7:d3
+I3nLlWMJB:1M`z<QBQYnJI3
+Z3 V`JN@9S9cnhjKRR_L]QIcM3
+Z4 !s105 usb_tx_v_unit
+S1
+R0
+Z5 w1575323946
+Z6 8mapped/usb_tx.v
+Z7 Fmapped/usb_tx.v
+L0 728
+Z8 OL;L;10.3b;59
+r1
+!s85 0
+31
+Z9 !s108 1575323949.022537
+Z10 !s107 mapped/usb_tx.v|
+Z11 !s90 -sv|-work|mapped_work|mapped/usb_tx.v|
+!i113 0
+Z12 o-sv -work mapped_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+n@c@d@l_@c@r@c_16
+vflex_counter2_NUM_CNT_BITS4
+R1
+R2
+!i10b 1
+!s100 VgfCE;MQ3e1KYfLGWYaCo3
+IBgWYWS=NTRYE;W18n`M5B1
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 883
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nflex_counter2_@n@u@m_@c@n@t_@b@i@t@s4
+vflex_counter3_NUM_CNT_BITS7
+R1
+R2
+!i10b 1
+!s100 <alh>7FX<Ld:WFeYX=5fC0
+IkHj<0H2Z:I16DjfY>iJ=53
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 24
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nflex_counter3_@n@u@m_@c@n@t_@b@i@t@s7
+vflex_counter3_NUM_CNT_BITS7_DW01_inc_0
+R1
+R2
+!i10b 1
+!s100 cjWTAXeNmz3KS1j=lBckH2
+IAQO7>f]hgS]gF80GohBZ;0
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 8
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nflex_counter3_@n@u@m_@c@n@t_@b@i@t@s7_@d@w01_inc_0
+vflex_counter4_NUM_CNT_BITS4
+R1
+R2
+!i10b 1
+!s100 ]G5m6dm13NLPcUkecTIVU2
+ID_B@SU;OPG0dHNCSNUUUP0
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 542
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nflex_counter4_@n@u@m_@c@n@t_@b@i@t@s4
+vflex_counter_NUM_CNT_BITS4_0
+R1
+R2
+!i10b 1
+!s100 Y8Wk[hcX0jKY]@eHIgC8Y2
+I]P`3>oBTFMi56=of@bS8_0
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 961
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nflex_counter_@n@u@m_@c@n@t_@b@i@t@s4_0
+vflex_counter_NUM_CNT_BITS4_1
+R1
+R2
+!i10b 1
+!s100 9Bjf=z76ZT2m`[IZJoJZ72
+IJ7[YhXiZ`VfFU[>WDDNOn0
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 818
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nflex_counter_@n@u@m_@c@n@t_@b@i@t@s4_1
+vflex_pts_sr_8_0
+R1
+R2
+!i10b 1
+!s100 =Q>Aa[7Ne0bdzIfgUHW811
+IUKbTAa5]iCB7VKIkJ^V3_1
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 617
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+vtb_usb_tx
+R1
+!s110 1575321460
+!i10b 1
+!s100 C]0>498iN[cEkdR>TVFXf0
+I4OScaVWmh8RUf9NFkdXN71
+R3
+!s105 tb_usb_tx_sv_unit
+S1
+R0
+w1575318482
+8source/tb_usb_tx.sv
+Fsource/tb_usb_tx.sv
+L0 11
+R8
+r1
+!s85 0
+31
+!s108 1575321460.936404
+!s107 source/tb_usb_tx.sv|
+!s90 -sv|-work|mapped_work|source/tb_usb_tx.sv|
+!i113 0
+R12
+vusb_bit_stuffer
+R1
+R2
+!i10b 1
+!s100 BEP_XJ44IEPaD>2M4h<d23
+IcUmPGkEGm3Pg;g^nQ:I<j0
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 605
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+vusb_controller
+R1
+R2
+!i10b 1
+!s100 F8oGBLO7=9[JF66`i@7h30
+I6QV8FC_ofSnLg5PZ>[W;k3
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 143
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+vusb_controller_DW01_inc_0
+R1
+R2
+!i10b 1
+!s100 DfbIZ@4[P`k:EkMjL6o010
+IBOhUWI2BPi1c4HoFUn6d:3
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 127
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nusb_controller_@d@w01_inc_0
+vusb_encoder
+R1
+R2
+!i10b 1
+!s100 Z_`2MYoEKT@3iKbPPIKFM2
+IM1_Ef7Bi76UNmUPLoUezZ0
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 700
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+vusb_pts
+R1
+R2
+!i10b 1
+!s100 dighXFh>_DXAL=JiXW:Z73
+I1o3<ZhD36WNOWo8[e9UQ]0
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 683
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+vusb_timer
+R1
+R2
+!i10b 1
+!s100 c;64g72JVNZzQR^h[2F1X0
+I8gCbNlN`oICO`Km5OAYOC1
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 1025
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+vusb_tx
+R1
+R2
+!i10b 1
+!s100 EheA580>iVc77Hho2=JGb1
+IP;GHgPQd4LQ2nR8KE[FF51
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 1048
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12

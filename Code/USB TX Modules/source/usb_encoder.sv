@@ -23,6 +23,8 @@ always_ff @(posedge clk, negedge n_rst) begin
 	end
 end
 always_comb begin
+	nxt_dminus = dminus_out;
+	nxt_dplus = dplus_out;
 if(clk12 == 1'b1) begin
 	if(bit_stuff_en == 1'b1) begin
 		nxt_dminus = !dminus_out;

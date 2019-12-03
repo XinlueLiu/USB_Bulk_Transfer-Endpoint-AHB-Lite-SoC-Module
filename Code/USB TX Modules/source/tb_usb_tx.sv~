@@ -198,6 +198,9 @@ begin
   reset_dut();
   prev_dplus = tb_dplus_out;
   init_expected_outs();
+
+  tb_tx_packet = 0;
+  tb_tx_packet_data = 0;
   idx_tx_packet_data = 0;
 end
 endtask
@@ -219,6 +222,7 @@ initial begin
   tb_test_case_num   = -1;
   // Wait some time before starting first test case
   init_expected_outs();
+  tb_tx_packet=0;
   #(0.1);
 
   //*****************************************************************************
@@ -298,8 +302,9 @@ initial begin
     result_list[i] = result_list[i-1] ^ 8'b11111111;
     data_list[i] = data_list[i-1] ^ 8'b11111111;
   end
-  CRC_byte1 = 8'b00101000;
-  CRC_byte2 = 8'b10100101;
+
+  CRC_byte1 = 8'b10101000;
+  CRC_byte2 = 8'b10101000;
 
   @(posedge tb_usb_clk);
   tb_tx_packet = TX_SEND_DATA;
@@ -313,9 +318,9 @@ initial begin
   end
  // test_stream(8'b00000000);
   //test_stream(8'b00000000);
-  //test_stream(CRC_byte1);
-  //test_stream(CRC_byte2);
-  #(USB_CLK_PERIOD*16);
+  test_stream(CRC_byte1);
+  test_stream(CRC_byte2);
+  //#(USB_CLK_PERIOD*16);
   check_eop();
 
   // Give some visual spacing between check and next test case start
@@ -332,9 +337,9 @@ initial begin
   // Reset the DUT
   reset_tb();
   tb_tx_packet_data_size = 7'b1;
-  data_list[0] = 8'b11111110;  //111111010
+  data_list[0] = 8'b10000010;  //111111010
   result_list[0] = 8'b01111110; // 0 in the next bit 111111010
-  CRC_byte1 = 8'b10000010;
+  CRC_byte1 = 8'b00101000;
   CRC_byte2 = 8'b00000111;
 
   @(posedge tb_usb_clk);
@@ -350,9 +355,10 @@ initial begin
   check_outputs("during bit stuffing"); // checking if the next one is 0
   //test_stream(8'b00000000);
   //test_stream(8'b00000000);
-  //test_stream(CRC_byte1);
-  //test_stream(CRC_byte2);
-  #(USB_CLK_PERIOD*16);
+  #(USB_CLK_PERIOD);
+  test_stream(CRC_byte1);
+  test_stream(CRC_byte2);
+  //#(USB_CLK_PERIOD*16);
   check_eop();
 
   // Give some visual spacing between check and next test case start

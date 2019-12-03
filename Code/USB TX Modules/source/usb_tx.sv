@@ -33,7 +33,7 @@ usb_controller A(.clk(clk),
 		.eop_reset(eop_reset),
 		.CRC_en(crc_en),		
 		.get_tx_packet_data(get_tx_packet_data),
-		.nxt_data(data_out),
+		.data(data_out),
 		.bytealmostcomplete(bytealmostcomplete));
 	
 usb_bit_stuffer B(.clk(clk),

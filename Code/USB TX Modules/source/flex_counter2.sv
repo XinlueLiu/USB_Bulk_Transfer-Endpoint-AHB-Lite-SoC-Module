@@ -32,10 +32,18 @@ begin
 end
 always_comb
 begin : NXT_LOGIC
+	nxt_one_before_flag = one_before_flag;
+	next_rollover_flag = rollover_flag;
 	if(halt == 1'b1) begin
-		next_count_out = count_out;
+	if(rollover_flag !=1) begin
+		next_count_out = count_out;		
 		next_rollover_flag = rollover_flag;
-	end
+		end
+	else begin
+		next_count_out = 0;
+		next_rollover_flag = 0;
+		end
+	end			
 	else if(clear == 1'b1)
 	begin
 		nxt_one_before_flag = 1'b0;
